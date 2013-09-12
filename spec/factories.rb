@@ -10,6 +10,13 @@ FactoryGirl.define do
       admin true
     end
   end
+  
+  factory :author do
+    last_name "Block"
+    first_name "Writer"
+    dob "1950-01-01"
+    nationality "USA"
+  end
 end
 
 #FactoryGirl.define do

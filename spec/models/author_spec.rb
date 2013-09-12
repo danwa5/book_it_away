@@ -49,7 +49,7 @@ describe Author do
   end
   
   describe "when nationality is not in permitted list" do
-    before { @author.nationality = 'France' }
+    before { @author.nationality = 'China' }
     it { should_not be_valid }
   end
   
