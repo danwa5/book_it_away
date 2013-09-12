@@ -12,7 +12,7 @@ class Author < ActiveRecord::Base
   end
   
   def valid_author_nationalities
-    countries = %w[USA Canada UK Sweden]
+    countries = %w[Canada France Sweden UK USA]
     errors.add(:nationality, "needs to be in permitted list") unless countries.include?(self.nationality)
   end
 end
