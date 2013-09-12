@@ -3,7 +3,7 @@ require 'spec_helper'
 describe User do
 
   before do
-    @user = User.new(last_name: "Jones", first_name: "Coconut", email: "cj@gmail.com",
+    @user = User.new(last_name: "Jones", first_name: "Coconut", email: "coconut@jones.com",
                      password: "111111", password_confirmation: "111111")
   end
 
@@ -17,7 +17,19 @@ describe User do
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:remember_token) }
   it { should respond_to(:authenticate) }
+  it { should respond_to(:admin) }
+  
   it { should be_valid }
+  it { should_not be_admin }
+
+  describe "with admin attribute set to 'true'" do
+    before do
+      @user.save!
+      @user.toggle!(:admin)
+    end
+
+    it { should be_admin }
+  end
   
   describe "when last name is not present" do
     before { @user.last_name = " " }
@@ -26,6 +38,16 @@ describe User do
   
   describe "when first name is not present" do
     before { @user.first_name = " " }
+    it { should_not be_valid }
+  end
+  
+  describe "when last name is too long" do
+    before { @user.last_name = "a" * 51 }
+    it { should_not be_valid }
+  end
+  
+  describe "when first name is too long" do
+    before { @user.first_name = "a" * 51 }
     it { should_not be_valid }
   end
   

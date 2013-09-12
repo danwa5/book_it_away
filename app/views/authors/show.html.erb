@@ -1,0 +1,17 @@
+<% provide(:title, @author.first_name + " " + @author.last_name) %>
+
+<h3>Last Name: <%= @author.last_name %></h3>
+<h3>First Name: <%= @author.first_name %></h3>
+<h3>Date of Birth: <%= @author.dob %></h3>
+<h3>Nationality: <%= @author.nationality %></h3>
+
+<% if signed_in? %>
+  <%= link_to "Add Book", authors_path, class: "btn btn-large btn-primary" %>
+  
+  <%= link_to "Edit Author", edit_author_path, class: "btn btn-large btn-primary" %>
+
+  <% if current_user.admin? %>
+    <%= link_to "Delete Author", author_path, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-large btn-primary" %>
+  <% end %>
+<% end %>
+

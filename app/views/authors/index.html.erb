@@ -1,0 +1,21 @@
+<% provide(:title, 'All Authors') %>
+<h1>All Authors</h1>
+
+<%# will_paginate %>
+
+<ul class="authors">
+  <%# render @authors %>
+  
+  <% @authors.each do |a| %>
+    <li>
+      <%= link_to a.first_name + " " + a.last_name, a %>
+      <%= "(" + a.nationality + ")" %>
+    </li>
+  <% end %>
+</ul>
+
+<%# will_paginate %>
+
+<% if signed_in? %>
+  <%= link_to "Add new author", new_author_path, class: "btn btn-large btn-primary" %>
+<% end %>

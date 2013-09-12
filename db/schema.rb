@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130819232556) do
+ActiveRecord::Schema.define(version: 20130912031614) do
+
+  create_table "authors", force: true do |t|
+    t.string   "last_name"
+    t.string   "first_name"
+    t.date     "dob"
+    t.string   "nationality"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "authors", ["last_name", "first_name"], name: "index_authors_on_last_name_and_first_name", unique: true
 
   create_table "users", force: true do |t|
     t.string   "last_name"
@@ -21,6 +32,7 @@ ActiveRecord::Schema.define(version: 20130819232556) do
     t.datetime "updated_at"
     t.string   "password_digest"
     t.string   "remember_token"
+    t.boolean  "admin",           default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
