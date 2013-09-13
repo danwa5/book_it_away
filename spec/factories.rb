@@ -17,6 +17,17 @@ FactoryGirl.define do
     dob "1950-01-01"
     nationality "USA"
   end
+<<<<<<< HEAD
+=======
+  
+  factory :book do
+    isbn "0123456789"
+    title "How to Rule the World"
+    publisher "Anchorsteam"
+    total_pages 500
+    author
+  end
+>>>>>>> books
 end
 
 #FactoryGirl.define do
@@ -26,12 +37,5 @@ end
 #    email "coconut@jones.com"
 #    password "111111"
 #    password_confirmation "111111"
-#  end
-
-#  factory :author do
-#    last_name "Krakauer"
-#    first_name "Jon"
-#    dob "1954-04-12"
-#    nationality "USA"
 #  end
 #end

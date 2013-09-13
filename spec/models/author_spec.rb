@@ -15,6 +15,7 @@ describe Author do
   it { should respond_to(:first_name) }
   it { should respond_to(:dob) }
   it { should respond_to(:nationality) }
+  it { should respond_to(:books) }
   it { should be_valid }
   
   describe "when last name is not present" do
@@ -49,7 +50,7 @@ describe Author do
   end
   
   describe "when nationality is not in permitted list" do
-    before { @author.nationality = 'China' }
+    before { @author.nationality = 'Antarctica' }
     it { should_not be_valid }
   end
   
