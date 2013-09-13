@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130912031614) do
+ActiveRecord::Schema.define(version: 20130912230213) do
 
   create_table "authors", force: true do |t|
     t.string   "last_name"
@@ -23,6 +23,18 @@ ActiveRecord::Schema.define(version: 20130912031614) do
   end
 
   add_index "authors", ["last_name", "first_name"], name: "index_authors_on_last_name_and_first_name", unique: true
+
+  create_table "books", force: true do |t|
+    t.string   "isbn"
+    t.string   "title"
+    t.string   "publisher"
+    t.integer  "total_pages"
+    t.integer  "author_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "books", ["isbn"], name: "index_books_on_isbn", unique: true
 
   create_table "users", force: true do |t|
     t.string   "last_name"
