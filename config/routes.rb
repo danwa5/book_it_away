@@ -1,7 +1,10 @@
 BookApp::Application.routes.draw do
   resources :users
-  resources :authors
   resources :sessions, only: [:new, :create, :destroy]
+  
+  resources :authors do
+    resources :books
+  end
   
   root 'static_pages#home'
 
@@ -12,6 +15,13 @@ BookApp::Application.routes.draw do
   match '/help', to: 'static_pages#help', via: 'get' # old => get "static_pages/help"
   match '/about', to: 'static_pages#about', via: 'get' #old => get "static_pages/about"
   match '/contact', to: 'static_pages#contact', via: 'get' #old => get "static_pages/contact"
+  match '/books', to: 'static_pages#books', via: 'get'
+
+  #unless Rails.application.config.consider_all_requests_local
+  #  match '*not_found', to: 'errors#error_404'
+  #end
+  
+  
   
   
   # The priority is based upon order of creation: first created -> highest priority.

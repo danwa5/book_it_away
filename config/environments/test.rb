@@ -36,4 +36,6 @@ BookApp::Application.configure do
   
   # Speed up tests by lowering bcrypt's cost function.
   ActiveModel::SecurePassword.min_cost = true
+  
+  #config.log_level = :debug
 end

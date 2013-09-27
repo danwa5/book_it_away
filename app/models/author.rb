@@ -16,4 +16,12 @@ class Author < ActiveRecord::Base
     countries = %w[Canada France Sweden UK USA]
     errors.add(:nationality, "needs to be in permitted list") unless countries.include?(self.nationality)
   end
+  
+  def name
+    first_name + " " + last_name
+  end
+  
+  def formatted_dob
+    dob.nil? ? "" : dob.to_formatted_s(:long)
+  end
 end

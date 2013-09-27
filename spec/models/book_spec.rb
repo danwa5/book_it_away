@@ -10,7 +10,7 @@ describe Book do
   it { should respond_to(:isbn) }
   it { should respond_to(:title) }
   it { should respond_to(:publisher) }
-  it { should respond_to(:total_pages) }
+  it { should respond_to(:pages) }
   it { should respond_to(:author_id) }
   its(:author) { should eq author }
 
@@ -26,13 +26,18 @@ describe Book do
     it { should_not be_valid }
   end
   
-  describe "when title is not present" do
-    before { @book.title = " " }
+  describe "when isbn does not consist of only numbers" do
+    before { @book.isbn = "12345ab678" }
     it { should_not be_valid }
   end
-
+  
   describe "when isbn is not 10 characters long" do
     before { @book.isbn = "5" * 11 }
+    it { should_not be_valid }
+  end
+  
+  describe "when title is not present" do
+    before { @book.title = " " }
     it { should_not be_valid }
   end
   
@@ -52,13 +57,18 @@ describe Book do
   end
   
   describe "when pages is not >= 1" do
-    before { @book.total_pages = 0 }
+    before { @book.pages = 0 }
     it { should_not be_valid }
   end
   
   describe "when pages is nil" do
-    before { @book.total_pages = nil }
+    before { @book.pages = nil }
     it { should be_valid }
+  end
+  
+  describe "when pages does not consist of only numbers" do
+    before { @book.pages = "12ab" }
+    it { should_not be_valid }
   end
   
 end

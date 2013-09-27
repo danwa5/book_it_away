@@ -17,17 +17,15 @@ FactoryGirl.define do
     dob "1950-01-01"
     nationality "USA"
   end
-<<<<<<< HEAD
-=======
   
   factory :book do
     isbn "0123456789"
     title "How to Rule the World"
     publisher "Anchorsteam"
-    total_pages 500
+    pages 500
     author
   end
->>>>>>> books
+
 end
 
 #FactoryGirl.define do

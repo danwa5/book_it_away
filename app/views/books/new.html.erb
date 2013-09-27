@@ -1,0 +1,29 @@
+<% provide(:title, 'New Book') %>
+<h1>New Book</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for([@author, @book]) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+
+      <%= label_tag :author %>
+      <%= text_field_tag "author", @author.name, :readonly => true %>
+      
+      <%= f.label :isbn, "ISBN" %>
+      <%= f.text_field :isbn, maxlength: 10 %>
+      
+      <%= f.label :title %>
+      <%= f.text_field :title, maxlength: 100 %>
+      
+      <%= f.label :publisher %>
+      <%= f.text_field :publisher, maxlength: 50 %>
+      
+      <%= f.label :pages %>
+      <%= f.text_field :pages, maxlength: 5 %>
+      
+      <%= f.submit "Add Book", class: "btn btn-primary" %>
+      
+      <%= link_to "Populate from Google Books", author_path(@author), class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

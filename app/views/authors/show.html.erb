@@ -1,17 +1,42 @@
-<% provide(:title, @author.first_name + " " + @author.last_name) %>
+<% provide(:title, @author.name) %>
 
-<h3>Last Name: <%= @author.last_name %></h3>
-<h3>First Name: <%= @author.first_name %></h3>
-<h3>Date of Birth: <%= @author.dob %></h3>
+<h3><%= @author.name %></h3>
+<h3>Date of Birth: <%= @author.formatted_dob %></h3>
 <h3>Nationality: <%= @author.nationality %></h3>
 
-<% if signed_in? %>
-  <%= link_to "Add Book", authors_path, class: "btn btn-large btn-primary" %>
-  
-  <%= link_to "Edit Author", edit_author_path, class: "btn btn-large btn-primary" %>
+<br/>
 
-  <% if current_user.admin? %>
-    <%= link_to "Delete Author", author_path, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-large btn-primary" %>
+<% if signed_in? %>
+  <%= link_to "Add Book", new_author_book_path(@author), class: "btn btn-primary" %>
+  
+  <%= link_to "Edit Author", edit_author_path, class: "btn btn-primary" %>
+
+  <% if current_user.admin? && !@books.any? %>
+    <%= link_to "Delete Author", author_path, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-primary" %>
   <% end %>
 <% end %>
+
+<br/><br/>
+
+<ul class="users">
+  <% if @books.any? %>
+    <h2><%= @books.count %> books found</h2>
+    <% @books.each do |book| %>
+        <%= image_tag(book.image) %><br/>
+        Title: <%= link_to book.title, author_book_path(@author, book) %><br/>
+        ISBN: <%= book.isbn %><br/>
+        Publisher: <%= book.publisher %><br/>
+        Pages: <%= book.pages %><br/>
+        Average Rating: <%= book.average_rating %><br/>
+        Ratings Count: <%= book.ratings_count %><br/>
+        <%= link_to "Edit", edit_author_book_path(@author, book) %>
+        <% if current_user.admin? %>
+        | <%= link_to "Delete", ([@author, book]), method: :delete, data: { confirm: "Are you sure?" } %>
+        <% end %>
+        <br/>
+    <% end %>
+  <% else %>
+    <h2>No books found for this author</h2>
+  <% end %>
+</ul>
 

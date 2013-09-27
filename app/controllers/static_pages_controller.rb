@@ -12,4 +12,8 @@ class StaticPagesController < ApplicationController
   def contact
   end
   
+  def books
+    @books = Book.all
+  end
+  
 end

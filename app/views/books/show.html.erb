@@ -1,0 +1,29 @@
+<% provide(:title, @book.title) %>
+<h1><%= @book.title %></h1>
+
+
+Title: <%= @book.title %><br/>
+Author: <%= link_to @author.name, author_path(@author) %><br/>
+ISBN: <%= @book.isbn %><br/>
+Publisher: <%= @book.publisher %><br/>
+Pages: <%= @book.pages %><br/>
+<br>
+
+<%= image_tag(@book.image) %><br>
+
+Average Rating: <%= @book.average_rating %><br>
+Ratings Count: <%= @book.ratings_count %>
+
+<br>
+Created: <%= @book.created_at %><br/>
+Last updated: <%= @book.updated_at %><br/>
+<br/>
+<%= link_to "Edit Book", edit_author_book_path(@author, @book), class:"btn btn-primary" %>
+<% if current_user.admin? %>
+  <%= link_to "Delete Book", ([@author, @book]), method: :delete, data: { confirm: "Are you sure?" }, class:"btn btn-primary" %>
+<% end %>
+
+<br/>
+<br/>
+
+<h3>Reviews</h3>
