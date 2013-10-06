@@ -1,5 +1,5 @@
 class AuthorsController < ApplicationController
-  before_action :signed_in_user, only: [:new, :create, :edit, :update, :destroy]
+  before_action :signed_in_user
   
   def index
     #@authors = Author.paginate(page: params[:page])
@@ -8,7 +8,11 @@ class AuthorsController < ApplicationController
   
   def show
     @author = Author.find(params[:id])
-    @books = @author.books.all
+    @books = @author.books.where(author_id: @author.id)
+    
+    @books.each do |b|
+      b.get_google_book_info
+    end
   end
   
   def new

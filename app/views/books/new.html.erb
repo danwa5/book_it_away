@@ -21,9 +21,9 @@
       <%= f.label :pages %>
       <%= f.text_field :pages, maxlength: 5 %>
       
-      <%= f.submit "Add Book", class: "btn btn-primary" %>
+      <%= link_to "Populate from Google Books", author_path(@author), class: "btn btn-warning" %>
       
-      <%= link_to "Populate from Google Books", author_path(@author), class: "btn btn-primary" %>
+      <%= f.submit "Add Book", class: "btn btn-primary" %>
     <% end %>
   </div>
 </div>

@@ -1,24 +1,12 @@
-<% provide(:title, 'All Books') %>
-<h1>All Books</h1>
+<% provide(:title, 'The Top Books') %>
+<h1>The Top Books</h1>
 
-<table>
-  <tr>
-    <th>Cover</th>
-    <th>Title</th>
-    <th>ISBN</th>
-    <th>Publisher</th>
-    <th>Pages</th>
-    <th>Author</th>
-  </tr>
-  <% @books.each do |book| %>
-  <tr>
-    <td><%= image_tag book.image %></td>
-    <td><%= link_to book.title, author_book_path(book.author, book) %></td>
-    <td><%= book.isbn %></td>
-    <td><%= book.publisher %></td>
-    <td><%= book.pages.to_s %></td>
-    <td><%= link_to book.author.name, author_path(book.author) %></td>
-  </tr>
-  <% end %>
-</table>
+<% @books = @books_most_reviewed %>
+<%= render partial: 'top_books', locals: {top_title: "The Most Reviewed"} %>
+
+<% @books = @books_highest_rated %>
+<%= render partial: 'top_books', locals: {top_title: "The Highest Rated"} %>
+
+<% @books = @books_latest_added %>
+<%= render partial: 'top_books', locals: {top_title: "The Latest Adds"} %>
 

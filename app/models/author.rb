@@ -1,5 +1,11 @@
 class Author < ActiveRecord::Base
   has_many :books
+  
+  before_save { 
+    self.last_name = self.last_name.titleize
+    self.first_name = self.first_name.titleize
+  }
+  
   validates :last_name, presence: true, length: { maximum: 50 }
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :nationality, presence: true

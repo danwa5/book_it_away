@@ -1,13 +1,15 @@
 class BooksController < ApplicationController
 
   before_action :get_author
+  before_action :signed_in_user
   
   def show
     @book = @author.books.find(params[:id])
+    @book.get_google_book_info
+    @reviews = @book.reviews.where(book_id: @book.id)
   end
 
   def new
-    #@author = Author.find(params[:author_id])
     @book = @author.books.build
   end
   

@@ -1,0 +1,22 @@
+<% if @books.any? %>
+  <h3><%= top_title  %></h3>
+  <div class="books-row">   
+    
+  <% @books.each do |book| %>
+    <div class="book-tile">
+      <div class="book-cover">
+        <%= link_to image_tag(book.image), author_book_path(book.author, book) %>
+      </div>
+      <div class="book-tile-details">
+        <ul class="book-details">
+        <li><%= link_to book.title, author_book_path(book.author, book) %>
+        <li>by <%= link_to book.author.name, author_path(book.author) %>
+        <li># of Reviews: <%= book.reviews.count %>
+        <li>Avg Rating: <%= rating_format(book.reviews.average(:rating)) %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+  
+  </div>
+<% end %>

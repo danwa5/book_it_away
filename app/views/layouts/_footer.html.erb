@@ -1,7 +1,10 @@
 <footer class="footer">
   <small>
-    <a href="http://railstutorial.org/">Rails Tutorial</a>
-    by Daniel Lee
+    <div id="navbar-search">
+      <%= form_tag("/search", method: "get") do %>
+        <%= text_field_tag(:query, "Search for title / author", class: "search", onclick: "this.value = '';") %>
+      <% end %>
+    </div>
   </small>
   <nav>
     <ul>

@@ -30,5 +30,40 @@ namespace :db do
                  first_name: "Tatiana",
                  dob: "1961-09-28",
                  nationality: "France")
+                 
+    Author.create!(last_name: "Hemingway",
+                 first_name: "Ernest",
+                 dob: "1899-07-21",
+                 nationality: "USA")
+                 
+    Author.create!(last_name: "Steinbeck",
+                 first_name: "John",
+                 dob: "1902-02-27",
+                 nationality: "USA")
+                 
+    Author.create!(last_name: "Alba",
+                 first_name: "Jessica",
+                 dob: "1981-04-28",
+                 nationality: "USA")
+                 
+    Author.create!(last_name: "London",
+                 first_name: "Jack",
+                 dob: "1876-01-12",
+                 nationality: "USA")
+                 
+    Author.create!(last_name: "Alba",
+                 first_name: "Jessica",
+                 dob: "1981-04-28",
+                 nationality: "USA")
+    
+    Author.create!(last_name: "Sparks",
+                 first_name: "Nicholas",
+                 dob: "1965-12-31",
+                 nationality: "USA")
+                 
+    Author.create!(last_name: "Philippa Gregory",
+                 first_name: "Jessica",
+                 dob: "1954-01-09",
+                 nationality: "UK")                                      
   end
 end

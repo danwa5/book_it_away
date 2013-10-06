@@ -3,7 +3,12 @@ BookApp::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   
   resources :authors do
-    resources :books
+    resources :books do
+      resources :reviews do
+        put :like
+        put :dislike
+      end
+    end
   end
   
   root 'static_pages#home'
@@ -16,6 +21,7 @@ BookApp::Application.routes.draw do
   match '/about', to: 'static_pages#about', via: 'get' #old => get "static_pages/about"
   match '/contact', to: 'static_pages#contact', via: 'get' #old => get "static_pages/contact"
   match '/books', to: 'static_pages#books', via: 'get'
+  match '/search', to: 'static_pages#search', via: 'get'
 
   #unless Rails.application.config.consider_all_requests_local
   #  match '*not_found', to: 'errors#error_404'

@@ -18,25 +18,44 @@
 
 <br/><br/>
 
-<ul class="users">
+
   <% if @books.any? %>
-    <h2><%= @books.count %> books found</h2>
-    <% @books.each do |book| %>
-        <%= image_tag(book.image) %><br/>
-        Title: <%= link_to book.title, author_book_path(@author, book) %><br/>
-        ISBN: <%= book.isbn %><br/>
-        Publisher: <%= book.publisher %><br/>
-        Pages: <%= book.pages %><br/>
-        Average Rating: <%= book.average_rating %><br/>
-        Ratings Count: <%= book.ratings_count %><br/>
+    <h2><%= pluralize(@books.count, "book") %> found</h2>
+    
+    <% @books.each_with_index do |book, index| %>
+    
+    <% if index%4 == 0 %>
+      <div class="books-row">
+    <% end %>
+    
+    <div class="book-tile">
+      <div class="book-cover">
+        <%= link_to image_tag(book.image), author_book_path(@author, book) %>
+      </div>
+  
+      <div class="book-tile-details">
+        <ul class="book-details">
+        <li><%= link_to book.title, author_book_path(@author, book) %>
+        <li>ISBN <%= book.isbn %>
+        <li><%= book.publisher %>
+        <li>Book-It-Away Avg Rating: <%= rating_format(book.reviews.average(:rating)) %> (<%= book.reviews.count %>)
+        <li>Google Books Avg Rating: <%= book.average_rating %> (<%= book.ratings_count %>)<br/>
         <%= link_to "Edit", edit_author_book_path(@author, book) %>
         <% if current_user.admin? %>
         | <%= link_to "Delete", ([@author, book]), method: :delete, data: { confirm: "Are you sure?" } %>
         <% end %>
-        <br/>
+        </ul>
+      </div>
+    </div>
+
+    <% if (index+1)%4 == 0 || (index+1) == @books.length %>
+      </div>
+    <% end %>
+  
     <% end %>
   <% else %>
     <h2>No books found for this author</h2>
   <% end %>
-</ul>
+  
+
 

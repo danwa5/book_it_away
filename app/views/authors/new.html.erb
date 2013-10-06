@@ -1,24 +1,5 @@
 <% provide(:title, 'New Author') %>
 <h1>New Author</h1>
 
-<div class="row">
-  <div class="span6 offset3">
-    <%= form_for(@author) do |f| %>
-      <%= render 'shared/error_messages', object: f.object %>
+<%= render partial: 'authors/form', locals: { button_label: "Add Author" } %>
 
-      <%= f.label :last_name %>
-      <%= f.text_field :last_name %>
-      
-      <%= f.label :first_name %>
-      <%= f.text_field :first_name %>
-
-      <%= f.label :dob, "Date of Birth" %>
-      <%= f.date_select :dob, {order: [:month, :day, :year], :prompt => true, use_short_month: true, start_year: 1800, end_year: DateTime.now.year, default: Time.now, date_separator: " / "}, {style: "width: 90px;"} %>
-
-      <%= f.label :nationality %>
-      <%= f.select :nationality, author_nationalities, :prompt => 'Please Select' %>
-      
-      <%= f.submit "Add Author", class: "btn btn-large btn-primary" %>
-    <% end %>
-  </div>
-</div>

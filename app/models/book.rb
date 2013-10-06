@@ -1,5 +1,6 @@
 class Book < ActiveRecord::Base
   belongs_to :author
+  has_many :reviews
   
   attr_accessor :gbook
   
@@ -8,7 +9,8 @@ class Book < ActiveRecord::Base
     self.publisher = self.publisher.titleize
   }
   
-  after_initialize :get_google_book_info #, :except => [:index, :new]
+  # ***** call from controller instead *****
+  # after_initialize :get_google_book_info
   
   validates :isbn, presence: true, length: { maximum: 10 }
   validates :title, presence: true, length: { maximum: 100 }
@@ -21,15 +23,15 @@ class Book < ActiveRecord::Base
   default_scope -> { order('title ASC') }
   
   def image
-    self.gbook.nil? ? "" : self.gbook.image_link
+    self.gbook.nil? ? "image_unavailable.jpg" : self.gbook.image_link
   end
   
   def average_rating
-    self.gbook.nil? ? "" : self.gbook.average_rating
+    self.gbook.nil? ? "n/a" : self.gbook.average_rating
   end
   
   def ratings_count
-    self.gbook.nil? ? "" : self.gbook.ratings_count
+    self.gbook.nil? ? "0" : self.gbook.ratings_count
   end
   
   def book_title_case(title)
@@ -41,20 +43,15 @@ class Book < ActiveRecord::Base
     title = title[0,1].capitalize + title[1, title.length-1]
   end
   
-  private
-  
-    def get_google_book_info
-      Rails.logger.info "get_google_book_info called"
-      if !self.isbn.nil?
-        self.gbook = GoogleBooks.search('isbn:' + isbn).first
-      end
+  def get_google_book_info
+    if !self.isbn.nil?
+      #Rails.logger.info "get_google_book_info called for " + self.title
+      self.gbook = GoogleBooks.search('isbn:' + isbn).first
     end
+  end
  
   #def upfirst
   #  self[0,1].capitalize + self[1,length-1]
   #end
-  
-  #def titleize_name
-  #  self.title = self.title.titleize
-  #end
+
 end

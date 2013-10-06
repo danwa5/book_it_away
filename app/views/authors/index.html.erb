@@ -3,19 +3,25 @@
 
 <%# will_paginate %>
 
-<ul class="authors">
+<ul class="users">
   <%# render @authors %>
   
   <% @authors.each do |a| %>
     <li>
-      <%= link_to a.name, a %>
-      <%= "(" + a.nationality + ")" %>
+      <%= link_to a.name, a %> // <%= pluralize(a.books.count, "book") %> in database
+      <% if a.books.count > 0 %>
+        including <i><%= link_to a.books.first.title, author_book_path(a, a.books.first) %></i>
+      <% if a.books.count > 1 %>
+        and <i><%= link_to a.books.last.title, author_book_path(a, a.books.last) %></i>
+      <% end %><% end %>
     </li>
   <% end %>
 </ul>
 
 <%# will_paginate %>
+<br/><br/>
 
 <% if signed_in? %>
   <%= link_to "Add new author", new_author_path, class: "btn btn-large btn-primary" %>
 <% end %>
+
