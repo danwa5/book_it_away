@@ -50,11 +50,6 @@ namespace :db do
                  first_name: "Jack",
                  dob: "1876-01-12",
                  nationality: "USA")
-                 
-    Author.create!(last_name: "Alba",
-                 first_name: "Jessica",
-                 dob: "1981-04-28",
-                 nationality: "USA")
     
     Author.create!(last_name: "Sparks",
                  first_name: "Nicholas",
