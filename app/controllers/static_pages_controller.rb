@@ -13,16 +13,20 @@ class StaticPagesController < ApplicationController
   end
   
   def search
-    @title_results = Book.where("title like ?", "%#{params[:query]}%").limit(6)
-    
-    @author_results = Book.find_by_sql ["select b.* from books b, authors a where a.id = b.author_id and a.first_name || ' ' || a.last_name like ? limit 6", "%#{params[:query]}%"]
-    
-    @title_results = @title_results.concat(@author_results)
-    
-    @title_results.each do |b|
-      Rails.logger.info "Search: get_google_book_info called for " + b.title
-      b.get_google_book_info
+  
+    if params[:query].blank?
+      redirect_to home_url
+    else
+      @title_results = Book.title_search(params[:query]).limit(6)
+      @author_results = Book.author_search(params[:query])
+      @title_results = @title_results.concat(@author_results)
+      
+      @title_results.each do |b|
+        Rails.logger.info "Search: get_google_book_info called for " + b.title
+        b.get_google_book_info
+      end
     end
+    
   end
   
   def books

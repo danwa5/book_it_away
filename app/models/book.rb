@@ -50,8 +50,12 @@ class Book < ActiveRecord::Base
     end
   end
  
-  #def upfirst
-  #  self[0,1].capitalize + self[1,length-1]
-  #end
+  def self.title_search(query)
+    where("title like ?", "%#{query}%")
+  end
+  
+  def self.author_search(query)
+    find_by_sql ["select b.* from books b, authors a where a.id = b.author_id and a.first_name || ' ' || a.last_name like ? limit 6", "%#{query}%"]
+  end
 
 end

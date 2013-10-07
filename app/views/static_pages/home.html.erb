@@ -1,7 +1,13 @@
 <% provide(:title, '') %>
 <div class="center hero-unit">
-  <h1>Book-it-away</h1>
 
+  <% if signed_in? %>
+    <h1>Welcome, <%= current_user.first_name %>!</h1>
+  <% else %>
+    <h1>Book-It-Away</h1>
+  <% end %>
+
+  <br/>
   <h2>Ever lose track of which books you've read?</h2>
   <h2>Well, this app allows you to track those books and write your own reviews!</h2>
 
