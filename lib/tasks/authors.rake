@@ -1,3 +1,5 @@
+=begin
+
 namespace :db do
   desc "Fill database with sample data"
   task populate: :environment do
@@ -56,9 +58,11 @@ namespace :db do
                  dob: "1965-12-31",
                  nationality: "USA")
                  
-    Author.create!(last_name: "Philippa Gregory",
-                 first_name: "Jessica",
+    Author.create!(last_name: "Gregory",
+                 first_name: "Philippa",
                  dob: "1954-01-09",
                  nationality: "UK")                                      
   end
 end
+
+=end
