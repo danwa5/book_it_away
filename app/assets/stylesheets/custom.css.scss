@@ -1,5 +1,100 @@
 @import "bootstrap";
 
+/* book tiles */
+
+div.main {
+  width: 100%;
+  float: left;
+  margin-bottom: 40px;
+}
+
+div.books-row {
+  width: 100%;
+  float: left;
+  padding-bottom: 30px;
+}
+
+div.book-tile {
+  float: left;
+  background-color: #fff;
+  min-width: 225px;
+}
+
+div.book-cover {
+}
+
+div.book-cover img {
+  padding: 3px;
+  border: 1px solid #cccccc;
+  background-color: ff0
+}
+
+div.book-tile-details {
+  padding-top: 5px;
+}
+
+ul.book-details {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#book-main {
+  width: 100%;
+  float: left;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+#book-main-cover {
+  float: left;
+}
+
+#book-main-cover img {
+  padding: 3px;
+  border: 1px solid #cccccc;
+  background-color: ff0
+}
+
+#book-main-details {
+  float: left;
+  padding-left: 25px;
+}
+
+#book-timestamps {
+  float: left;
+  width: 100%;
+  margin-top: 20px;
+}
+
+#review-main {
+  width: 100%;
+  float: left;
+  margin-top: 20px;
+}
+
+div.book-details {
+  float: left;
+  padding-top: 5px;
+}
+
+h3 {
+  font-family: "Verdana";
+  font-size: 2.0em;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #666;
+}
+
+#navbar-search {
+  float: left;
+  width: 400px;
+}
+
+input.search {
+  background-color: #E0F0FF;
+}
+
 /* mixins, variables, etc. */
 
 $grayMediumLight: #eaeaea;
@@ -245,100 +340,5 @@ aside {
   width: 100%;
   margin-top: 45px;
   @include box_sizing;
-}
-
-/* book tiles */
-
-div.main {
-  width: 100%;
-  float: left;
-  margin-bottom: 40px;
-}
-
-div.books-row {
-  width: 100%;
-  float: left;
-  padding-bottom: 30px;
-}
-
-div.book-tile {
-  float: left;
-  background-color: #fff;
-  min-width: 225px;
-}
-
-div.book-cover {
-}
-
-div.book-cover img {
-  padding: 3px;
-  border: 1px solid #cccccc;
-  background-color: ff0
-}
-
-div.book-tile-details {
-  padding-top: 5px;
-}
-
-ul.book-details {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-#book-main {
-  width: 100%;
-  float: left;
-  margin-top: 40px;
-  margin-bottom: 40px;
-}
-
-#book-main-cover {
-  float: left;
-}
-
-#book-main-cover img {
-  padding: 3px;
-  border: 1px solid #cccccc;
-  background-color: ff0
-}
-
-#book-main-details {
-  float: left;
-  padding-left: 25px;
-}
-
-#book-timestamps {
-  float: left;
-  width: 100%;
-  margin-top: 20px;
-}
-
-#review-main {
-  width: 100%;
-  float: left;
-  margin-top: 20px;
-}
-
-div.book-details {
-  float: left;
-  padding-top: 5px;
-}
-
-h3 {
-  font-family: "Verdana";
-  font-size: 2.0em;
-  margin-bottom: 20px;
-  font-weight: bold;
-  color: #666;
-}
-
-#navbar-search {
-  float: left;
-  width: 400px;
-}
-
-input.search {
-  background-color: #E0F0FF;
 }
 
