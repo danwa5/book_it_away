@@ -46,7 +46,7 @@ class Book < ActiveRecord::Base
   def get_google_book_info
     if !self.isbn.nil?
       Rails.logger.info "get_google_book_info invoked in model for " + self.title
-      self.gbook = GoogleBooks.search('isbn:' + isbn).first
+      self.gbook = GoogleBooks.search('isbn:' + self.isbn).first
     end
   end
  

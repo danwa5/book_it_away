@@ -8,7 +8,7 @@
   
   <% @authors.each do |a| %>
     <li>
-      <%= link_to a.name, a %> // <%= pluralize(a.books.count, "book") %> in database
+      <%= link_to a.name, a %> // <%= pluralize(a.books.count, "book") %>
       <% if a.books.count > 0 %>
         including <i><%= link_to a.books.first.title, author_book_path(a, a.books.first) %></i>
       <% if a.books.count > 1 %>
