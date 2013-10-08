@@ -51,11 +51,19 @@ class Book < ActiveRecord::Base
   end
  
   def self.title_search(query)
-    where("title like ?", "%#{query}%")
+    if Rails.env.production?
+      where("title ilike ?", "%#{query}%")
+    else
+      where("title like ?", "%#{query}%")
+    end
   end
   
   def self.author_search(query)
-    find_by_sql ["select b.* from books b, authors a where a.id = b.author_id and a.first_name || ' ' || a.last_name like ? limit 6", "%#{query}%"]
+    if Rails.env.production?
+      find_by_sql ["select b.* from books b, authors a where a.id = b.author_id and a.first_name || ' ' || a.last_name ilike ? limit 6", "%#{query}%"]
+    else
+      find_by_sql ["select b.* from books b, authors a where a.id = b.author_id and a.first_name || ' ' || a.last_name like ? limit 6", "%#{query}%"]
+    end
   end
 
 end
