@@ -39,7 +39,7 @@ class ReviewsController < ApplicationController
     @review = Review.find(params[:review_id])
     @likes_count = @review.likes
     @review.update_attribute(:likes, @likes_count+1)
-    #redirect_to author_book_url(@author, @book)
+    redirect_to author_book_url(@author, @book)
     #render partial: 'books/review', collection: @reviews
     #render partial: 'books/review', object: @review
   end

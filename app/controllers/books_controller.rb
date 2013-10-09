@@ -5,7 +5,7 @@ class BooksController < ApplicationController
   
   def show
     @book = @author.books.find(params[:id])
-    @book.get_google_book_info
+    @book.get_google_book_info(request.remote_ip)
     @reviews = @book.reviews.where(book_id: @book.id)
   end
 

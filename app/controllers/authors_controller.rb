@@ -11,7 +11,7 @@ class AuthorsController < ApplicationController
     @books = @author.books.where(author_id: @author.id)
     
     @books.each do |b|
-      b.get_google_book_info
+      b.get_google_book_info(request.remote_ip)
     end
   end
   

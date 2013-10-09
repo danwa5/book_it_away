@@ -43,10 +43,10 @@ class Book < ActiveRecord::Base
     title = title[0,1].capitalize + title[1, title.length-1]
   end
   
-  def get_google_book_info
+  def get_google_book_info(user_ip)
     if !self.isbn.nil?
       Rails.logger.info "get_google_book_info invoked in model for " + self.title
-      self.gbook = GoogleBooks.search('isbn:' + self.isbn).first
+      self.gbook = GoogleBooks.search('isbn:' + self.isbn, {}, user_ip).first
     end
   end
  
