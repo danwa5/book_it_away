@@ -1,5 +1,29 @@
 @import "bootstrap";
 
+/* bootstrap override */
+
+.hero-unit {
+  padding: 100px;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 200;
+  line-height: 30px;
+  color: inherit;
+  background-image:url('book-bkg-orange-filter.jpg');
+  background-color: #333;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px; }
+  .hero-unit h1 {
+    margin-bottom: 0;
+    font-size: 60px;
+    line-height: 1;
+    color: inherit;
+    letter-spacing: -1px; }
+  .hero-unit li {
+    line-height: 30px; }
+   
+
 /* book tiles */
 
 div.main {
@@ -149,7 +173,8 @@ h2 {
   margin-bottom: 30px;
   text-align: center;
   font-weight: normal;
-  color: $grayLight;
+  /*color: $grayLight;*/
+  color: #eee;
 }
 
 p {
