@@ -5,20 +5,12 @@
 .hero-unit {
   padding: 100px;
   margin-bottom: 20px;
-  background-image: asset-data-url('book-bkg-orange-filter.jpg');
+  background-image: asset-data-url("book-bkg-orange-filter.jpg");
 }
 
-.rails-unit {
-  padding: 60px;
-  margin-bottom: 30px;
-  font-size: 18px;
-  font-weight: 200;
-  line-height: 30px;
-  color: inherit;
-  background-image: asset-data-url('rails.png');
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  border-radius: 6px;
+[class^="icon-"],
+[class*=" icon-"] {
+  background-image: asset-data-url("glyphicons-halflings.png");
 }
 
 
@@ -27,7 +19,6 @@
 div.main {
   width: 100%;
   float: left;
-  margin-bottom: 40px;
 }
 
 div.books-row {
@@ -203,7 +194,9 @@ p {
 /* footer */
 
 footer {
-  margin-top: 45px;
+  width: 100%;
+  display: inline-block;
+  margin-top: 35px;
   padding-top: 5px;
   border-top: 1px solid $grayMediumLight;
   color: $grayLight;
