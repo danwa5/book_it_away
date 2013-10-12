@@ -1,6 +1,7 @@
 class Book < ActiveRecord::Base
   belongs_to :author
   has_many :reviews
+  has_and_belongs_to_many :subjects
   
   attr_accessor :gbook
   
@@ -63,6 +64,23 @@ class Book < ActiveRecord::Base
       find_by_sql ["select b.* from books b, authors a where a.id = b.author_id and a.first_name || ' ' || a.last_name ilike ? limit 6", "%#{query}%"]
     else
       find_by_sql ["select b.* from books b, authors a where a.id = b.author_id and a.first_name || ' ' || a.last_name like ? limit 6", "%#{query}%"]
+    end
+  end
+  
+  def categorized_under?(subject)
+    self.subjects.include?(subject)
+  end
+  
+  def non_categorized_subjects
+    Subjects.find(:all) - self.subjects
+  end
+  
+  def get_subjects
+    str = String.new
+    unless self.subjects.blank?
+      #self.subjects.each do |s|
+      #  str << "b"
+      #end
     end
   end
 

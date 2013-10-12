@@ -13,7 +13,15 @@
   background-image: asset-data-url("glyphicons-halflings.png");
 }
 
-
+/* book subjects checkbox group */
+#subjects {
+  width: 90%;
+  position: relative;
+  margin: 5px 0 15px 0;
+  padding: 10px;
+  border: 1px dotted #666;
+}
+  
 /* book tiles */
 
 div.main {

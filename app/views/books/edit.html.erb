@@ -6,6 +6,9 @@
     <%= form_for([@author, @book]) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
 
+      <%= label_tag :author %>
+      <%= text_field_tag "author", @author.name, :readonly => true %>
+      
       <%= f.label :isbn, "ISBN" %>
       <%= f.text_field :isbn, maxlength: 10 %>
       
@@ -18,10 +21,31 @@
       <%= f.label :pages %>
       <%= f.text_field :pages, maxlength: 5 %>
       
-      <%= label_tag :author %>
-      <%= text_field_tag "author", @author.name, :readonly => true %>
+      <%= label_tag :subjects %>
+      <div id="subjects">
+      <% if not @subjects_all.nil? %>
+        
+        <table cellpadding="2">
+        <% for subject in @subjects_all do %>
+          <tr>
+            <td>
+          <% if @subjects.include?(subject) %>
+          <%= check_box_tag "subjects[]", subject.id, :checked => true %>
+          <% else %>
+          <%= check_box_tag "subjects[]", subject.id %>
+          <% end %>
+            </td>
+            <td><%= subject.name %></td>
+          </tr>
+        <% end %>
+        </table>
+      <% else %>
+        <h3>No subjects found</h3>
+      <% end %>
+      </div>
 
-      <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+      <%= f.submit "Save Changes", class: "btn btn-primary" %>
+      <%= link_to "Cancel", author_book_path(@author, @book), class: "btn btn-primary" %>
     <% end %>
   </div>
 </div>

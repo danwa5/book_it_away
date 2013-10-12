@@ -21,7 +21,21 @@
       <%= f.label :pages %>
       <%= f.text_field :pages, maxlength: 5 %>
       
-      <%= link_to "Populate from Google Books", author_path(@author), class: "btn btn-warning" %>
+      <%= label_tag :subjects %>
+      <div id="subjects">
+      <% if not @subjects_all.nil? %>
+        <table cellpadding="2">
+        <% for subject in @subjects_all do %>
+          <tr>
+            <td><%= check_box_tag "subjects[]", subject.id %></td>
+            <td><%= subject.name %></td>
+          </tr>
+        <% end %>
+        </table>
+      <% else %>
+        <h3>No subjects found</h3>
+      <% end %>
+      </div>
       
       <%= f.submit "Add Book", class: "btn btn-primary" %>
     <% end %>

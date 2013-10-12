@@ -1,0 +1,15 @@
+<% provide(:title, 'All Book Subjects') %>
+<h1>All Book Subjects</h1>
+
+<ul class="users">
+  
+  <% @subjects.each do |s| %>
+    <li>
+      <%= s.name %> (<%= link_to 'Edit', edit_subject_path(s) %>)
+    </li>
+  <% end %>
+</ul>
+
+<br/><br/>
+
+<%= link_to "Add new subject", new_subject_path, class: "btn btn-primary" %>

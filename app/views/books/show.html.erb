@@ -11,7 +11,8 @@
     Publisher: <%= @book.publisher %><br/>
     Pages: <%= @book.pages %><br/>
     Book-It-Away Avg Rating: <%= rating_format(@book.reviews.average(:rating)) %> (<%= @book.reviews.count %>)<br/>
-    Google Books Avg Rating: <%= @book.average_rating %> (<%= @book.ratings_count %>)
+    Google Books Avg Rating: <%= @book.average_rating %> (<%= @book.ratings_count %>)<br/>
+    Subjects: <%#= @book.get_subjects %>
   </div>
 
   <div id="book-timestamps">
@@ -21,7 +22,8 @@
     <%= link_to "Edit Book", edit_author_book_path(@author, @book), class:"btn btn-primary" %>
     <% if current_user.admin? %>
       <%= link_to "Delete Book", ([@author, @book]), method: :delete, data: { confirm: "Are you sure?" }, class:"btn btn-primary" %>
-<% end %>
+    <% end %>
+  </div>
 </div>
 
 <div id="review-main">
@@ -30,8 +32,6 @@
   <br/><br/>
   
   <% if @reviews.any? %>
-  
     <%= render partial: 'books/review', collection: @reviews %>
-  
   <% end %>
 </div>

@@ -11,12 +11,21 @@ class BooksController < ApplicationController
 
   def new
     @book = @author.books.build
+    @subjects_all = Subject.all.order('name ASC')
   end
   
   def create
     @book = @author.books.build(user_params)
     
     if @book.save
+      subject_ids = params[:subjects]
+      unless subject_ids.blank?
+        subject_ids.each do |subject_id|
+          subject = Subject.find(subject_id)
+          @book.subjects << subject
+        end
+      end
+      
       flash[:success] = "Book successfully added!"
       redirect_to @book.author
     else
@@ -26,14 +35,42 @@ class BooksController < ApplicationController
   
   def edit
     @book = @author.books.find(params[:id])
+    @subjects = @book.subjects
+    @subjects_all = Subject.all.order('name ASC')
   end
   
   def update
     @book = @author.books.find(params[:id])
     
     if @book.update_attributes(user_params)
+      #retrieve selected subjects from form
+      subject_ids = params[:subjects]
+      selected = Array.new
+    
+      #if not already added, add subject to book
+      unless subject_ids.blank?
+        subject_ids.each do |subject_id|
+          @subject = Subject.find(subject_id)
+          selected.push(@subject)
+          if not @book.categorized_under?(@subject)
+            @book.subjects << @subject
+          end
+        end
+      end
+      
+      #get unselected subjects and check if book is categorized under it
+      #if so, delete it
+      check_to_delete = Subject.all - selected
+      unless check_to_delete.blank?
+        check_to_delete.each do |d|
+          if @book.categorized_under?(d)
+            @book.subjects.delete(d)
+          end
+        end
+      end    
+      
       flash[:success] = "Book updated!"
-      redirect_to @author
+      redirect_to author_book_url(@author, @book)
     else
       render 'edit'
     end
@@ -45,7 +82,7 @@ class BooksController < ApplicationController
     flash[:success] = "Book deleted."
     redirect_to @author    
   end
-  
+
   private
   
     def get_author

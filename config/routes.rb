@@ -1,6 +1,7 @@
 BookApp::Application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
+  resources :subjects, except: [:show, :destroy]
   
   resources :authors do
     resources :books do
@@ -26,9 +27,6 @@ BookApp::Application.routes.draw do
   #unless Rails.application.config.consider_all_requests_local
   #  match '*not_found', to: 'errors#error_404'
   #end
-  
-  
-  
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
