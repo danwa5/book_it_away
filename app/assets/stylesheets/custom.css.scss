@@ -21,6 +21,18 @@
   padding: 10px;
   border: 1px dotted #666;
 }
+
+/* search no results */
+.no-results {
+  padding: 90px;
+  border: 1px dotted #666;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  h2 {
+    color: #999;
+  }
+}
   
 /* book tiles */
 

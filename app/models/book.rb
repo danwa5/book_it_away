@@ -13,12 +13,12 @@ class Book < ActiveRecord::Base
   # ***** call from controller instead *****
   # after_initialize :get_google_book_info
   
-  validates :isbn, presence: true, length: { maximum: 10 }
+  validates :isbn, presence: true, uniqueness: true, length: { maximum: 10 }
   validates :title, presence: true, length: { maximum: 100 }
   validates :publisher, allow_nil: true, length: { maximum: 50 }
   validates :pages, allow_nil: true, numericality: { greater_than_or_equal_to: 1 }
   validates :author_id, presence: true
-  
+
   validates_format_of :isbn, with: /[0-9]{10}/
   
   default_scope -> { order('title ASC') }

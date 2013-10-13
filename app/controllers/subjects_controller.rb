@@ -1,7 +1,7 @@
 class SubjectsController < ApplicationController
 
   before_action :signed_in_user
-  #before_action :admin_user
+  before_action :admin_user
   before_action :set_subject, only: [:edit, :update]
 
   def index
@@ -44,4 +44,9 @@ class SubjectsController < ApplicationController
     def subject_params
       params.require(:subject).permit(:name)
     end
+    
+    def admin_user
+      redirect_to(root_url) unless current_user.admin?
+    end
+
 end
