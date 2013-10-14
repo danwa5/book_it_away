@@ -39,7 +39,7 @@
 <script>
   $('.star').raty({
     readOnly: true,
-    score: <%= rating_format(@book.reviews.average(:rating)) %>,
+    score: <%= @book.reviews.count == 0 ? 0 : @book.reviews.average(:rating) %>,
     hints:['horrible','bad','unremarkable','good','awesome'],
     path: '/assets'
   });
