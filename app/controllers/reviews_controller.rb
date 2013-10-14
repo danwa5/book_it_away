@@ -10,6 +10,7 @@ class ReviewsController < ApplicationController
   def create
     @review = @book.reviews.build(review_params)
     @review.user = current_user
+    @review.rating = params[:score]
     
     if @review.save
       flash[:success] = "Review succesfully added!"
@@ -26,7 +27,8 @@ class ReviewsController < ApplicationController
   
   def update
     @review = @book.reviews.find(params[:id])
-    
+    @review.rating = params[:score]
+     
     if @review.update_attributes(review_params)
       flash[:success] = "Review updated!"
       redirect_to author_book_url(@author, @book)
