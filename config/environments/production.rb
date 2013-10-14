@@ -79,4 +79,5 @@ BookApp::Application.configure do
   config.log_formatter = ::Logger::Formatter.new
   
   config.assets.debug = true
+  config.assets.precompile = false
 end
