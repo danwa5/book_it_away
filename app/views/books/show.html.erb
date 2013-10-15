@@ -40,14 +40,10 @@
 
 <script>
   $('.star').raty({
-    readOnly: true,
-    score: <%= @book.reviews.count == 0 ? 0 : @book.reviews.average(:rating) %>,
-    path: '/assets'
+    score: <%= @book.reviews.count == 0 ? 0 : @book.reviews.average(:rating) %>
   });
   
   $('.g-star').raty({
-    readOnly: true,
-    score: <%= @book.average_rating %>,
-    path: '/assets'
+    score: <%= @book.average_rating %>
   });
 </script>

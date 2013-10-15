@@ -22,9 +22,7 @@
   <script>
   <% @books.each_with_index do |book, index| %>
     $('.<%= group %><%= index %>').raty({
-      readOnly: true,
-      score: <%= book.reviews.count == 0 ? 0 : book.reviews.average(:rating) %>,
-      path: '/assets'
+      score: <%= book.reviews.count == 0 ? 0 : book.reviews.average(:rating) %>
     });
   <% end %>
   </script>

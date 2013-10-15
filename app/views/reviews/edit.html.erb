@@ -24,9 +24,8 @@
 
 <script>
   $('#user_star').raty({
+    readOnly: false,
     score: <%= @review.rating %>,
-    hints:['horrible','bad','unremarkable','good','awesome'],
-    path: '/assets',
     click: function(score, evt) {
       $.ajax({
         url: '/authors/' + <%= @author.id %> + '/books/' + <%= @book.id %> + '/reviews/' + <%= @review.id %>,
