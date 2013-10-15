@@ -443,7 +443,7 @@
     click         : undefined,
     half          : false,
     halfShow      : true,
-    hints         : ['horrible', 'bad', 'unremarkable', 'good', 'awesome'],
+    hints         : ['horrible', 'poor', 'decent', 'good', 'awesome'],
     iconRange     : undefined,
     mouseout      : undefined,
     mouseover     : undefined,

@@ -1,10 +1,23 @@
 <% provide(:title, @user.first_name + " " + @user.last_name) %>
+<h1>My Profile</h1>
 
-<div class="no-results">
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@user) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
 
-<h2>Last Name: <%= @user.last_name %></h2>
-<h2>First Name: <%= @user.first_name %></h2>
-<h2>Email: <%= @user.email %></h2>
-<h2>Admin: <%= @user.admin %></h2>
+      <%= f.label :last_name %>
+      <%= f.text_field :last_name, :readonly => true %>
+      
+      <%= f.label :first_name %>
+      <%= f.text_field :first_name, :readonly => true %>
 
+      <%= f.label :email %>
+      <%= f.text_field :email, :readonly => true %>
+      
+      <%= label_tag :admin %>
+      <%= text_field_tag "admin", @user.admin, :readonly => true %>
+    <% end %>
+  </div>
 </div>
+

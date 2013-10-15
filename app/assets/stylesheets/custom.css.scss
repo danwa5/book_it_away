@@ -81,7 +81,6 @@ ul.book-details {
   width: 100%;
   float: left;
   margin-top: 40px;
-  margin-bottom: 40px;
 }
 
 #book-main-cover {
@@ -99,10 +98,17 @@ ul.book-details {
   padding-left: 25px;
 }
 
+#book-description {
+  width: 100%;
+  float: left;
+  margin-top: 20px;
+}
+
 #book-timestamps {
   float: left;
   width: 100%;
   margin-top: 20px;
+  color: #999;
 }
 
 #review-main {

@@ -27,6 +27,10 @@ class Book < ActiveRecord::Base
     self.gbook.nil? ? "image_unavailable.jpg" : self.gbook.image_link
   end
   
+  def description
+    self.gbook.nil? ? "" : self.gbook.description
+  end
+  
   def average_rating
     self.gbook.nil? ? "n/a" : self.gbook.average_rating
   end

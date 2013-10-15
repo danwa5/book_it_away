@@ -1,8 +1,8 @@
 <% if @books.any? %>
   <h3><%= top_title  %></h3>
   <div class="books-row">   
-    
-  <% @books.each do |book| %>
+  
+  <% @books.each_with_index do |book, index| %>
     <div class="book-tile">
       <div class="book-cover">
         <%= link_to image_tag(book.image), author_book_path(book.author, book) %>
@@ -11,12 +11,22 @@
         <ul class="book-details">
         <li><%= link_to book.title, author_book_path(book.author, book) %>
         <li>by <%= link_to book.author.name, author_path(book.author) %>
-        <li># of Reviews: <%= book.reviews.count %>
-        <li>Avg Rating: <%= rating_format(book.reviews.average(:rating)) %>
+        <li><span class="<%= group %><%= index %>"></span> (<%= book.reviews.count %>)
         </ul>
       </div>
     </div>
   <% end %>
   
   </div>
+  
+  <script>
+  <% @books.each_with_index do |book, index| %>
+    $('.<%= group %><%= index %>').raty({
+      readOnly: true,
+      score: <%= book.reviews.count == 0 ? 0 : book.reviews.average(:rating) %>,
+      path: '/assets'
+    });
+  <% end %>
+  </script>
 <% end %>
+
