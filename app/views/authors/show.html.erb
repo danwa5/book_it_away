@@ -38,8 +38,7 @@
         <li><%= link_to book.title, author_book_path(@author, book) %>
         <li>ISBN <%= book.isbn %>
         <li><%= book.publisher %>
-        <li>Book-It-Away Avg Rating: <%= rating_format(book.reviews.average(:rating)) %> (<%= book.reviews.count %>)
-        <li>Google Books Avg Rating: <%= book.average_rating %> (<%= book.ratings_count %>)<br/>
+        <li><span class="star<%= index %>"></span> (<%= book.reviews.count %>)<br/>
         <%= link_to "Edit", edit_author_book_path(@author, book) %>
         <% if current_user.admin? %>
         | <%= link_to "Delete", ([@author, book]), method: :delete, data: { confirm: "Are you sure?" } %>
@@ -53,6 +52,14 @@
     <% end %>
   
     <% end %>
+    
+    <script>
+    <% @books.each_with_index do |book, index| %>
+      $('.star<%= index %>').raty({
+        score: <%= book.reviews.count == 0 ? 0 : book.reviews.average(:rating) %>
+      });
+    <% end %>
+    </script>
   <% else %>
     <h2>No books found for this author</h2>
   <% end %>

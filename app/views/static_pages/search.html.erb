@@ -23,8 +23,7 @@
         <li>by <%= link_to book.author.name, author_path(book.author) %>
         <li>ISBN <%= book.isbn %>
         <li><%= book.publisher %>
-        <li>Book-It-Away Rating: <%= rating_format(book.reviews.average(:rating)) %> (<%= book.reviews.count %>)
-        <li>Google Books Rating: <%= book.average_rating %> (<%= book.ratings_count %>)
+        <li><span class="star<%= index %>"></span> (<%= book.reviews.count %>)
         </ul>
       </div>
     </div>
@@ -34,6 +33,14 @@
     <% end %>
   
     <% end %>
+    
+    <script>
+    <% @books.each_with_index do |book, index| %>
+      $('.star<%= index %>').raty({
+        score: <%= book.reviews.count == 0 ? 0 : book.reviews.average(:rating) %>
+      });
+    <% end %>
+    </script>
   <% else %>
     <div class="no-results">
       <h2>No books found for your search</h2>
