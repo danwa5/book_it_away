@@ -1,0 +1,53 @@
+<% provide(:title, "Search Results") %>
+<h1>Search Results</h1>
+
+<% @books = @results %>
+
+  <% if @books.any? %>
+    <% if @books.count > 0 %>
+      <div class="alert alert-success"><%= pluralize(@books.count, "book") %> found!</div>
+    <% end %>
+    
+    <% @books.each_with_index do |book, index| %>
+    
+    <% if index%4 == 0 %>
+      <div class="books-row">
+    <% end %>
+    
+    <div class="book-tile">
+      <div class="book-cover">
+        <%= link_to image_tag(book.image), author_book_path(book.author, book) %>
+      </div>
+  
+      <div class="book-tile-details">
+        <ul class="book-details">
+        <li><%= link_to book.title, author_book_path(book.author, book) %>
+        <li>by <%= link_to book.author.name, author_path(book.author) %>
+        <li>ISBN <%= book.isbn %>
+        <li><%= book.publisher %>
+        <li><span class="star<%= index %>"></span> (<%= book.reviews.count %>)
+        </ul>
+      </div>
+    </div>
+
+    <% if (index+1)%4 == 0 || (index+1) == @books.length %>
+      </div>
+    <% end %>
+  
+    <% end %>
+    
+    <script>
+    <% @books.each_with_index do |book, index| %>
+      $('.star<%= index %>').raty({
+        score: <%= book.reviews.count == 0 ? 0 : book.reviews.average(:rating) %>
+      });
+    <% end %>
+    </script>
+  <% else %>
+    <div class="no-results">
+      <h2>No books found for your search</h2>
+    </div>
+  <% end %>
+  
+
+

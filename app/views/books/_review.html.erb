@@ -2,8 +2,10 @@
 <%# @reviews.each do |review| %>
   Rating: <%= review.rating %><br/>
   Comments: <%= review.comments %><br/>
-  Likes: <%= link_to review.likes, author_book_review_like_path(@author, @book, review.id), method:"put", class:"btn btn-success btn-mini" %> /
-  Dislikes: <%= link_to review.dislikes, author_book_review_dislike_path(@author, @book, review.id), method:"put", class:"btn btn-danger btn-mini" %><br/>
+  <i class="icon-thumbs-up"></i>
+  <%= link_to review.likes, author_book_review_like_path(@author, @book, review.id), method:"put", class:"btn btn-success btn-mini" %> /
+  <i class="icon-thumbs-down"></i>
+  <%= link_to review.dislikes, author_book_review_dislike_path(@author, @book, review.id), method:"put", class:"btn btn-danger btn-mini" %><br/>
   Reviewed on <%= date_format(review.created_at) %> by <%= review.user.name %>
 
   <% if current_user == review.user %>

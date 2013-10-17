@@ -65,11 +65,19 @@ class Book < ActiveRecord::Base
   
   def self.author_search(query)
     if Rails.env.production?
-      find_by_sql ["select b.* from books b, authors a where a.id = b.author_id and a.first_name || ' ' || a.last_name ilike ? limit 6", "%#{query}%"]
+      joins(:author).where("first_name || ' ' || last_name ILIKE ?", "%#{query}%")
     else
-      find_by_sql ["select b.* from books b, authors a where a.id = b.author_id and a.first_name || ' ' || a.last_name like ? limit 6", "%#{query}%"]
+      joins(:author).where("first_name || ' ' || last_name LIKE ?", "%#{query}%")
     end
   end
+  
+  #def self.author_search(query)
+  #  if Rails.env.production?
+  #    find_by_sql ["select b.* from books b, authors a where a.id = b.author_id and a.first_name || ' ' || a.last_name ilike ? limit 6", "%#{query}%"]
+  #  else
+  #    find_by_sql ["select b.* from books b, authors a where a.id = b.author_id and a.first_name || ' ' || a.last_name like ? limit 6", "%#{query}%"]
+  #  end
+  #end
   
   def categorized_under?(subject)
     self.subjects.include?(subject)

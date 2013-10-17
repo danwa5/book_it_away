@@ -17,5 +17,25 @@ module ApplicationHelper
   def rating_format(rating)
     rating.nil? ? "n/a" : number_with_precision(rating, precision: 1)
   end
+  
+  def operator_html_options
+    oper = ['<','=','>']
+    str = String.new
+    oper.each do |x|
+      str = str + "<option>" + x + "</option>"
+    end
+    str = str.html_safe
+  end
+  
+  def subject_html_options
+    options = Subject.order("name ASC")
+    str = String.new
+    unless options.blank?
+      options.each do |x|
+        str = str + "<option>" + x.name + "</option>"
+      end
+    end
+    str = str.html_safe
+  end
 
 end

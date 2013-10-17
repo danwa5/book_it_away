@@ -22,6 +22,7 @@ BookApp::Application.routes.draw do
   match '/about', to: 'static_pages#about', via: 'get' #old => get "static_pages/about"
   match '/contact', to: 'static_pages#contact', via: 'get' #old => get "static_pages/contact"
   match '/books', to: 'static_pages#books', via: 'get'
+  match '/results', to: 'static_pages#results', via: 'get'
   match '/search', to: 'static_pages#search', via: 'get'
 
   #unless Rails.application.config.consider_all_requests_local

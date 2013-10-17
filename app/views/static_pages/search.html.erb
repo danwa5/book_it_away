@@ -1,51 +1,62 @@
-<% provide(:title, "Search Results: " + params[:query]) %>
-<h1>Search Results: "<%= params[:query] %>"</h1>
+<% provide(:title, 'Search') %>
+<h1>Search</h1>
 
-<% @books = @title_results %>
-
-  <% if @books.any? %>
-    <h2><%= pluralize(@books.count, "book") %> found</h2>
-    
-    <% @books.each_with_index do |book, index| %>
-    
-    <% if index%4 == 0 %>
-      <div class="books-row">
-    <% end %>
-    
-    <div class="book-tile">
-      <div class="book-cover">
-        <%= link_to image_tag(book.image), author_book_path(book.author, book) %>
+<div class="row">
+<%= form_tag(results_path, method: "get", class: "form-horizontal span5 offset2", id: "search-form") do %>
+  <div class="control-group">
+    <%= label_tag :author, nil, {class:"control-label"} %>
+    <div class="controls">
+      <%= text_field_tag :author, nil, {class:"input-block-level span4", maxlength:50} %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= label_tag :title, nil, {class:"control-label"} %>
+    <div class="controls">
+      <%= text_field_tag :title, nil, {class:"input-block-level span4", maxlength:100} %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= label_tag :isbn, "ISBN", {class:"control-label"} %>
+    <div class="controls">
+      <%= text_field_tag :isbn, nil, {class:"input-block-level span4", maxlength:10} %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= label_tag :pages, nil, {class:"control-label"} %>
+    <div class="controls">
+      <div class="row-fluid">
+        <div class="span3">
+          <%= select_tag :page_operator, operator_html_options, {class:"input-block-level"} %>
+        </div>
+        <div class="span8">
+          <%= text_field_tag :pages, nil, {class:"input-block-level", maxlength:5} %>
+        </div>
       </div>
-  
-      <div class="book-tile-details">
-        <ul class="book-details">
-        <li><%= link_to book.title, author_book_path(book.author, book) %>
-        <li>by <%= link_to book.author.name, author_path(book.author) %>
-        <li>ISBN <%= book.isbn %>
-        <li><%= book.publisher %>
-        <li><span class="star<%= index %>"></span> (<%= book.reviews.count %>)
+    </div>
+  </div>
+  <div class="control-group">
+    <%= label_tag :subjects, nil, {class:"control-label"} %>
+    <div class="controls">
+      
+      <% if not @subjects_all.nil? %>
+        <ul class="subjects span4">
+        <% for subject in @subjects_all do %>
+          <li><label class="checkbox">
+            <%= check_box_tag "subjects[]", subject.name %>
+            <span><%= subject.name.html_safe %></span>
+          </label></li>
+        <% end %>
         </ul>
-      </div>
-    </div>
+      <% else %>
+        <label class="checkbox"><b>No subjects found</b></label>
+      <% end %>
 
-    <% if (index+1)%4 == 0 || (index+1) == @books.length %>
-      </div>
-    <% end %>
-  
-    <% end %>
-    
-    <script>
-    <% @books.each_with_index do |book, index| %>
-      $('.star<%= index %>').raty({
-        score: <%= book.reviews.count == 0 ? 0 : book.reviews.average(:rating) %>
-      });
-    <% end %>
-    </script>
-  <% else %>
-    <div class="no-results">
-      <h2>No books found for your search</h2>
     </div>
-  <% end %>
-  
-
+  </div>
+  <div class="form-actions span4">
+    <%= submit_tag "Search", class: "btn btn-primary" %>
+    <%= button_tag "Reset", class: "btn" %>
+  </div>
+<% end %>
+</div>
 

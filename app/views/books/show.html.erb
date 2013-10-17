@@ -37,7 +37,7 @@
     <%= render partial: 'books/review', collection: @reviews %>
   <% end %>
 </div>
-
+						
 <script>
   $('.star').raty({
     score: <%= @book.reviews.count == 0 ? 0 : @book.reviews.average(:rating) %>
