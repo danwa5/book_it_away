@@ -3,21 +3,42 @@
 
 <div class="row">
   <div class="span6 offset3">
-    <%= form_for(@user) do |f| %>
-      <%= render 'shared/error_messages', object: f.object %>
+    <%= form_for(@user, html: {class:"form-horizontal"}) do |f| %>
 
-      <%= f.label :last_name %>
-      <%= f.text_field :last_name, :readonly => true %>
+      <div class="control-group">
+        <%= f.label :last_name, nil, class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :last_name, {disabled: true} %>
+        </div>
+      </div>
       
-      <%= f.label :first_name %>
-      <%= f.text_field :first_name, :readonly => true %>
+      <div class="control-group">
+        <%= f.label :first_name, nil, class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :first_name, {disabled: true} %>
+        </div>
+      </div>
+      
+      <div class="control-group">
+        <%= f.label :email, nil, class: "control-label" %>
+        <div class="controls">
+          <div class="input-prepend">
+            <span class="add-on"><i class="icon-envelope"></i></span>
+            <%= f.text_field :email, {disabled: true} %>
+          </div>
+        </div>
+      </div>
 
-      <%= f.label :email %>
-      <%= f.text_field :email, :readonly => true %>
-      
-      <%= label_tag :admin %>
-      <%= text_field_tag "admin", @user.admin, :readonly => true %>
+      <div class="control-group">
+        <%= f.label :admin, nil, class: "control-label" %>
+        <div class="controls">
+          <div class="input-prepend">
+            <span class="add-on"><i class="icon-wrench"></i></span>
+            <%= text_field_tag "admin", @user.admin, {disabled: true} %>
+          </div>
+        </div>
+      </div>
+
     <% end %>
   </div>
 </div>
-

@@ -1,0 +1,80 @@
+<div class="row">
+  <div class="span7 offset2">
+    <%= form_for([@author, @book], html: {class:"form-horizontal"}) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+
+      <div class="control-group">
+        <%= label_tag :author, nil, class: "control-label" %>
+        <div class="controls">
+          <%= text_field_tag :author, @author.name, disabled: true %>
+        </div>
+      </div>
+      
+      <div class="control-group">
+        <%= f.label :isbn, "ISBN", class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :isbn, maxlength:10 %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :title, nil, class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :title, maxlength:100 %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :publisher, nil, class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :publisher, maxlength:50 %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :pages, nil, class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :pages, maxlength:5 %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :subjects, nil, class: "control-label" %>
+        <div class="controls">
+          
+        <% if not @subjects_all.nil? %>
+          <ul class="subjects span4">
+          <% for subject in @subjects_all do %>
+            <li>
+              <label class="checkbox">
+
+              <% if new_form == true %>
+                <%= check_box_tag "subjects[]", subject.id %>
+              <% else %>
+                <% if @subjects.include?(subject) %>
+                  <%= check_box_tag "subjects[]", subject.id, :checked => true %>
+                <% else %>
+                  <%= check_box_tag "subjects[]", subject.id %>
+                <% end %>
+              <% end %>
+
+              <span><%= subject.name.html_safe %></span></label>
+            </li>
+          <% end %>
+          </ul>
+        <% else %>
+          <label class="checkbox"><strong>No subjects found</strong></label>
+        <% end %>
+
+        </div>
+      </div>
+      
+      <div class="control-group">
+        <div class="controls">
+          <%= f.submit button_label, class: "btn btn-primary" %>
+          <%= link_to "Cancel", cancel_path, class: "btn btn-primary" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

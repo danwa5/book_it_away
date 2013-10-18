@@ -8,6 +8,17 @@
   background-image: asset-data-url("book-bkg-orange-filter.jpg");
 }
 
+.form-horizontal .field_with_errors {
+  @extend .control-group;
+  @extend .error;
+  margin: 0;
+}
+
+.form-horizontal .field_with_errors:before, .form-horizontal .field_with_errors:after {
+  display: block;
+  clear: none;
+}
+
 [class^="icon-"],
 [class*=" icon-"] {
   background-image: asset-data-url("glyphicons-halflings.png");
@@ -19,12 +30,12 @@
 }
 
 /* book subjects checkbox group */
-#subjects {
+/* #subjects {
   position: relative;
   margin: 5px 0 15px 0;
   padding: 10px;
   border: 1px dotted #666;
-}
+} */
 
 /* search no results */
 .no-results {
@@ -108,6 +119,11 @@ ul.subjects {
   width: 100%;
   float: left;
   margin-top: 20px;
+
+  p {
+    color: #444;
+    line-height: 20px;
+  }
 }
 
 #book-timestamps {

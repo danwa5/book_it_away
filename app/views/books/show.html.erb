@@ -6,25 +6,31 @@
   </div>
   <div id="book-main-details">
     <h3><%= @book.title %></h3>
-    by <%= link_to @author.name, author_path(@author) %><br/>
-    ISBN: <%= @book.isbn %><br/>
-    Publisher: <%= @book.publisher %><br/>
-    Pages: <%= @book.pages %><br/>
-    Book-It-Away Average Rating: <span class="star"></span> (<%= @book.reviews.count %>)<br/>
-    Google Books Average Rating: <span class="g-star"></span> (<%= @book.ratings_count %>)<br/>
-    <%#= @book.get_subjects %>
+    <ul class="book-details">
+      <li>by <%= link_to @author.name, author_path(@author) %>
+      <li>ISBN: <%= @book.isbn %>
+      <li>Publisher: <%= @book.publisher %>
+      <li>Pages: <%= @book.pages %>
+      <li>Book-It-Away Average Rating: <span class="star"></span> (<%= @book.reviews.count %>)
+      <li>Google Books Average Rating: <span class="g-star"></span> (<%= @book.ratings_count.nil? ? "-" : @book.ratings_count %>)
+      <li><%#= @book.get_subjects %>
+    </ul>
   </div>
 
   <div id="book-description"><%= @book.description %></div>
+</div>
 
-  <div id="book-timestamps">
-    Created: <%= @book.created_at %><br/>
-    Last updated: <%= @book.updated_at %><br/>
-
-    <%= link_to "Edit Book", edit_author_book_path(@author, @book), class:"btn btn-primary" %>
-    <% if current_user.admin? %>
-      <%= link_to "Delete Book", ([@author, @book]), method: :delete, data: { confirm: "Are you sure?" }, class:"btn btn-primary" %>
-    <% end %>
+<div id="book-timestamps">
+  <div class="row-fluid">
+    <div style="float:left; width:110px; vertical-align:middle;">
+      <%= link_to "Edit Book", edit_author_book_path(@author, @book), class:"btn btn-primary" %>
+    </div>
+    <div style="float:left; width:400px;">
+      <small><ul class="book-details">
+        <li>Created: <%= @book.created_at %>
+        <li>Last updated: <%= @book.updated_at %>
+      </ul></small>
+    </div>
   </div>
 </div>
 
@@ -44,6 +50,6 @@
   });
   
   $('.g-star').raty({
-    score: <%= @book.average_rating %>
+    score: <%= @book.ratings_count == 0 || @book.ratings_count.nil? ? 0 : @book.average_rating %>
   });
 </script>

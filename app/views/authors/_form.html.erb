@@ -1,21 +1,42 @@
 <div class="row">
-  <div class="span6 offset3">
-    <%= form_for(@author) do |f| %>
+  <div class="span7 offset2">
+    <%= form_for(@author, html: {class:"form-horizontal"}) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
 
-      <%= f.label :last_name %>
-      <%= f.text_field :last_name %>
+      <div class="control-group">
+        <%= f.label :last_name, nil, class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :last_name %>
+        </div>
+      </div>
       
-      <%= f.label :first_name %>
-      <%= f.text_field :first_name %>
+      <div class="control-group">
+        <%= f.label :first_name, nil, class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :first_name %>
+        </div>
+      </div>
 
-      <%= f.label :dob, "Date of Birth" %>
-      <%= f.date_select :dob, {order: [:month, :day, :year], :prompt => true, use_short_month: true, start_year: 1800, end_year: DateTime.now.year, default: Time.now, date_separator: " / "}, {style: "width: 90px;"} %>
+      <div class="control-group">
+        <%= f.label :dob, "Date of Birth", class: "control-label" %>
+        <div class="controls">
+          <%= f.date_select :dob, {order: [:month, :day, :year], :prompt => true, use_short_month: true, start_year: 1800, end_year: DateTime.now.year, default: Time.now, date_separator: " / "}, {style: "width: 90px;"} %>
+        </div>
+      </div>
 
-      <%= f.label :nationality %>
-      <%= f.select :nationality, author_nationalities, :prompt => 'Please Select' %>
+      <div class="control-group">
+        <%= f.label :nationality, nil, class: "control-label" %>
+        <div class="controls">
+          <%= f.select :nationality, author_nationalities %>
+        </div>
+      </div>
       
-      <%= f.submit button_label, class: "btn btn-primary" %>
+      <div class="control-group">
+        <div class="controls">
+          <%= f.submit button_label, class: "btn btn-primary" %>
+          <%= link_to "Cancel", cancel_path, class: "btn btn-primary" %>
+        </div>
+      </div>
     <% end %>
   </div>
 </div>

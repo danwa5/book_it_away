@@ -2,7 +2,7 @@ class Book < ActiveRecord::Base
   belongs_to :author
   has_many :reviews
   has_and_belongs_to_many :subjects
-  
+
   attr_accessor :gbook
   
   before_save { 
@@ -84,15 +84,24 @@ class Book < ActiveRecord::Base
   end
   
   def non_categorized_subjects
-    Subjects.find(:all) - self.subjects
+    Subject.find(:all) - self.subjects
   end
   
   def get_subjects
     str = String.new
-    unless self.subjects.blank?
-      #self.subjects.each do |s|
-      #  str << "b"
+    if not self.subjects.blank?
+      #self.subjects.each do |sub|
+      #  str << sub.name
       #end
+
+      #subjects_all = Subject.all.order("name ASC")
+      #subjects_all.each do |s|
+      #  if self.subjects.include?(s)
+      #    str << s.to_s
+      #  end
+      #end
+
+      str << self.subjects.first.name
     end
   end
 
