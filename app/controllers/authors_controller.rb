@@ -4,6 +4,7 @@ class AuthorsController < ApplicationController
   def index
     #@authors = Author.paginate(page: params[:page])
     @authors = Author.all.order('last_name ASC')
+    @visits = $redis.incr("visits:authorsIndex:totals")
   end
   
   def show

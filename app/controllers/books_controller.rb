@@ -7,6 +7,7 @@ class BooksController < ApplicationController
     @book = @author.books.find(params[:id])
     @book.get_google_book_info(request.remote_ip)
     @reviews = @book.reviews.where(book_id: @book.id)
+    @visits = $redis.incr("visits:author:#{@author.id}:book:#{@book.id}:totals")
   end
 
   def new
