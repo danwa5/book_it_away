@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20131011043514) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "authors", force: true do |t|
     t.string   "last_name"
     t.string   "first_name"
@@ -22,7 +25,7 @@ ActiveRecord::Schema.define(version: 20131011043514) do
     t.datetime "updated_at"
   end
 
-  add_index "authors", ["last_name", "first_name"], name: "index_authors_on_last_name_and_first_name", unique: true
+  add_index "authors", ["last_name", "first_name"], name: "index_authors_on_last_name_and_first_name", unique: true, using: :btree
 
   create_table "books", force: true do |t|
     t.string   "isbn"
@@ -34,14 +37,14 @@ ActiveRecord::Schema.define(version: 20131011043514) do
     t.datetime "updated_at"
   end
 
-  add_index "books", ["isbn"], name: "index_books_on_isbn", unique: true
+  add_index "books", ["isbn"], name: "index_books_on_isbn", unique: true, using: :btree
 
   create_table "books_subjects", id: false, force: true do |t|
     t.integer "book_id",    null: false
     t.integer "subject_id", null: false
   end
 
-  add_index "books_subjects", ["book_id", "subject_id"], name: "index_books_subjects_on_book_id_and_subject_id", unique: true
+  add_index "books_subjects", ["book_id", "subject_id"], name: "index_books_subjects_on_book_id_and_subject_id", unique: true, using: :btree
 
   create_table "reviews", force: true do |t|
     t.decimal  "rating"
@@ -54,8 +57,8 @@ ActiveRecord::Schema.define(version: 20131011043514) do
     t.datetime "updated_at"
   end
 
-  add_index "reviews", ["book_id", "created_at"], name: "index_reviews_on_book_id_and_created_at"
-  add_index "reviews", ["user_id", "created_at"], name: "index_reviews_on_user_id_and_created_at"
+  add_index "reviews", ["book_id", "created_at"], name: "index_reviews_on_book_id_and_created_at", using: :btree
+  add_index "reviews", ["user_id", "created_at"], name: "index_reviews_on_user_id_and_created_at", using: :btree
 
   create_table "subjects", force: true do |t|
     t.string   "name"
@@ -74,7 +77,7 @@ ActiveRecord::Schema.define(version: 20131011043514) do
     t.boolean  "admin",           default: false
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["remember_token"], name: "index_users_on_remember_token"
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
 
 end
