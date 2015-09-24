@@ -1,57 +1,71 @@
 require 'spec_helper'
 
 describe Author do
+  let(:author) { create(:author) }
+  let(:countries) { %w[Australia Brazil Canada Germany France Spain Sweden UK USA] }
+  subject { author }
+  
+  describe 'associations' do
+    it { is_expected.to have_many :books }
+  end
 
-  #let(:author) { FactoryGirl.create(:author) }
-  
-  before do
-    @author = Author.new(last_name: "Krakauer", first_name: "Jon", 
-                       dob: "1954-04-12", nationality: "USA")
+  describe 'before_save' do
+    it 'titleizes the author\'s first and last name' do
+      subject.first_name = 'larry'
+      subject.last_name = 'robinson'
+      subject.save
+      expect(subject.first_name).to eq('Larry')
+      expect(subject.last_name).to eq('Robinson')
+    end
   end
-  
-  subject { @author }
-  
-  it { should respond_to(:last_name) }
-  it { should respond_to(:first_name) }
-  it { should respond_to(:dob) }
-  it { should respond_to(:nationality) }
-  it { should respond_to(:books) }
-  it { should be_valid }
-  
-  describe "when last name is not present" do
-    before { @author.last_name = " " }
-    it { should_not be_valid }
-  end
-  
-  describe "when first name is not present" do
-    before { @author.first_name = " " }
-    it { should_not be_valid }
-  end
-  
-  #describe "when last name/first name is already taken" do
-  #  before do
-  #    duplicate_author = @author.dup
-  #    duplicate_author.last_name = @author.last_name.downcase
-  #    duplicate_author.first_name = @author.first_name.downcase
-  #    duplicate_author.save
-  #  end
 
-  #  it { should_not be_valid }
-  #end
-  
-  describe "when dob is today" do
-    before { @author.dob = Date.today }
-    it { should_not be_valid }
+  describe 'validations' do
+    describe '#last_name' do
+      it { is_expected.to validate_presence_of(:last_name) }
+      it { is_expected.to ensure_length_of(:last_name).is_at_most(50) }
+    end
+    describe '#first_name' do
+      it { is_expected.to validate_presence_of(:first_name) }
+      it { is_expected.to ensure_length_of(:first_name).is_at_most(50) }
+    end
+    describe '#nationality' do
+      it { is_expected.to validate_presence_of(:nationality) }
+      it { is_expected.to validate_inclusion_of(:nationality).in_array(countries) }
+    end
   end
-  
-  describe "when dob is after today's date" do
-    before { @author.dob = Date.tomorrow }
-    it { should_not be_valid }
+
+  describe '#valid_author_dob' do
+    context 'dob is in the future' do
+      before { subject.dob = DateTime.now.tomorrow.to_date }
+      it { should_not be_valid }
+    end
+    context 'dob is today' do
+      before { subject.dob = Date.today }
+      it { should_not be_valid }
+    end
+    context 'dob is in the past' do
+      before { subject.dob = Date.today.prev_day }
+      it { should be_valid }
+    end
   end
-  
-  describe "when nationality is not in permitted list" do
-    before { @author.nationality = 'Antarctica' }
-    it { should_not be_valid }
+
+  describe '#name' do
+    it 'returns the author\'s first and last names' do
+      expect(subject.name).to eq(subject.first_name + ' ' + subject.last_name)
+    end
   end
-  
+
+  describe '#formatted_dob' do
+    context 'dob is present' do
+      it 'returns a formatted date' do
+        expect(subject.formatted_dob).to eq(subject.dob.to_formatted_s(:long))
+      end
+    end
+    context 'dob is nil' do
+      it 'returns an empty string' do
+        subject.dob = nil
+        expect(subject.formatted_dob).to eq('')
+      end
+    end
+  end
 end

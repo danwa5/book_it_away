@@ -12,8 +12,8 @@ FactoryGirl.define do
   end
   
   factory :author do
-    last_name "Block"
-    first_name "Writer"
+    last_name { Faker::Name.first_name }
+    first_name { Faker::Name.last_name }
     dob "1950-01-01"
     nationality "USA"
   end
