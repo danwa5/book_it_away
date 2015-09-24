@@ -1,0 +1,25 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  database: book_dev
+  username: book_user
+  password: bookitaway
+  pool: 5
+  reconnect: true
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  database: book_test
+  username: book_user
+  password: bookitaway
+  pool: 5
+  reconnect: true
+
+# production:
+#   adapter: sqlite3
+#   database: db/production.sqlite3
+#   pool: 5
+#   timeout: 5000
