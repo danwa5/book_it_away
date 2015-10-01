@@ -24,4 +24,5 @@ doc/
 .idea
 .secret
 bundler_stubs/
+coverage/
 
