@@ -14,26 +14,48 @@ FactoryGirl.define do
   factory :author do
     last_name { Faker::Name.first_name }
     first_name { Faker::Name.last_name }
-    dob "1950-01-01"
+    dob { Faker::Date.between(50.years.ago, 20.years.ago) }
     nationality "USA"
   end
   
   factory :book do
-    isbn "0123456789"
-    title "How to Rule the World"
-    publisher "Anchorsteam"
-    pages 500
-    author
+    association :author
+    isbn { Faker::Number.number(10) }
+    title { Faker::Book.title }
+    publisher { Faker::Book.publisher }
+    pages { Faker::Number.number(3) }
+
+    factory :travel_book do
+      after(:create) do |book, _|
+        subject = Subject.find_or_create_by(name: 'Travel')
+        book.subjects << subject
+      end
+    end
+
+    factory :fiction_book do
+      after(:create) do |book, _|
+        subject = Subject.find_or_create_by(name: 'Fiction')
+        book.subjects << subject
+      end
+    end
+
+    factory :history_fiction_book do
+      after(:create) do |book, _|
+        %w(History Fiction).each do |s|
+          subject = Subject.find_or_create_by(name: s)
+          book.subjects << subject
+        end
+      end
+    end
   end
 
-end
+  factory :subject do
+    name 'Travel'
+  end
 
-#FactoryGirl.define do
-#  factory :user do
-#    last_name "Jones"
-#    first_name "Coconut"
-#    email "coconut@jones.com"
-#    password "111111"
-#    password_confirmation "111111"
-#  end
-#end
+  # factory :book_subject do
+  #   association :book
+  #   association :subject
+  # end
+
+end

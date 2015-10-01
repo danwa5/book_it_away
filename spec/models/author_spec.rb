@@ -4,6 +4,10 @@ describe Author do
   let(:author) { create(:author) }
   let(:countries) { %w[Australia Brazil Canada Germany France Spain Sweden UK USA] }
   subject { author }
+
+  it 'has a valid factory' do
+    expect(FactoryGirl.build(:book)).to be_valid
+  end
   
   describe 'associations' do
     it { is_expected.to have_many :books }

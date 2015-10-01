@@ -13,7 +13,7 @@
       <li>Pages: <%= @book.pages %>
       <li>Book-It-Away Average Rating: <span class="star"></span> (<%= @book.reviews.count %>)
       <li>Google Books Average Rating: <span class="g-star"></span> (<%= @book.ratings_count.nil? ? "-" : @book.ratings_count %>)
-      <li><%#= @book.get_subjects %>
+      <li><%= @book.subject_string %>
     </ul>
   </div>
 
