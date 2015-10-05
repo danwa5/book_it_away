@@ -31,6 +31,7 @@ describe Author do
     describe '#first_name' do
       it { is_expected.to validate_presence_of(:first_name) }
       it { is_expected.to ensure_length_of(:first_name).is_at_most(50) }
+      it { is_expected.to validate_uniqueness_of(:first_name).scoped_to(:last_name) }
     end
     describe '#nationality' do
       it { is_expected.to validate_presence_of(:nationality) }

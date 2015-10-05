@@ -3,7 +3,9 @@ BookApp::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :subjects, except: [:show, :destroy]
   
-  resources :authors do
+  resources :authors, only: [:index, :new, :create]
+
+  resources :authors, only: [:show, :edit, :update, :destroy], path: '' do
     resources :books do
       resources :reviews do
         put :like

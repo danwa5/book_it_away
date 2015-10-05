@@ -1,4 +1,7 @@
 class Author < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :slug_candidates, use: :slugged
+
   has_many :books
   
   before_save { 
@@ -9,6 +12,7 @@ class Author < ActiveRecord::Base
   validates :last_name, presence: true, length: { maximum: 50 }
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :nationality, presence: true
+  validates_uniqueness_of :first_name, scope: :last_name
   validate :valid_author_nationalities, :valid_author_dob
   
   def valid_author_dob
@@ -28,5 +32,11 @@ class Author < ActiveRecord::Base
   
   def formatted_dob
     dob.present? ? dob.to_formatted_s(:long) : ''
+  end
+
+  def slug_candidates
+    [
+      [:first_name, :last_name]
+    ]
   end
 end

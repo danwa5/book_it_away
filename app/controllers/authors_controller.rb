@@ -1,5 +1,6 @@
 class AuthorsController < ApplicationController
   before_action :signed_in_user
+  before_action :find_author, only: [:show, :edit, :update, :destroy]
   
   def index
     #@authors = Author.paginate(page: params[:page])
@@ -8,7 +9,6 @@ class AuthorsController < ApplicationController
   end
   
   def show
-    @author = Author.find(params[:id])
     @books = @author.books.where(author_id: @author.id)
     
     @books.each do |b|
@@ -31,11 +31,9 @@ class AuthorsController < ApplicationController
   end
   
   def edit
-    @author = Author.find(params[:id])
   end
   
   def update
-    @author = Author.find(params[:id])
     if @author.update_attributes(user_params)
       flash[:success] = "Author updated!"
       redirect_to @author
@@ -45,15 +43,18 @@ class AuthorsController < ApplicationController
   end
   
   def destroy
-    Author.find(params[:id]).destroy
+    @author.destroy
     flash[:success] = "Author deleted."
     redirect_to authors_url
   end
   
   private
 
-    def user_params
-      params.require(:author).permit(:last_name, :first_name, :dob, :nationality)
-    end 
-  
+  def find_author
+    @author = Author.friendly.find(params[:id])
+  end
+
+  def user_params
+    params.require(:author).permit(:last_name, :first_name, :dob, :nationality)
+  end
 end
