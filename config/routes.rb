@@ -3,19 +3,6 @@ BookApp::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :subjects, except: [:show, :destroy]
   
-  resources :authors, only: [:index, :new, :create]
-
-  resources :authors, only: [:show, :edit, :update, :destroy], path: '' do
-    resources :books do
-      resources :reviews do
-        put :like
-        put :dislike
-      end
-    end
-  end
-  
-  root 'static_pages#home'
-
   match '/signup', to: 'users#new', via: 'get'
   match '/signin', to: 'sessions#new', via: 'get'
   match '/signout', to: 'sessions#destroy', via: 'delete'
@@ -26,6 +13,20 @@ BookApp::Application.routes.draw do
   match '/books', to: 'static_pages#books', via: 'get'
   match '/results', to: 'static_pages#results', via: 'get'
   match '/search', to: 'static_pages#search', via: 'get'
+
+  resources :authors, only: [:index, :new, :create]
+
+  resources :authors, only: [:show, :edit, :update, :destroy], path: '' do
+    resources :books, only: [:new, :create]
+    resources :books, only: [:show, :edit, :update, :destroy], path: '' do
+      resources :reviews do
+        put :like
+        put :dislike
+      end
+    end
+  end
+  
+  root 'static_pages#home'
 
   #unless Rails.application.config.consider_all_requests_local
   #  match '*not_found', to: 'errors#error_404'

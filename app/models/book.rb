@@ -1,4 +1,7 @@
 class Book < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :title, use: :scoped, scope: :author
+
   belongs_to :author
   has_many :reviews
   has_and_belongs_to_many :subjects
@@ -48,11 +51,8 @@ class Book < ActiveRecord::Base
   end
   
   def book_title_case(title)
-    cap_exceptions = [ 
-      'of','a','the','and','an','or','nor','but','if','then','else','when',
-      'up','at','from','by','on', 'off','for','in','out','over','to'
-    ]
-    title = title.downcase.split.map {|w| cap_exceptions.include?(w) ? w : w.capitalize}.join(" ")
+    cap_exceptions = %w(of a the and an or nor but if then else when up at from by on off for in out over to)
+    title = title.downcase.split.map {|w| cap_exceptions.include?(w) ? w : w.capitalize}.join(' ')
     title = title[0,1].capitalize + title[1, title.length-1]
   end
   
@@ -74,5 +74,4 @@ class Book < ActiveRecord::Base
   def subject_string
     self.subjects.map(&:name).sort.join(', ')
   end
-
 end
