@@ -14,6 +14,8 @@ class Author < ActiveRecord::Base
   validates :nationality, presence: true
   validates_uniqueness_of :first_name, scope: :last_name
   validate :valid_author_nationalities, :valid_author_dob
+
+  default_scope { order('last_name asc') }
   
   def valid_author_dob
     if dob.present? && dob >= Date.today

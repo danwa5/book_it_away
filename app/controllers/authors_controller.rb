@@ -4,14 +4,12 @@ class AuthorsController < ApplicationController
   
   def index
     #@authors = Author.paginate(page: params[:page])
-    @authors = Author.all.order('last_name ASC')
+    @authors = Author.all
     @visits = $redis.incr("visits:authorsIndex:totals")
   end
   
   def show
-    @books = @author.books.where(author_id: @author.id)
-    
-    @books.each do |b|
+    @books = @author.books.each do |b|
       b.get_google_book_info(request.remote_ip)
     end
   end
@@ -23,7 +21,7 @@ class AuthorsController < ApplicationController
   def create
     @author = Author.new(user_params)
     if @author.save
-      flash[:success] = "Author successfully added!"
+      flash[:success] = 'Author successfully added!'
       redirect_to @author
     else
       render 'new'
@@ -35,7 +33,7 @@ class AuthorsController < ApplicationController
   
   def update
     if @author.update_attributes(user_params)
-      flash[:success] = "Author updated!"
+      flash[:success] = 'Author updated!'
       redirect_to @author
     else
       render 'edit'
@@ -44,7 +42,7 @@ class AuthorsController < ApplicationController
   
   def destroy
     @author.destroy
-    flash[:success] = "Author deleted."
+    flash[:success] = 'Author deleted.'
     redirect_to authors_url
   end
   
