@@ -28,8 +28,8 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
-    awesome_print (1.2.0)
-    bcrypt-ruby (3.0.1)
+    awesome_print (1.6.1)
+    bcrypt-ruby (3.1.2)
     bootstrap-sass (2.3.2.0)
       sass (~> 3.2)
     bootstrap-will_paginate (0.0.9)
@@ -186,7 +186,7 @@ PLATFORMS
 
 DEPENDENCIES
   awesome_print
-  bcrypt-ruby (= 3.0.1)
+  bcrypt-ruby (= 3.1.2)
   bootstrap-sass (= 2.3.2.0)
   bootstrap-will_paginate (= 0.0.9)
   byebug
@@ -214,3 +214,6 @@ DEPENDENCIES
   turbolinks (= 1.1.1)
   uglifier (= 2.1.1)
   will_paginate (= 3.0.4)
+
+BUNDLED WITH
+   1.10.6
