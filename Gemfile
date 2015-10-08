@@ -4,7 +4,7 @@ ruby '2.2.3'
 
 gem 'rails', '~> 4.1.8'
 gem 'pg', '0.15.1'
-gem 'redis', '~> 3.0.6'
+gem 'redis', '~> 3.2.1'
 gem 'bootstrap-sass', '2.3.2.0'
 gem 'bcrypt-ruby', '3.1.2'
 

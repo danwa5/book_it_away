@@ -5,7 +5,7 @@ class AuthorsController < ApplicationController
   def index
     #@authors = Author.paginate(page: params[:page])
     @authors = Author.all
-    @visits = $redis.incr("visits:authorsIndex:totals")
+    @visits = REDIS.incr("visits:authorsIndex:totals")
   end
   
   def show
