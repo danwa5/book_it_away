@@ -3,20 +3,21 @@ BookApp::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :subjects, except: [:show, :destroy]
   
-  match '/signup', to: 'users#new', via: 'get'
-  match '/signin', to: 'sessions#new', via: 'get'
-  match '/signout', to: 'sessions#destroy', via: 'delete'
-  match '/home', to: 'static_pages#home', via: 'get' # old => get "static_pages/home"
-  match '/help', to: 'static_pages#help', via: 'get' # old => get "static_pages/help"
-  match '/about', to: 'static_pages#about', via: 'get' #old => get "static_pages/about"
-  match '/contact', to: 'static_pages#contact', via: 'get' #old => get "static_pages/contact"
-  match '/books', to: 'static_pages#books', via: 'get'
-  match '/results', to: 'static_pages#results', via: 'get'
-  match '/search', to: 'static_pages#search', via: 'get'
-
+  get '/signup',     to: 'users#new'
+  get '/signin',     to: 'sessions#new'
+  get '/home',       to: 'static_pages#home'
+  get '/help',       to: 'static_pages#help'
+  get '/about',      to: 'static_pages#about'
+  get '/contact',    to: 'static_pages#contact'
+  get '/books',      to: 'static_pages#books'
+  get '/results',    to: 'static_pages#results'
+  get '/search',     to: 'static_pages#search'
+  delete '/signout', to: 'sessions#destroy'
+  
   resources :authors, only: [:index, :new, :create]
+  resources :authors, only: [:show, :edit, :update, :destroy], path: ''
 
-  resources :authors, only: [:show, :edit, :update, :destroy], path: '' do
+  resources :authors, only: [], path: '' do
     resources :books, only: [:new, :create]
     resources :books, only: [:show, :edit, :update, :destroy], path: '' do
       resources :reviews do
@@ -25,7 +26,7 @@ BookApp::Application.routes.draw do
       end
     end
   end
-  
+
   root 'static_pages#home'
 
   #unless Rails.application.config.consider_all_requests_local

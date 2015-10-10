@@ -23,7 +23,7 @@ gem 'friendly_id', '~> 5.1.0'
 group :development, :test do
   gem 'rspec-rails', '~> 3.1.0'
   gem 'rspec-its', '~> 1.0.1'
-  gem 'shoulda-matchers', '~> 2.7.0'
+  gem 'shoulda-matchers'
   gem 'factory_girl_rails', '~> 4.5.0'
   gem 'faker', '~> 1.5.0'
   # The following optional lines are part of the advanced setup.
@@ -35,7 +35,7 @@ end
 
 group :test do
   gem 'selenium-webdriver', '2.0.0'
-  gem 'capybara', '~> 2.4.4'
+  gem 'capybara'
   gem 'simplecov', require: false
   # gem 'cucumber-rails', '1.3.0', :require => false
   gem 'database_cleaner', '~> 1.3.0'

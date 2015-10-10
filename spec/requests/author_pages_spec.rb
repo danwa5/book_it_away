@@ -1,159 +1,162 @@
 require 'spec_helper'
 
-describe "AuthorPages" do
- 
+describe 'AuthorPages' do
+  let!(:user) { create(:user) }
+  let!(:admin_user) { create(:admin_user) }
+  let!(:author) { create(:author) }
+
+  before { sign_in user }
+
   subject { page }
   
-  describe "index" do
-    let(:author) { FactoryGirl.create(:author) }
-    before do
-      visit authors_path
-    end
+  describe 'index page' do
+    before { visit authors_path }
     
-    it { should have_title('All Authors') }
-    it { should have_content('All Authors') }
+    it { is_expected.to have_title('All Authors') }
+    it { is_expected.to have_text('All Authors') }
     
-    it "should list each author" do
+    it 'should list each author' do
       Author.all.each do |author|
-        expect(page).to have_selector('li', text: author.first_name + " " + author.last_name)
+        expect(page).to have_selector('li', text: author.first_name + ' ' + author.last_name)
       end
     end
     
-    describe "'add new author' link" do
-      it { should_not have_link('Add new author') }
-      
-      describe "only visible to an admin user" do
-        let(:admin) { FactoryGirl.create(:admin) }
-        before do
-          sign_in admin
-          visit authors_path
-        end
-
-        it { should have_link('Add new author', href: new_author_path) }
+    context 'when a non-admin user is signed in' do
+      it { is_expected.not_to have_link('Add new author', href: new_author_path) }
+    end
+    context 'when an admin user is signed in' do
+      before do
+        sign_in admin_user
+        visit authors_path
       end
+      it { is_expected.to have_link('Add new author', href: new_author_path) }
     end
   end
   
-  describe "author page" do
-    let(:author) { FactoryGirl.create(:author) }
+  describe 'show page' do
     before { visit author_path(author) }
 
-    it { should have_content(author.last_name) }
-    it { should have_content(author.first_name) }
-    it { should have_title(author.first_name + " " + author.last_name) }
+    it { is_expected.to have_content(author.last_name) }
+    it { is_expected.to have_content(author.first_name) }
+    it { is_expected.to have_title(author.first_name + ' ' + author.last_name) }
     
-    describe "links" do
-      it { should_not have_link('Add Book') }
-      it { should_not have_link('Edit Author') }
-      it { should_not have_link('Delete Author') }
+    context 'when a non-admin user is signed in' do
+      it { is_expected.to have_link('Add Book') }
+      it { is_expected.not_to have_link('Edit Author') }
+      it { is_expected.not_to have_link('Delete Author') }
       
-      describe "visible to non-admin users" do
-        let(:user) { FactoryGirl.create(:user) }
-        before do
-          sign_in user
-          visit author_path(author)
-        end
-        it { should have_link('Add Book') }
-        it { should have_link('Edit Author') }
-        it { should_not have_link('Delete Author') }
+      context 'when the author has a book entry' do
+        let!(:book) { create(:book, author: author) }
+        before { visit author_path(author) }
+        it { is_expected.to have_link('Edit', href: edit_author_book_path(author, book)) }
       end
-      
-      describe "visible to non-admin users" do
-        let(:admin) { FactoryGirl.create(:admin) }
-        before do
-          sign_in admin
-          visit author_path(author)
-        end
-        it { should have_link('Add Book') }
-        it { should have_link('Edit Author') }
-        it { should have_link('Delete Author') }
+    end
+    context 'when an admin user is signed in' do
+      before do
+        sign_in admin_user
+        visit author_path(author)
+      end
+      it { is_expected.to have_link('Add Book') }
+      it { is_expected.to have_link('Edit Author') }
+      it { is_expected.to have_link('Delete Author') }
+
+      context 'when the author has a book entry' do
+        let!(:book) { create(:book, author: author) }
+        before { visit author_path(author) }
+        it { is_expected.to have_link('Edit', href: edit_author_book_path(author, book)) }
       end
     end
   end
   
-  describe "edit author" do
-    let(:user) { FactoryGirl.create(:user) }
-    let(:author) { FactoryGirl.create(:author) }
-    before do
-      sign_in user
-      visit edit_author_path(author)
+  describe 'edit page' do
+    context 'when a non-admin user is signed in' do
+      it 'should get redirected to author show page' do
+        visit edit_author_path(author)
+        expect(current_path).to eq(author_path(author))
+      end
     end
-
-    describe "page" do
-      it { should have_content("Update Author") }
-      it { should have_title("Edit author") }
-    end
-    
-    describe "with invalid information" do
-      let(:new_last_name)  { "" }
-      let(:new_first_name)  { "" }
+    context 'when an admin user is signed in' do
       before do
-        fill_in "Last name",        with: new_last_name
-        fill_in "First name",       with: new_first_name
-        click_button "Save changes"
+        sign_in admin_user
+        visit edit_author_path(author)
       end
 
-      it { should have_content('error') }
-    end
-    
-    describe "with valid information" do
-      let(:new_last_name)  { "Block" }
-      let(:new_first_name)  { "Writer" }
-      #let(:new_dob)  { "1950-01-01" }
-      let(:new_nationality)  { "Canada" }
-      before do
-        fill_in "Last name",        with: new_last_name
-        fill_in "First name",       with: new_first_name
-        #select new_dob, from: "Date of Birth"
-        select new_nationality, from: "Nationality"
-        click_button "Save changes"
-      end
+      it { is_expected.to have_content('Update Author') }
+      it { is_expected.to have_title('Edit author') }
+      
+      context 'with invalid information' do
+        before do
+          fill_in 'Last name', with: ''
+          fill_in 'First name', with: ''
+          click_button 'Save Changes'
+        end
 
-      it { should have_title(new_first_name + " " + new_last_name) }
-      it { should have_selector('div.alert.alert-success') }
-      specify { expect(author.reload.last_name).to  eq new_last_name }
-      specify { expect(author.reload.first_name).to  eq new_first_name }
+        it 'should get redirected back to edit page with error message' do
+          is_expected.to have_content('The form contains 2 errors.')
+        end
+      end
+      context 'with valid information' do
+        let(:new_last_name)  { Faker::Name.last_name }
+        let(:new_first_name)  { Faker::Name.first_name }
+        let(:new_nationality)  { 'Canada' }
+        before do
+          fill_in 'Last name', with: new_last_name
+          fill_in 'First name', with: new_first_name
+          select new_nationality, from: 'Nationality'
+          click_button 'Save Changes'
+        end
+
+        it 'should update successfully' do
+          is_expected.to have_title(new_first_name + ' ' + new_last_name)
+          is_expected.to have_selector('div.alert.alert-success')
+          expect(author.reload.last_name).to eq(new_last_name)
+          expect(author.reload.first_name).to eq(new_first_name)
+        end
+      end
     end
   end
   
-  describe "new author" do
-    let(:user) { FactoryGirl.create(:user) }
-    before do
-      sign_in user
-      visit new_author_path
-    end
-    
-    describe "page" do
-      it { should have_content("New Author") }
-      it { should have_title("New Author") }
-    end
-    
-    describe "with invalid information" do
-      it "should not add author" do
-        expect { click_button "Add Author" }.not_to change(Author, :count)
+  describe 'new page' do
+    context 'when a non-admin user is signed in' do
+      it 'should get redirected to author show page' do
+        visit new_author_path
+        expect(current_path).to eq(authors_path)
       end
     end
-    
-    describe "with valid information" do
-      let(:new_last_name)  { "Blog" }
-      let(:new_first_name)  { "Joe" }
-      let(:new_nationality)  { "Canada" }
+    context 'when an admin user is signed in' do
       before do
-        fill_in "Last name", with: new_last_name
-        fill_in "First name", with: new_first_name
-        select new_nationality, from: "Nationality"
+        sign_in admin_user
+        visit new_author_path
       end
+
+      it { is_expected.to have_content('New Author') }
+      it { is_expected.to have_title('New Author') }
       
-      it "should create an author" do
-        expect { click_button "Add Author" }.to change(Author, :count).by(1)
+      context 'with invalid information' do
+        it 'should not add author' do
+          expect { click_button 'Add Author' }.not_to change(Author, :count)
+        end
       end
-      
-      describe "after adding author" do
-        before { click_button "Add Author" }
-        it { should have_title(new_first_name + " " + new_last_name) }
-        it { should have_selector('div.alert.alert-success') }
+      context 'with valid information' do
+        let(:new_last_name) { Faker::Name.last_name }
+        let(:new_first_name) { Faker::Name.first_name }
+        let(:new_nationality) { 'Canada' }
+        before do
+          fill_in 'Last name', with: new_last_name
+          fill_in 'First name', with: new_first_name
+          select new_nationality, from: 'Nationality'
+        end
+        
+        it 'should create an author' do
+          expect { click_button 'Add Author' }.to change(Author, :count).by(1)
+        end
+        
+        describe 'after adding author' do
+          before { click_button 'Add Author' }
+          it { is_expected.to have_title(new_first_name + ' ' + new_last_name) }
+          it { is_expected.to have_selector('div.alert.alert-success') }
+        end
       end
     end
   end
- 
 end

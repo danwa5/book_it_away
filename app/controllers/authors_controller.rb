@@ -15,6 +15,7 @@ class AuthorsController < ApplicationController
   end
   
   def new
+    redirect_to authors_path if !current_user.admin
     @author = Author.new
   end
   
@@ -29,6 +30,7 @@ class AuthorsController < ApplicationController
   end
   
   def edit
+    redirect_to author_path(@author) if !current_user.admin
   end
   
   def update

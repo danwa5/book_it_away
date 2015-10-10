@@ -21,7 +21,7 @@
 <%# will_paginate %>
 <br/><br/>
 
-<% if signed_in? %>
+<% if signed_in? && current_user.admin? %>
   <%= link_to "Add new author", new_author_path, class: "btn btn-primary" %>
 <% end %>
 

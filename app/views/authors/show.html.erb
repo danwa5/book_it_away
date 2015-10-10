@@ -8,16 +8,15 @@
 
 <% if signed_in? %>
   <%= link_to "Add Book", new_author_book_path(@author), class: "btn btn-primary" %>
-  
-  <%= link_to "Edit Author", edit_author_path, class: "btn btn-primary" %>
-
-  <% if current_user.admin? && !@books.any? %>
-    <%= link_to "Delete Author", author_path, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-primary" %>
+  <% if current_user.admin? %>
+    <%= link_to "Edit Author", edit_author_path, class: "btn btn-primary" %>
+    <% if !@books.any? %>
+      <%= link_to "Delete Author", author_path, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-primary" %>
+    <% end %>
   <% end %>
 <% end %>
 
 <br/><br/>
-
 
   <% if @books.any? %>
     <h2><%= pluralize(@books.count, "book") %> found</h2>
