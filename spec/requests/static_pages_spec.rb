@@ -1,46 +1,34 @@
 require 'spec_helper'
 
-describe "Static pages" do
+describe 'Static pages' do
+  let(:user) { create(:user) }
+  before { sign_in user }
 
   subject { page }
 
-  describe "Home page" do
+  describe 'Home page' do
     before { visit root_path }
-    
-    it { should have_content('Book App') }
-    it { should have_title(full_title('')) }
-    it { should_not have_title('| Home') }
+    it { is_expected.to have_content('Welcome') }
+    it { is_expected.to have_title(full_title('')) }
+    it { is_expected.not_to have_title('| Home') }
   end
 
-  describe "Help page" do
+  describe 'Help page' do
     before { visit help_path }
-    
-    it { should have_content('Help') }
-    it { should have_title(full_title('Help')) }
-    
-    #it "should have the content 'Help'" do
-    #  visit help_path
-    #  expect(page).to have_content('Help')
-    #end
-    
-    #it "should have the title 'Help'" do
-    #  visit help_path
-    #  expect(page).to have_title("Daniel's Book App | Help")
-    #end
+    it { is_expected.to have_content('Help') }
+    it { is_expected.to have_title(full_title('Help')) }
   end
   
-  describe "About page" do
+  describe 'About page' do
     before { visit about_path }
-    
-    it { should have_content('About Us') }
-    it { should have_title(full_title('About Us')) }
+    it { is_expected.to have_content('About Us') }
+    it { is_expected.to have_title(full_title('About Us')) }
   end
   
-  describe "Contact page" do
+  describe 'Contact page' do
     before { visit contact_path }
-    
-    it { should have_content('Contact') }
-    it { should have_title(full_title('Contact')) }
+    it { is_expected.to have_content('Contact') }
+    it { is_expected.to have_title(full_title('Contact')) }
   end
   
 end
