@@ -20,8 +20,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       sign_in @user
-      flash[:success] = "Welcome to the Sample App!"
-      redirect_to @user
+      flash[:success] = 'Welcome to Book-It-Away!'
+      redirect_to authors_path
     else
       render 'new'
     end
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
   def update
     #@user = User.find(params[:id])
     if @user.update_attributes(user_params)
-      flash[:success] = "User profile updated!"
+      flash[:success] = 'User profile updated!'
       sign_in @user
       redirect_to @user
     else
@@ -44,14 +44,14 @@ class UsersController < ApplicationController
   
   def destroy
     User.find(params[:id]).destroy
-    flash[:success] = "User destroyed."
+    flash[:success] = 'User destroyed.'
     redirect_to users_url
   end
 
   private
 
     def user_params
-      params.require(:user).permit(:last_name, :first_name, :name, :email, 
+      params.require(:user).permit(:last_name, :first_name, :name, :username, :email,
                                    :password, :password_confirmation)
     end
     
@@ -60,7 +60,7 @@ class UsersController < ApplicationController
     def signed_in_user
       unless signed_in?
         store_location
-        redirect_to signin_url, notice: "Please sign in."
+        redirect_to signin_url, notice: 'Please sign in.'
       end
     end
 

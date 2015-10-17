@@ -76,6 +76,7 @@ describe 'User pages' do
 
     describe 'with valid information' do
       before do
+        fill_in 'Username',     with: 'burgerking'
         fill_in 'Last name',    with: 'King'
         fill_in 'First name',   with: 'Burger'
         fill_in 'Email',        with: 'user@example.com'
@@ -91,8 +92,9 @@ describe 'User pages' do
         before { click_button submit }
         let(:user) { User.find_by(email: 'user@example.com') }
 
-        it { is_expected.to have_link('Sign out') }
-        it { is_expected.to have_title(user.first_name + ' ' + user.last_name) }
+        it 'should redirect user to authors index page' do
+          expect(current_path).to eq(authors_path)
+        end
         it { is_expected.to have_selector('div.alert.alert-success', text: 'Welcome') }
       end
     end

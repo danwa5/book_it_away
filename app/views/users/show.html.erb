@@ -6,6 +6,13 @@
     <%= form_for(@user, html: {class:"form-horizontal"}) do |f| %>
 
       <div class="control-group">
+        <%= f.label :username, nil, class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :username, {disabled: true} %>
+        </div>
+      </div>
+
+      <div class="control-group">
         <%= f.label :last_name, nil, class: "control-label" %>
         <div class="controls">
           <%= f.text_field :last_name, {disabled: true} %>

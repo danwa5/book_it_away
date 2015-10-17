@@ -21,6 +21,10 @@ describe User do
       it { is_expected.to validate_presence_of(:first_name) }
       it { is_expected.to ensure_length_of(:first_name).is_at_most(50) }
     end
+    describe '#username' do
+      it { is_expected.to validate_presence_of(:username) }
+      it { is_expected.to ensure_length_of(:username).is_at_most(20) }
+    end
     describe '#email' do
       it { is_expected.to validate_presence_of(:email) }
       it { is_expected.to validate_uniqueness_of(:email).case_insensitive }

@@ -1,10 +1,11 @@
 FactoryGirl.define do
   factory :user do
-    sequence(:last_name)  { |n| "Last#{n}" }
-    sequence(:first_name)  { |n| "First#{n}" }
+    sequence(:last_name) { |n| "Last#{n}" }
+    sequence(:first_name) { |n| "First#{n}" }
+    username { "#{first_name}[0]#{last_name}".downcase }
     sequence(:email) { |n| "user#{n}@email.com"}
-    password "111111"
-    password_confirmation "111111"
+    password '111111'
+    password_confirmation '111111'
     
     factory :admin_user do
       admin true
