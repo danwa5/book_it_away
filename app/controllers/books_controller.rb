@@ -1,5 +1,4 @@
 class BooksController < ApplicationController
-  before_action :find_author
   before_action :find_book, only: [:show, :edit, :update, :destroy]
   before_action :signed_in_user
   
@@ -10,12 +9,12 @@ class BooksController < ApplicationController
   end
 
   def new
-    @book = @author.books.build
+    @book = author.books.build
     @subjects_all = Subject.all.order('name ASC')
   end
   
   def create
-    @book = @author.books.build(user_params)
+    @book = author.books.build(user_params)
     
     if @book.save
       subject_ids = params[:subjects]
@@ -81,12 +80,12 @@ class BooksController < ApplicationController
 
   private
   
-  def find_author
-    @author = Author.friendly.find(params[:author_id])
+  def author
+    @author ||= Author.friendly.find(params[:author_id])
   end
 
   def find_book
-    @book = @author.books.friendly.find(params[:id])
+    @book = author.books.friendly.find(params[:id])
   end
 
   def user_params
