@@ -7,7 +7,7 @@ describe "subjects/new" do
     ).as_new_record)
   end
 
-  it "renders new subject form" do
+  xit "renders new subject form" do
     render
 
     # Run the generator again with the --webrat flag if you want to use webrat matchers

@@ -50,6 +50,16 @@ describe 'AuthorPages' do
         before { visit author_path(author) }
         it { is_expected.to have_link('Edit', href: edit_author_book_path(author, book)) }
       end
+      context 'when the author has no book entries' do
+        before do
+          delete :destroy, { id: author }
+        end
+        xit 'deleting author is not permitted' do
+          # expect {
+          #   delete :destroy, id: author
+          # }.not_to change(Author, :count)
+        end
+      end
     end
     context 'when an admin user is signed in' do
       before do

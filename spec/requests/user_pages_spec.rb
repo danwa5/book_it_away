@@ -91,9 +91,9 @@ describe 'User pages' do
         before { click_button submit }
         let(:user) { User.find_by(email: 'user@example.com') }
 
-        it { should have_link('Sign out') }
-        it { should have_title(user.first_name + ' ' + user.last_name) }
-        it { should have_selector('div.alert.alert-success', text: 'Welcome') }
+        it { is_expected.to have_link('Sign out') }
+        it { is_expected.to have_title(user.first_name + ' ' + user.last_name) }
+        it { is_expected.to have_selector('div.alert.alert-success', text: 'Welcome') }
       end
     end
   end
@@ -106,14 +106,14 @@ describe 'User pages' do
     end
 
     describe 'page' do
-      it { should have_content('Update your profile') }
-      it { should have_title('Edit user') }
+      it { is_expected.to have_content('Update your profile') }
+      it { is_expected.to have_title('Edit user') }
       #it { should have_link('change', href: 'http://gravatar.com/emails') }
     end
 
     describe 'with invalid information' do
       before { click_button 'Save changes' }
-      it { should have_content('error') }
+      it { is_expected.to have_content('error') }
     end
     
     describe 'with valid information' do
@@ -129,12 +129,12 @@ describe 'User pages' do
         click_button 'Save changes'
       end
 
-      it { should have_title(new_first_name + ' ' + new_last_name) }
-      it { should have_selector('div.alert.alert-success') }
-      it { should have_link('Sign out', href: signout_path) }
-      specify { expect(user.reload.last_name).to  eq new_last_name }
-      specify { expect(user.reload.first_name).to  eq new_first_name }
-      specify { expect(user.reload.email).to eq new_email }
+      it { is_expected.to have_title(new_first_name + ' ' + new_last_name) }
+      it { is_expected.to have_selector('div.alert.alert-success') }
+      it { is_expected.to have_link('Sign out', href: signout_path) }
+      it { expect(user.reload.last_name).to eq(new_last_name) }
+      it { expect(user.reload.first_name).to eq(new_first_name) }
+      it { expect(user.reload.email).to eq(new_email) }
     end
   end
 end
