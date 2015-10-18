@@ -129,4 +129,14 @@ describe User do
     before { subject.save }
     it { expect(subject.remember_token).to_not be_blank }
   end
+
+  describe '#email_activate' do
+    before { subject.email_activate}
+    it 'email_confirmed should be set to true' do
+      expect(subject.email_confirmed).to eq(true)
+    end
+    it 'confirm_token should be set to nil' do
+      expect(subject.confirm_token).to be_nil
+    end
+  end
 end

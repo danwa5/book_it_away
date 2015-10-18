@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 6 }
 
   class << self
-    def new_remember_token
+    def new_secure_token
       SecureRandom.urlsafe_base64
     end
 
@@ -32,16 +32,15 @@ class User < ActiveRecord::Base
     self.email_confirmed = true
     self.confirm_token = nil
     save!(:validate => false)
-    redirect_to signin_path
   end
 
   private
 
     def create_remember_token
-      self.remember_token = User.encrypt(User.new_remember_token)
+      self.remember_token = User.encrypt(User.new_secure_token)
     end
 
     def create_confirm_token
-      self.confirm_token = SecureRandom.urlsafe_base64.to_s if self.confirm_token.blank?
+      self.confirm_token = User.new_secure_token if self.confirm_token.blank?
     end
 end

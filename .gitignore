@@ -26,3 +26,6 @@ doc/
 bundler_stubs/
 coverage/
 
+
+# Ignore application configuration
+/config/application.yml

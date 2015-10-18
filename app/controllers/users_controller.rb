@@ -51,8 +51,9 @@ class UsersController < ApplicationController
     user = User.find_by(confirm_token: params[:id])
     if user
       user.email_activate
-      flash[:success] = 'Welcome to the Book-It-Away App! Your email has been confirmed. Please sign in to continue.'
-      redirect_to signin_url
+      sign_in user
+      flash[:success] = 'Welcome to the Book-It-Away App! Your account has been confirmed.'
+      redirect_to authors_path
     else
       flash[:error] = 'Sorry. User does not exist.'
       redirect_to root_url

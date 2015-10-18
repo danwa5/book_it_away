@@ -18,6 +18,7 @@ gem 'turbolinks', '1.1.1'
 gem 'jbuilder', '1.0.2'
 gem 'googlebooks', '0.0.9'
 gem 'rubyzip', '~> 0.9.9'
+gem 'figaro', '~> 1.1.1'
 gem 'friendly_id', '~> 5.1.0'
 
 group :development, :test do

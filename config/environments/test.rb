@@ -44,9 +44,9 @@ BookApp::Application.configure do
   config.action_mailer.smtp_settings = {
     :address              => 'smtp.mailgun.org',
     :port                 => 587,
-    :domain               => 'sandbox0187bcf9dca741b8aa95ffce785aa10b.mailgun.org',
-    :user_name            => 'postmaster@sandbox0187bcf9dca741b8aa95ffce785aa10b.mailgun.org',
-    :password             => 'c56fc11fee2a8d04785e60b6accb8ea5',
+    :domain               => Figaro.env.mailgun_domain,
+    :user_name            => Figaro.env.mailgun_user,
+    :password             => Figaro.env.mailgun_pswd,
     :authentication       => :plain,
     :enable_starttls_auto => true
   }
