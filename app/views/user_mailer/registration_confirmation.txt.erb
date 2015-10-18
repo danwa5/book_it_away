@@ -1,0 +1,8 @@
+Welcome to Book-It-Away, <%= @user.name %>!
+
+You have successfully signed up,
+your username is: <%= @user.username %>.
+
+To confirm your registration, click on the following URL: <%= confirm_email_user_url(@user.confirm_token) %>.
+
+Thanks for joining and have a great day!
