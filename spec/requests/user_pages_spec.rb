@@ -92,10 +92,19 @@ describe 'User pages' do
         before { click_button submit }
         let(:user) { User.find_by(email: 'user@example.com') }
 
-        it 'should redirect user to authors index page' do
-          expect(current_path).to eq(authors_path)
+        it 'user account needs to be activated' do
+          expect(user.email_confirmed).to eq(false)
+          expect(user.confirm_token).to be_present
+          is_expected.to have_selector('div.alert.alert-success', text: 'Please confirm your email address to continue')
         end
-        it { is_expected.to have_selector('div.alert.alert-success', text: 'Welcome') }
+
+        describe 'after clicking on activation link in email' do
+          before { visit confirm_email_user_path(user.confirm_token) }
+          it 'should redirect user to authors index page' do
+            expect(current_path).to eq(authors_path)
+          end
+          it { is_expected.to have_selector('div.alert.alert-success', text: 'Welcome') }
+        end
       end
     end
   end
