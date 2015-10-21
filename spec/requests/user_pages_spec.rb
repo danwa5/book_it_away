@@ -98,12 +98,19 @@ describe 'User pages' do
           is_expected.to have_selector('div.alert.alert-success', text: 'Please confirm your email address to continue')
         end
 
-        describe 'after clicking on activation link in email' do
+        context 'after clicking on activation link in email with valid confirmation token' do
           before { visit confirm_email_user_path(user.confirm_token) }
           it 'should redirect user to authors index page' do
             expect(current_path).to eq(authors_path)
           end
           it { is_expected.to have_selector('div.alert.alert-success', text: 'Welcome') }
+        end
+        context 'guessing activation path with invalid confirmation token' do
+          before { visit confirm_email_user_path('abc123') }
+          it 'should redirect user to root page' do
+            expect(current_path).to eq(root_path)
+          end
+          it { is_expected.to have_selector('div.alert.alert-error', text: 'Sorry') }
         end
       end
     end
