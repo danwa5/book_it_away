@@ -3,7 +3,7 @@ class BooksController < ApplicationController
   before_action :signed_in_user
   
   def show
-    @book.get_google_book_info(request.remote_ip)
+    @book.get_google_book_info
     @reviews = @book.reviews
     @visits = REDIS.incr("visits:author:#{@author.id}:book:#{@book.id}:totals")
   end

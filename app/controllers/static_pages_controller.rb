@@ -80,7 +80,7 @@ class StaticPagesController < ApplicationController
       unless books.blank?
         books.each do |b|
           #Rails.logger.info "get_google_book_info called for " + b.title
-          b.get_google_book_info(request.remote_ip)
+          b.get_google_book_info
         end
       end
     end

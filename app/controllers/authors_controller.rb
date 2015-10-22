@@ -10,7 +10,7 @@ class AuthorsController < ApplicationController
   
   def show
     @books = @author.books.each do |b|
-      b.get_google_book_info(request.remote_ip)
+      b.get_google_book_info
     end
   end
   

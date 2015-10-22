@@ -141,7 +141,7 @@ describe Book do
 
     describe '#get_google_book_info' do
       it 'returns book details from GoogleBooks' do
-        expect(book.get_google_book_info('')).to be_present
+        expect(book.get_google_book_info).to be_present
       end
     end
   end
