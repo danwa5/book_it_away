@@ -81,7 +81,7 @@ BookApp::Application.configure do
   config.assets.debug = true
   config.assets.compile = true
 
-  config.action_mailer.default_url_options = { :host => 'boiling-bastion-5843.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => 'book-it-away.herokuapp.com' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :address              => 'smtp.mailgun.org',
