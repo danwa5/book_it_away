@@ -63,7 +63,7 @@ class BooksController < ApplicationController
             @book.subjects.delete(d)
           end
         end
-      end    
+      end
       
       flash[:success] = "Book updated!"
       redirect_to author_book_url(@author, @book)

@@ -8,7 +8,7 @@ class Book < ActiveRecord::Base
 
   attr_accessor :gbook
   
-  before_save { 
+  before_save {
     self.title = book_title_case(title)
     self.publisher = publisher.titleize
   }
@@ -31,6 +31,14 @@ class Book < ActiveRecord::Base
 
     def author_search(query)
       joins(:author).where("first_name || ' ' || last_name ILIKE ?", "%#{query}%")
+    end
+
+    def google_books_api_isbn_search(isbn)
+      begin
+        GoogleBooks.search('isbn:' + isbn).first
+      rescue SocketError => e
+        puts e.message
+      end
     end
   end
 
@@ -58,7 +66,7 @@ class Book < ActiveRecord::Base
   
   def get_google_book_info
     if isbn.present?
-      Rails.logger.info "get_google_book_info invoked in model for " + self.title
+      Rails.logger.info 'get_google_book_info invoked in model for ' + self.title
       begin
         self.gbook = GoogleBooks.search('isbn:' + isbn).first
       rescue SocketError => e

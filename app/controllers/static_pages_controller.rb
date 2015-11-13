@@ -17,7 +17,7 @@ class StaticPagesController < ApplicationController
   end
   
   def results
-    @results = Array.new    
+    @results = Array.new
     
     if !params[:author].blank? || !params[:title].blank? || !params[:isbn].blank? || !params[:pages].blank? || !params[:subjects].blank?
       query = Book.where("1=1")

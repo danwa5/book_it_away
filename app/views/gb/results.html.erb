@@ -1,0 +1,21 @@
+<% provide(:title, @book.title) %>
+
+<div id="book-main">
+  <div id="book-main-cover">
+    <%= image_tag(@book.image_link) %>
+  </div>
+  <div id="book-main-details">
+    <h3><%= @book.title %></h3>
+    <ul class="book-details">
+      <li>by <%= @book.authors %>
+      <li>ISBN: <%= @book.isbn %>
+      <li>Publisher: <%= @book.publisher %>
+      <li>Pages: <%= @book.page_count %>
+      <li>Google Books Ratings Count: <span class="star"></span> (<%= @book.ratings_count %>)
+      <li>Google Books Average Rating: <span class="g-star"></span> (<%= @book.average_rating %>)
+      <li>Categories: <%= @book.categories %>
+    </ul>
+  </div>
+
+  <div id="book-description"><%= @book.description %></div>
+</div>
