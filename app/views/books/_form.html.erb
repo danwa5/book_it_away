@@ -32,6 +32,13 @@
       </div>
 
       <div class="control-group">
+        <%= f.label :published_date, nil, class: "control-label" %>
+        <div class="controls">
+          <%= f.date_select :published_date, {order: [:month, :day, :year], :prompt => true, use_short_month: true, start_year: 1800, end_year: DateTime.now.year, default: Time.now, date_separator: " / "}, {style: "width: 90px;"} %>
+        </div>
+      </div>
+
+      <div class="control-group">
         <%= f.label :pages, nil, class: "control-label" %>
         <div class="controls">
           <%= f.text_field :pages, maxlength:5 %>

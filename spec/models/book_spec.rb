@@ -15,7 +15,8 @@ describe Book do
   end
 
   describe 'attributes' do
-    it { should respond_to(:gbook) }
+    it { is_expected.to respond_to(:gbook) }
+    it { is_expected.to respond_to(:published_date) }
   end
 
   describe 'validations' do
@@ -144,8 +145,13 @@ describe Book do
     end
 
     describe '#get_google_book_info' do
-      it 'returns book details from GoogleBooks' do
-        expect(book.get_google_book_info).to be_present
+      context 'isbn exists in GoogleBooks' do
+        it 'returns book details from GoogleBooks' do
+          expect(book.get_google_book_info).to be_present
+        end
+      end
+      context 'isbn does not exist in GoogleBooks' do
+        pending
       end
     end
   end

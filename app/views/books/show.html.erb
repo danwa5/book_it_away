@@ -10,6 +10,7 @@
       <li>by <%= link_to @author.name, author_path(@author) %>
       <li>ISBN: <%= @book.isbn %>
       <li>Publisher: <%= @book.publisher %>
+      <li>Published Date: <%= date_format(@book.published_date) %>
       <li>Pages: <%= @book.pages %>
       <li>Book-It-Away Average Rating: <span class="star"></span> (<%= @book.reviews.count %>)
       <li>Google Books Average Rating: <span class="g-star"></span> (<%= @book.ratings_count.nil? ? "-" : @book.ratings_count %>)
