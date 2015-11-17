@@ -42,8 +42,13 @@ describe Book do
   end
 
   describe 'before_save' do
-    it 'titleizes the book\'s publisher' do
-      subject.publisher = 'world publishing'
+    it 'strips and titleizes the book\'s title' do
+      subject.title = ' the old man and the sea '
+      subject.save
+      expect(subject.title).to eq ('The Old Man and the Sea')
+    end
+    it 'strips and titleizes the book\'s publisher' do
+      subject.publisher = ' world publishing '
       subject.save
       expect(subject.publisher).to eq('World Publishing')
     end

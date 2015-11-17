@@ -14,9 +14,9 @@ describe Author do
   end
 
   describe 'before_save' do
-    it 'titleizes the author\'s first and last name' do
-      subject.first_name = 'larry'
-      subject.last_name = 'robinson'
+    it 'strips and titleizes the author\'s first and last names' do
+      subject.first_name = ' larry'
+      subject.last_name = 'robinson '
       subject.save
       expect(subject.first_name).to eq('Larry')
       expect(subject.last_name).to eq('Robinson')

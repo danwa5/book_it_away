@@ -10,11 +10,8 @@ class Book < ActiveRecord::Base
   
   before_save {
     self.title = book_title_case(title)
-    self.publisher = publisher.titleize
+    self.publisher = publisher.strip.titleize
   }
-  
-  # ***** call from controller instead *****
-  # after_initialize :get_google_book_info
   
   validates :isbn, presence: true, uniqueness: true, format: { with: /[0-9]{10}/}, length: { is: 10 }
   validates :title, presence: true, length: { maximum: 100 }
@@ -60,7 +57,7 @@ class Book < ActiveRecord::Base
   
   def book_title_case(title)
     cap_exceptions = %w(of a the and an or nor but if then else when up at from by on off for in out over to)
-    title = title.downcase.split.map {|w| cap_exceptions.include?(w) ? w : w.capitalize}.join(' ')
+    title = title.downcase.split.map { |w| cap_exceptions.include?(w) ? w : w.capitalize }.join(' ')
     title = title[0,1].capitalize + title[1, title.length-1]
   end
   
