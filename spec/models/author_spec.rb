@@ -13,7 +13,11 @@ describe Author do
     it { is_expected.to have_many :books }
   end
 
-  describe 'before_save' do
+  describe 'nested attributes' do
+    it { is_expected.to accept_nested_attributes_for(:books) }
+  end
+
+  describe 'before_save callback' do
     it 'strips and titleizes the author\'s first and last names' do
       subject.first_name = ' larry'
       subject.last_name = 'robinson '

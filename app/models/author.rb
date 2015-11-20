@@ -3,6 +3,8 @@ class Author < ActiveRecord::Base
   friendly_id :slug_candidates, use: :slugged
 
   has_many :books
+
+  accepts_nested_attributes_for :books
   
   before_save { 
     self.last_name = last_name.strip.titleize

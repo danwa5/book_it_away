@@ -27,6 +27,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'factory_girl_rails', '~> 4.5.0'
   gem 'faker', '~> 1.5.0'
+  gem 'byebug'
   # The following optional lines are part of the advanced setup.
   # gem 'guard-rspec', '2.5.0'
   # gem 'spork-rails', github: 'sporkrb/spork-rails'
@@ -40,7 +41,6 @@ group :test do
   gem 'simplecov', require: false
   # gem 'cucumber-rails', '1.3.0', :require => false
   gem 'database_cleaner', '~> 1.3.0'
-  gem 'byebug'
   gem 'awesome_print'
 end
 
