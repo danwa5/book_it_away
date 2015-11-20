@@ -44,7 +44,8 @@ class GbController < ApplicationController
         isbn: @gbook.isbn_10,
         publisher: @gbook.publisher,
         published_date: @gbook.published_date,
-        pages: @gbook.page_count
+        pages: @gbook.page_count,
+        description: @gbook.description
       )
     end
   end
@@ -52,7 +53,8 @@ class GbController < ApplicationController
   private
 
   def author_params
-    params.require(:author).permit(:last_name, :first_name, books_attributes: [:isbn, :title, :publisher, :published_date, :pages])
+    params.require(:author).permit(:last_name, :first_name,
+      books_attributes: [:isbn, :title, :publisher, :published_date, :pages, :description])
   end
 
 end

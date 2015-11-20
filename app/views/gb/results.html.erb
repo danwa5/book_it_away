@@ -75,6 +75,13 @@
             <%= b.text_field :pages %>
           </div>
         </div>
+
+        <div class="control-group">
+          <%= b.label :description, nil, class: "control-label" %>
+          <div class="controls">
+            <%= b.text_area :description, rows: 15 %>
+          </div>
+        </div>
       <% end %>
 
       <div class="control-group">
