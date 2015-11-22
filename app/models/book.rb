@@ -31,14 +31,6 @@ class Book < ActiveRecord::Base
     def author_search(query)
       joins(:author).where("first_name || ' ' || last_name ILIKE ?", "%#{query}%")
     end
-
-    def google_books_api_isbn_search(isbn)
-      begin
-        GoogleBooksService.call(isbn)
-      rescue SocketError => e
-        puts e.message
-      end
-    end
   end
 
   def load_google_books_data

@@ -89,10 +89,6 @@ describe Book do
         expect(described_class.author_search('krakauer')).to eq([book_1, book_3])
       end
     end
-
-    describe '.google_books_api_isbn_search' do
-      pending
-    end
   end
 
   describe 'instance methods from GoogleBooks API' do
