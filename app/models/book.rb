@@ -10,8 +10,10 @@ class Book < ActiveRecord::Base
   
   before_save {
     self.title = book_title_case(title)
-    self.publisher = publisher.strip.titleize
+    self.publisher = publisher.to_s.strip.titleize
   }
+
+  after_find :load_google_books_data
   
   validates :isbn, presence: true, uniqueness: true, format: { with: /[0-9]{10}/}, length: { is: 10 }
   validates :title, presence: true, length: { maximum: 100 }
@@ -32,27 +34,45 @@ class Book < ActiveRecord::Base
 
     def google_books_api_isbn_search(isbn)
       begin
-        GoogleBooks.search('isbn:' + isbn).first
+        GoogleBooksService.call(isbn)
       rescue SocketError => e
         puts e.message
       end
     end
   end
 
+  def load_google_books_data
+    if isbn.present?
+      begin
+        self.gbook = GoogleBooksService.call(isbn)
+      rescue SocketError => e
+        puts e.message
+      end
+    end
+  end
+
+  def publisher
+    self[:publisher].present? ? self[:publisher] : gbook.try(:publisher).to_s
+  end
+
+  def pages
+    self[:pages].present? ? self[:pages] : gbook.try(:page_count).to_s
+  end
+
   def image
-    gbook.present? ? gbook.image_link : 'image_unavailable.jpg'
+    gbook.present? ? gbook.try(:image_link).to_s : 'image_unavailable.jpg'
   end
   
   def description
-    gbook.present? ? gbook.description : ''
+    self[:description].present? ? self[:description] : gbook.try(:description).to_s
   end
   
   def average_rating
-    gbook.present? ? gbook.average_rating : 'n/a'
+    gbook.present? ? gbook.try(:average_rating) : 'N/A'
   end
   
   def ratings_count
-    gbook.present? ? gbook.ratings_count : 0
+    gbook.present? ? gbook.try(:ratings_count) : 0
   end
   
   def book_title_case(title)
@@ -60,18 +80,7 @@ class Book < ActiveRecord::Base
     title = title.downcase.split.map { |w| cap_exceptions.include?(w) ? w : w.capitalize }.join(' ')
     title = title[0,1].capitalize + title[1, title.length-1]
   end
-  
-  def get_google_book_info
-    if isbn.present?
-      Rails.logger.info 'get_google_book_info invoked in model for ' + self.title
-      begin
-        self.gbook = GoogleBooks.search('isbn:' + isbn).first
-      rescue SocketError => e
-        puts e.message
-      end
-    end
-  end
- 
+
   def categorized_under?(subject)
     self.subjects.include?(subject)
   end

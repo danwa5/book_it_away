@@ -14,9 +14,8 @@ describe Book do
     it { is_expected.to have_and_belong_to_many :subjects }
   end
 
-  describe 'attributes' do
+  describe 'attr_accessor' do
     it { is_expected.to respond_to(:gbook) }
-    it { is_expected.to respond_to(:published_date) }
   end
 
   describe 'validations' do
@@ -51,6 +50,14 @@ describe Book do
       subject.publisher = ' world publishing '
       subject.save
       expect(subject.publisher).to eq('World Publishing')
+    end
+  end
+
+  describe 'after_find' do
+    before { create(:book) }
+    it 'loads data from GoogleBooks API' do
+      expect_any_instance_of(Book).to receive(:load_google_books_data)
+      Book.last
     end
   end
 
@@ -128,9 +135,9 @@ describe Book do
         end
       end
       context 'book is not available in GoogleBooks' do
-        it "returns 'n/a'" do
+        it "returns 'N/A'" do
           book.gbook = nil
-          expect(book.average_rating).to eq('n/a')
+          expect(book.average_rating).to eq('N/A')
         end
       end
     end
@@ -149,10 +156,10 @@ describe Book do
       end
     end
 
-    describe '#get_google_book_info' do
+    describe '#load_google_books_data' do
       context 'isbn exists in GoogleBooks' do
         it 'returns book details from GoogleBooks' do
-          expect(book.get_google_book_info).to be_present
+          expect(book.load_google_books_data).to be_present
         end
       end
       context 'isbn does not exist in GoogleBooks' do

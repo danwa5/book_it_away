@@ -79,8 +79,7 @@ class StaticPagesController < ApplicationController
     def process_google_books_info(books)
       unless books.blank?
         books.each do |b|
-          #Rails.logger.info "get_google_book_info called for " + b.title
-          b.get_google_book_info
+          b.load_google_books_data
         end
       end
     end

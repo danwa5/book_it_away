@@ -28,7 +28,7 @@ class GbController < ApplicationController
       redirect_to search_gb_index_path
     end
 
-    @gbook = Book.google_books_api_isbn_search(params[:isbn])
+    @gbook = GoogleBooksService.call(params[:isbn])
 
     if @gbook.nil?
       flash[:error] = 'ISBN cannot be found in Google Books API!'
