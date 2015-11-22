@@ -4,7 +4,7 @@ class Book < ActiveRecord::Base
 
   belongs_to :author
   has_many :reviews
-  has_and_belongs_to_many :subjects
+  has_and_belongs_to_many :categories
 
   attr_accessor :gbook
   
@@ -66,15 +66,15 @@ class Book < ActiveRecord::Base
     title = title[0,1].capitalize + title[1, title.length-1]
   end
 
-  def categorized_under?(subject)
-    self.subjects.include?(subject)
+  def categorized_under?(category)
+    self.categories.include?(category)
   end
   
-  def non_categorized_subjects
-    Subject.all - self.subjects
+  def excluded_categories
+    Category.all - self.categories
   end
   
-  def subject_string
-    self.subjects.map(&:name).sort.join(', ')
+  def category_string
+    self.categories.map(&:name).sort.join(', ')
   end
 end

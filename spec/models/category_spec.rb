@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Subject do
-  let(:subject) { create(:subject) }
-  # subject { subject }
+describe Category do
+  let(:category) { create(:category) }
+  subject { category }
 
   it 'has a valid factory' do
-    expect(FactoryGirl.build(:subject)).to be_valid
+    expect(FactoryGirl.build(:category)).to be_valid
   end
 
   describe 'associations' do
@@ -20,16 +20,16 @@ describe Subject do
   describe 'callbacks' do
     describe 'before_validation' do
       it 'strips beginning and ending whitespace' do
-        subject.name = ' Adventure '
+        category.name = ' Adventure '
         expect(subject.name).to eq(' Adventure ')
-        subject.valid?
+        category.valid?
         expect(subject.name).to eq('Adventure')
       end
     end
     describe 'before_save' do
       it 'titleize the name' do
-        subject.name = 'fiction'
-        subject.save
+        category.name = 'fiction'
+        category.save
         expect(subject.name).to eq('Fiction')
       end
     end

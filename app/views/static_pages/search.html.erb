@@ -35,20 +35,20 @@
     </div>
   </div>
   <div class="control-group">
-    <%= label_tag :subjects, nil, {class:"control-label"} %>
+    <%= label_tag :categories, nil, {class:"control-label"} %>
     <div class="controls">
       
-      <% if not @subjects_all.nil? %>
-        <ul class="subjects span4">
-        <% for subject in @subjects_all do %>
+      <% if not @categories_all.nil? %>
+        <ul class="categories span4">
+        <% for category in @categories_all do %>
           <li><label class="checkbox">
-            <%= check_box_tag "subjects[]", subject.name %>
-            <span><%= subject.name.html_safe %></span>
+            <%= check_box_tag "categories[]", category.name %>
+            <span><%= category.name.html_safe %></span>
           </label></li>
         <% end %>
         </ul>
       <% else %>
-        <label class="checkbox"><b>No subjects found</b></label>
+        <label class="checkbox"><b>No categories found</b></label>
       <% end %>
 
     </div>

@@ -11,7 +11,7 @@ describe Book do
   describe 'associations' do
     it { is_expected.to belong_to :author }
     it { is_expected.to have_many :reviews }
-    it { is_expected.to have_and_belong_to_many :subjects }
+    it { is_expected.to have_and_belong_to_many :categories }
   end
 
   describe 'attr_accessor' do
@@ -156,40 +156,40 @@ describe Book do
     end
   end
 
-  describe 'subject-related methods' do
+  describe 'category-related methods' do
     let!(:travel_book) { create(:travel_book) }
     let!(:fiction_book) { create(:fiction_book) }
     let!(:history_fiction_book) { create(:history_fiction_book) }
-    let!(:subject) { Subject.find_by(name: 'Fiction') }
+    let!(:category) { Category.find_by(name: 'Fiction') }
 
     describe '#categorized_under?' do
-      it 'returns true if given subject is associated with book' do
-        expect(travel_book.categorized_under?(subject)).to eq(false)
-        expect(fiction_book.categorized_under?(subject)).to eq(true)
-        expect(history_fiction_book.categorized_under?(subject)).to eq(true)
+      it 'returns true if given category is associated with book' do
+        expect(travel_book.categorized_under?(category)).to eq(false)
+        expect(fiction_book.categorized_under?(category)).to eq(true)
+        expect(history_fiction_book.categorized_under?(category)).to eq(true)
       end
     end
 
-    describe '#non_categorized_subjects' do
-      it 'returns all subjects that do not belong to the book' do
-        expect(history_fiction_book.non_categorized_subjects).to eq([travel_book.subjects.first])
+    describe '#excluded_categories' do
+      it 'returns all categories that do not belong to the book' do
+        expect(history_fiction_book.excluded_categories).to eq([travel_book.categories.first])
       end
     end
 
-    describe '#subject_string' do
-      context 'book with 0 subject' do
+    describe '#category_string' do
+      context 'book with 0 categories' do
         it 'returns an empty string' do
-          expect(book.subject_string).to eq('')
+          expect(book.category_string).to eq('')
         end
       end
-      context 'book with 1 subject' do
-        it 'returns a string of its only subject' do
-          expect(travel_book.subject_string).to eq('Travel')
+      context 'book with 1 category' do
+        it 'returns a string of its only category' do
+          expect(travel_book.category_string).to eq('Travel')
         end
       end
-      context 'book with multiple subjects' do
-        it 'returns a comma-delimited string of its subjects' do
-          expect(history_fiction_book.subject_string).to eq('Fiction, History')
+      context 'book with multiple categories' do
+        it 'returns a comma-delimited string of its categories' do
+          expect(history_fiction_book.category_string).to eq('Fiction, History')
         end
       end
     end

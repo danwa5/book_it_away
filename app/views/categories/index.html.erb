@@ -1,5 +1,5 @@
-<% provide(:title, 'All Book Subjects') %>
-<h1>All Book Subjects</h1>
+<% provide(:title, 'All Book Categories') %>
+<h1>All Book Categories</h1>
 
 <div class="span6 offset3">
   <table class="table table-striped">
@@ -11,10 +11,10 @@
     </tr>
   </thead>
   <tbody>
-    <% @subjects.each_with_index do |s,i| %>
+    <% @categories.each_with_index do |s,i| %>
     <tr>
       <td><span class="muted"><%= i+1 %></span></td>
-      <td><%= s.name %> (<%= link_to 'Edit', edit_subject_path(s) %>)</td>
+      <td><%= s.name %> (<%= link_to 'Edit', edit_category_path(s) %>)</td>
       <td><%= s.books.count %></td>
     </tr>
     <% end %>
@@ -22,6 +22,6 @@
   </table>
   <br/>
   <div class="span2 offset1">
-    <%= link_to "Add new subject", new_subject_path, class: "btn btn-primary" %>
+    <%= link_to "Add new category", new_category_path, class: "btn btn-primary" %>
   </div>
 </div>

@@ -6,7 +6,7 @@ BookApp::Application.routes.draw do
   end
 
   resources :sessions, only: [:new, :create, :destroy]
-  resources :subjects, except: [:show, :destroy]
+  resources :categories, except: [:show, :destroy]
 
   resources :gb, only: [:create] do
     collection do

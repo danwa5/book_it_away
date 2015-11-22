@@ -29,35 +29,35 @@ FactoryGirl.define do
 
     factory :travel_book do
       after(:create) do |book, _|
-        subject = Subject.find_or_create_by(name: 'Travel')
-        book.subjects << subject
+        category = Category.find_or_create_by(name: 'Travel')
+        book.categories << category
       end
     end
 
     factory :fiction_book do
       after(:create) do |book, _|
-        subject = Subject.find_or_create_by(name: 'Fiction')
-        book.subjects << subject
+        category = Category.find_or_create_by(name: 'Fiction')
+        book.categories << category
       end
     end
 
     factory :history_fiction_book do
       after(:create) do |book, _|
         %w(History Fiction).each do |s|
-          subject = Subject.find_or_create_by(name: s)
-          book.subjects << subject
+          category = Category.find_or_create_by(name: s)
+          book.categories << category
         end
       end
     end
   end
 
-  factory :subject do
+  factory :category do
     name 'Travel'
   end
 
-  # factory :book_subject do
+  # factory :book_category do
   #   association :book
-  #   association :subject
+  #   association :category
   # end
 
 end

@@ -19,7 +19,7 @@ class StaticPagesController < ApplicationController
   def results
     @results = Array.new
     
-    if !params[:author].blank? || !params[:title].blank? || !params[:isbn].blank? || !params[:pages].blank? || !params[:subjects].blank?
+    if !params[:author].blank? || !params[:title].blank? || !params[:isbn].blank? || !params[:pages].blank? || !params[:categories].blank?
       query = Book.where("1=1")
       
       if not params[:author].blank?
@@ -42,10 +42,10 @@ class StaticPagesController < ApplicationController
         query = query.where("pages " + params[:page_operator] + " ?", "#{params[:pages]}")
       end
       
-      if not params[:subjects].blank?
-        subjects = params[:subjects]
-        subjects.each do |subject|
-          query = query & Book.joins(:subjects).where("name = ?", "#{subject}")
+      if not params[:categories].blank?
+        categories = params[:categories]
+        categories.each do |category|
+          query = query & Book.joins(:categories).where("name = ?", "#{category}")
         end
       end
       

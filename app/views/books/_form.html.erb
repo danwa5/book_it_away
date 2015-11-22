@@ -53,31 +53,31 @@
       </div>
 
       <div class="control-group">
-        <%= f.label :subjects, nil, class: "control-label" %>
+        <%= f.label :categories, nil, class: "control-label" %>
         <div class="controls">
           
-        <% if not @subjects_all.nil? %>
-          <ul class="subjects span4">
-          <% for subject in @subjects_all do %>
+        <% if not @categories_all.nil? %>
+          <ul class="categories span4">
+          <% for category in @categories_all do %>
             <li>
               <label class="checkbox">
 
               <% if new_form == true %>
-                <%= check_box_tag "subjects[]", subject.id %>
+                <%= check_box_tag "categories[]", category.id %>
               <% else %>
-                <% if @subjects.include?(subject) %>
-                  <%= check_box_tag "subjects[]", subject.id, :checked => true %>
+                <% if @categories.include?(category) %>
+                  <%= check_box_tag "categories[]", category.id, :checked => true %>
                 <% else %>
-                  <%= check_box_tag "subjects[]", subject.id %>
+                  <%= check_box_tag "categories[]", category.id %>
                 <% end %>
               <% end %>
 
-              <span><%= subject.name.html_safe %></span></label>
+              <span><%= category.name.html_safe %></span></label>
             </li>
           <% end %>
           </ul>
         <% else %>
-          <label class="checkbox"><strong>No subjects found</strong></label>
+          <label class="checkbox"><strong>No categories found</strong></label>
         <% end %>
 
         </div>

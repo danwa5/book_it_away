@@ -10,18 +10,18 @@ class BooksController < ApplicationController
 
   def new
     @book = author.books.build
-    @subjects_all = Subject.all.order('name ASC')
+    @subjects_all = Category.all.order('name ASC')
   end
   
   def create
     @book = author.books.build(user_params)
     
     if @book.save
-      subject_ids = params[:subjects]
-      unless subject_ids.blank?
-        subject_ids.each do |subject_id|
-          subject = Subject.find(subject_id)
-          @book.subjects << subject
+      category_ids = params[:categories]
+      unless category_ids.blank?
+        category_ids.each do |category_id|
+          category = Category.find(category_id)
+          @book.categories << category
         end
       end
       
@@ -33,34 +33,34 @@ class BooksController < ApplicationController
   end
   
   def edit
-    @subjects = @book.subjects
-    @subjects_all = Subject.all.order('name ASC')
+    @categories = @book.categories
+    @categories_all = Category.all.order('name ASC')
   end
   
   def update
     if @book.update_attributes(user_params)
-      #retrieve selected subjects from form
-      subject_ids = params[:subjects]
+      #retrieve selected categories from form
+      subject_ids = params[:categories]
       selected = Array.new
     
-      #if not already added, add subject to book
-      unless subject_ids.blank?
-        subject_ids.each do |subject_id|
-          @subject = Subject.find(subject_id)
-          selected.push(@subject)
-          if not @book.categorized_under?(@subject)
-            @book.subjects << @subject
+      #if not already added, add category to book
+      unless category_ids.blank?
+        category_ids.each do |category_id|
+          @category = Category.find(category_id)
+          selected.push(@category)
+          if not @book.categorized_under?(@category)
+            @book.categories << @category
           end
         end
       end
       
-      #get unselected subjects and check if book is categorized under it
+      #get unselected categories and check if book is categorized under it
       #if so, delete it
-      check_to_delete = Subject.all - selected
+      check_to_delete = Category.all - selected
       unless check_to_delete.blank?
         check_to_delete.each do |d|
           if @book.categorized_under?(d)
-            @book.subjects.delete(d)
+            @book.categories.delete(d)
           end
         end
       end
