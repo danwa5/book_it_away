@@ -13,8 +13,6 @@ class Book < ActiveRecord::Base
     self.publisher = publisher.to_s.strip.titleize
   }
 
-  after_find :load_google_books_data
-  
   validates :isbn, presence: true, uniqueness: true, format: { with: /[0-9]{10}/}, length: { is: 10 }
   validates :title, presence: true, length: { maximum: 100 }
   validates :publisher, allow_nil: true, length: { maximum: 50 }
@@ -34,13 +32,8 @@ class Book < ActiveRecord::Base
   end
 
   def load_google_books_data
-    if isbn.present?
-      begin
-        self.gbook = GoogleBooksService.call(isbn)
-      rescue SocketError => e
-        puts e.message
-      end
-    end
+    Rails.logger.info "after_find called for #{isbn}"
+    self.gbook = GoogleBooksService.call(isbn) if self.isbn.present?
   end
 
   def publisher

@@ -53,14 +53,6 @@ describe Book do
     end
   end
 
-  describe 'after_find' do
-    before { create(:book) }
-    it 'loads data from GoogleBooks API' do
-      expect_any_instance_of(Book).to receive(:load_google_books_data)
-      Book.last
-    end
-  end
-
   describe 'default scope' do
     let!(:book_1) { create(:book, title: 'B')}
     let!(:book_2) { create(:book, title: 'C')}

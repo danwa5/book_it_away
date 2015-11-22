@@ -3,6 +3,7 @@ class BooksController < ApplicationController
   before_action :signed_in_user
 
   def show
+    @book.load_google_books_data
     @reviews = @book.reviews
     @visits = REDIS.incr("visits:author:#{@author.id}:book:#{@book.id}:totals")
   end
