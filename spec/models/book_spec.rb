@@ -53,12 +53,22 @@ describe Book do
     end
   end
 
-  describe 'default scope' do
-    let!(:book_1) { create(:book, title: 'B')}
-    let!(:book_2) { create(:book, title: 'C')}
-    let!(:book_3) { create(:book, title: 'A')}
-    it 'returns books in ascending order of title' do
-      expect(described_class.all).to eq([book_3, book_1, book_2])
+  describe 'scopes' do
+    let!(:book_1) { create(:book, title: 'D')}
+    let!(:book_2) { create(:book, title: 'B')}
+    let!(:book_3) { create(:book, title: 'C')}
+    let!(:book_4) { create(:book, title: 'A')}
+    let!(:book_5) { create(:book, title: 'E')}
+
+    describe 'default scope' do
+      it 'returns books in ascending order of title' do
+        expect(described_class.all).to eq([book_4, book_2, book_3, book_1, book_5])
+      end
+    end
+    describe '.last_added' do
+      it 'returns the last 4 books in descending order of created_at' do
+        expect(described_class.last_added).to eq([book_5, book_4, book_3, book_2])
+      end
     end
   end
 

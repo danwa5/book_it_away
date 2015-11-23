@@ -13,7 +13,6 @@ class Book < ActiveRecord::Base
   before_save {
     self.title = book_title_case(title)
     self.publisher = publisher.to_s.strip.titleize
-
   }
 
   validates :isbn, presence: true, uniqueness: true, format: { with: /[0-9]{10}/}, length: { is: 10 }
@@ -23,6 +22,8 @@ class Book < ActiveRecord::Base
   validates :author, presence: true
   
   default_scope -> { order('title ASC') }
+
+  scope :last_added, -> { unscope(:order).order('created_at DESC').limit(4) }
   
   class << self
     def title_search(query)
