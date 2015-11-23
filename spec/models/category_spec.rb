@@ -12,6 +12,15 @@ describe Category do
     it { is_expected.to have_and_belong_to_many :books }
   end
 
+  describe 'default scope' do
+    let!(:category_1) { create(:category, name: 'Biography')}
+    let!(:category_2) { create(:category, name: 'Cooking')}
+    let!(:category_3) { create(:category, name: 'Autobiography')}
+    it 'returns categories in ascending order of name' do
+      expect(described_class.all).to eq([category_3, category_1, category_2])
+    end
+  end
+
   describe 'validations' do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_uniqueness_of(:name).case_insensitive }

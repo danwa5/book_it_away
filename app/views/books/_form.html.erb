@@ -56,7 +56,7 @@
         <%= f.label :categories, nil, class: "control-label" %>
         <div class="controls">
           
-        <% if not @categories_all.nil? %>
+        <% if @categories_all.present? %>
           <ul class="categories span4">
           <% for category in @categories_all do %>
             <li>

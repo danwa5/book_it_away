@@ -82,6 +82,15 @@
             <%= b.text_area :description, rows: 15 %>
           </div>
         </div>
+
+        <%= b.fields_for :categories do |c| %>
+          <div class="control-group">
+            <%= c.label :name, 'Category', class: "control-label" %>
+            <div class="controls">
+              <%= c.text_field :name %>
+            </div>
+          </div>
+        <% end %>
       <% end %>
 
       <div class="control-group">

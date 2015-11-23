@@ -4,12 +4,17 @@ class GbController < ApplicationController
     author = Author.where(last_name: author_params[:last_name], first_name: author_params[:first_name]).first_or_initialize
     author.nationality = 'USA'
 
-    book_params = author_params[:books_attributes].values.first
+    book_params     = author_params[:books_attributes].values.first
+    category_params = book_params[:categories_attributes].values.first
+
     book = Book.where(isbn: book_params[:isbn]).first_or_initialize
 
     if author.save
       book.author = author
       book.update_attributes(book_params)
+
+      category = Category.where(name: category_params[:name]).first_or_create!
+      book.categories << category if !book.categories.include?(category)
 
       flash[:success] = 'Author and book data successfully imported!'
       redirect_to author
@@ -39,13 +44,17 @@ class GbController < ApplicationController
       @author.first_name = @gbook.authors_array.first.rpartition(' ').first
       @author.nationality = 'USA'
 
-      @author.books.build(
+      @book = @author.books.build(
         title: @gbook.title,
         isbn: @gbook.isbn_10,
         publisher: @gbook.publisher,
         published_date: @gbook.published_date,
         pages: @gbook.page_count,
-        description: @gbook.description
+        description: @gbook.description,
+      )
+
+      @book.categories.build(
+        name: @gbook.categories
       )
     end
   end
@@ -54,7 +63,7 @@ class GbController < ApplicationController
 
   def author_params
     params.require(:author).permit(:last_name, :first_name,
-      books_attributes: [:isbn, :title, :publisher, :published_date, :pages, :description])
+      books_attributes: [:isbn, :title, :publisher, :published_date, :pages, :description, categories_attributes: [:name]])
   end
 
 end

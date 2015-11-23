@@ -10,22 +10,19 @@ class BooksController < ApplicationController
 
   def new
     @book = author.books.build
-    @subjects_all = Category.all.order('name ASC')
+    @categories_all = Category.all
   end
   
   def create
-    @book = author.books.build(user_params)
+    @book = author.books.build(book_params)
     
     if @book.save
-      category_ids = params[:categories]
-      unless category_ids.blank?
-        category_ids.each do |category_id|
-          category = Category.find(category_id)
-          @book.categories << category
-        end
+      if params[:categories].present?
+        category_ids = params[:categories].map(&:to_i)
+        @book.add_categories(category_ids)
       end
       
-      flash[:success] = "Book successfully added!"
+      flash[:success] = 'Book successfully added!'
       redirect_to @book.author
     else
       render 'new'
@@ -34,38 +31,23 @@ class BooksController < ApplicationController
   
   def edit
     @categories = @book.categories
-    @categories_all = Category.all.order('name ASC')
+    @categories_all = Category.all
   end
   
   def update
-    if @book.update_attributes(user_params)
-      #retrieve selected categories from form
-      subject_ids = params[:categories]
-      selected = Array.new
-    
-      #if not already added, add category to book
-      unless category_ids.blank?
-        category_ids.each do |category_id|
-          @category = Category.find(category_id)
-          selected.push(@category)
-          if not @book.categorized_under?(@category)
-            @book.categories << @category
-          end
-        end
+    if @book.update_attributes(book_params)
+
+      # Add selected categories to book
+      if params[:categories].present?
+        category_ids = params[:categories].map(&:to_i)
+        @book.add_categories(category_ids)
       end
-      
-      #get unselected categories and check if book is categorized under it
-      #if so, delete it
-      check_to_delete = Category.all - selected
-      unless check_to_delete.blank?
-        check_to_delete.each do |d|
-          if @book.categorized_under?(d)
-            @book.categories.delete(d)
-          end
-        end
-      end
-      
-      flash[:success] = "Book updated!"
+
+      # Remove unselected categories from book
+      categories_to_remove = Category.all - Category.where(id: category_ids)
+      @book.remove_categories(categories_to_remove)
+
+      flash[:success] = 'Book updated!'
       redirect_to author_book_url(@author, @book)
     else
       render 'edit'
@@ -88,7 +70,7 @@ class BooksController < ApplicationController
     @book = author.books.friendly.find(params[:id])
   end
 
-  def user_params
+  def book_params
     params.require(:book).permit!
   end
 end

@@ -6,17 +6,20 @@ class Book < ActiveRecord::Base
   has_many :reviews
   has_and_belongs_to_many :categories
 
+  accepts_nested_attributes_for :categories
+
   attr_accessor :gbook
   
   before_save {
     self.title = book_title_case(title)
     self.publisher = publisher.to_s.strip.titleize
+
   }
 
   validates :isbn, presence: true, uniqueness: true, format: { with: /[0-9]{10}/}, length: { is: 10 }
   validates :title, presence: true, length: { maximum: 100 }
   validates :publisher, allow_nil: true, length: { maximum: 50 }
-  validates :pages, allow_nil: true, numericality: { greater_than_or_equal_to: 1 }
+  validates :pages, numericality: { greater_than_or_equal_to: 1, allow_blank: true }
   validates :author, presence: true
   
   default_scope -> { order('title ASC') }
@@ -32,7 +35,6 @@ class Book < ActiveRecord::Base
   end
 
   def load_google_books_data
-    Rails.logger.info "after_find called for #{isbn}"
     self.gbook = GoogleBooksService.call(isbn) if self.isbn.present?
   end
 
@@ -76,5 +78,22 @@ class Book < ActiveRecord::Base
   
   def category_string
     self.categories.map(&:name).sort.join(', ')
+  end
+
+  def add_categories(category_ids)
+    unless category_ids.empty?
+      category_ids.each do |category_id|
+        category = Category.find(category_id)
+        if excluded_categories.include?(category)
+          self.categories << category
+        end
+      end
+    end
+  end
+
+  def remove_categories(categories_to_remove)
+    unless categories_to_remove.blank?
+      self.categories.delete(categories_to_remove)
+    end
   end
 end

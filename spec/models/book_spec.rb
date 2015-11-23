@@ -193,5 +193,24 @@ describe Book do
         end
       end
     end
+
+    describe '#add_categories' do
+      let(:category2) { Category.find_by(name: 'Travel') }
+      let(:category_ids) { [category.id, category2.id] }
+      it 'adds categories to book' do
+        expect(subject.categories.count).to eq(0)
+        subject.add_categories(category_ids)
+        expect(subject.categories.count).to eq(2)
+        expect(subject.categories.map(&:id)).to eq([category.id, category2.id])
+      end
+    end
+
+    describe '#remove_categories' do
+      it 'removes categories from book' do
+        expect(fiction_book.categories.count).to eq(1)
+        fiction_book.remove_categories(category)
+        expect(fiction_book.categories.count).to eq(0)
+      end
+    end
   end
 end
