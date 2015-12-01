@@ -20,6 +20,7 @@ gem 'googlebooks', '0.0.9'
 gem 'rubyzip', '~> 0.9.9'
 gem 'figaro', '~> 1.1.1'
 gem 'friendly_id', '~> 5.1.0'
+gem 'multi_json', '1.11.2'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.1.0'
