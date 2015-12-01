@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Category do
   let(:category) { create(:category) }
@@ -13,9 +13,9 @@ describe Category do
   end
 
   describe 'default scope' do
-    let!(:category_1) { create(:category, name: 'Biography')}
-    let!(:category_2) { create(:category, name: 'Cooking')}
-    let!(:category_3) { create(:category, name: 'Autobiography')}
+    let!(:category_1) { create(:category, name: 'Biography') }
+    let!(:category_2) { create(:category, name: 'Cooking') }
+    let!(:category_3) { create(:category, name: 'Autobiography') }
     it 'returns categories in ascending order of name' do
       expect(described_class.all).to eq([category_3, category_1, category_2])
     end

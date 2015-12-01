@@ -23,6 +23,7 @@ doc/
 .DS_Store
 .idea
 .secret
+.byebug_history
 bundler_stubs/
 coverage/
 

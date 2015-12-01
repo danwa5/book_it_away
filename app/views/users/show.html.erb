@@ -1,51 +1,56 @@
-<% provide(:title, @user.first_name + " " + @user.last_name) %>
-<h1>My Profile</h1>
+<% provide(:title, @user.name) %>
+
+<div class="blog-header">
+  <h1 class="blog-title">My Profile</h1>
+</div>
 
 <div class="row">
-  <div class="span6 offset3">
-    <%= form_for(@user, html: {class:"form-horizontal"}) do |f| %>
+  <%= form_for(@user, html: { class:"form-horizontal" }) do |f| %>
 
-      <div class="control-group">
-        <%= f.label :username, nil, class: "control-label" %>
-        <div class="controls">
-          <%= f.text_field :username, {disabled: true} %>
-        </div>
+    <div class="form-group">
+      <%= f.label :username, nil, class: "col-sm-3 control-label" %>
+      <div class="col-sm-8">
+        <%= f.text_field :username, class: "form-control", disabled: true %>
       </div>
+    </div>
 
-      <div class="control-group">
-        <%= f.label :last_name, nil, class: "control-label" %>
-        <div class="controls">
-          <%= f.text_field :last_name, {disabled: true} %>
-        </div>
+    <div class="form-group">
+      <%= f.label :last_name, nil, class: "col-sm-3 control-label" %>
+      <div class="col-sm-8">
+        <%= f.text_field :last_name, class: "form-control", disabled: true %>
       </div>
-      
-      <div class="control-group">
-        <%= f.label :first_name, nil, class: "control-label" %>
-        <div class="controls">
-          <%= f.text_field :first_name, {disabled: true} %>
-        </div>
+    </div>
+    
+    <div class="form-group">
+      <%= f.label :first_name, nil, class: "col-sm-3 control-label" %>
+      <div class="col-sm-8">
+        <%= f.text_field :first_name, class: "form-control", disabled: true %>
       </div>
-      
-      <div class="control-group">
-        <%= f.label :email, nil, class: "control-label" %>
-        <div class="controls">
-          <div class="input-prepend">
-            <span class="add-on"><i class="icon-envelope"></i></span>
-            <%= f.text_field :email, {disabled: true} %>
+    </div>
+    
+    <div class="form-group">
+      <%= f.label :email, nil, class: "col-sm-3 control-label" %>
+      <div class="col-sm-8">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
           </div>
+          <%= f.text_field :email, class: "form-control", disabled: true %>
         </div>
       </div>
+    </div>
 
-      <div class="control-group">
-        <%= f.label :admin, nil, class: "control-label" %>
-        <div class="controls">
-          <div class="input-prepend">
-            <span class="add-on"><i class="icon-wrench"></i></span>
-            <%= text_field_tag "admin", @user.admin, {disabled: true} %>
+    <div class="form-group">
+      <%= f.label :admin, nil, class: "col-sm-3 control-label" %>
+      <div class="col-sm-8">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
           </div>
+          <%= text_field_tag "admin", @user.admin, class: "form-control", disabled: true %>
         </div>
       </div>
+    </div>
 
-    <% end %>
-  </div>
+  <% end %>
 </div>

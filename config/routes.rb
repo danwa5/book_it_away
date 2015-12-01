@@ -20,11 +20,10 @@ BookApp::Application.routes.draw do
   get '/home',       to: 'static_pages#home'
   get '/help',       to: 'static_pages#help'
   get '/about',      to: 'static_pages#about'
-  get '/contact',    to: 'static_pages#contact'
   get '/books',      to: 'static_pages#books'
   get '/results',    to: 'static_pages#results'
   get '/search',     to: 'static_pages#search'
-  delete '/signout', to: 'sessions#destroy'
+  get '/signout', to: 'sessions#destroy'
   
   resources :authors, only: [:index, :new, :create]
   resources :authors, only: [:show, :edit, :update, :destroy], path: ''

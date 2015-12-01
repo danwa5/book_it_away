@@ -1,94 +1,90 @@
 <div class="row">
-  <div class="span7 offset2">
-    <%= form_for([@author, @book], html: {class:"form-horizontal"}) do |f| %>
-      <%= render 'shared/error_messages', object: f.object %>
+  <%= form_for([@author, @book], html: { class:"form-horizontal" }) do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
 
-      <div class="control-group">
-        <%= label_tag :author, nil, class: "control-label" %>
-        <div class="controls">
-          <%= text_field_tag :author, @author.name, disabled: true %>
-        </div>
+    <div class="form-group">
+      <%= label_tag :author, nil, class: "col-sm-3 control-label" %>
+      <div class="col-sm-8">
+        <%= text_field_tag :author, @author.name, disabled: true, class: "form-control" %>
       </div>
-      
-      <div class="control-group">
-        <%= f.label :isbn, "ISBN", class: "control-label" %>
-        <div class="controls">
-          <%= f.text_field :isbn, maxlength:10 %>
-        </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :isbn, "ISBN", class: "col-sm-3 control-label" %>
+      <div class="col-sm-8">
+        <%= f.text_field :isbn, maxlength: 10, class: "form-control" %>
       </div>
+    </div>
 
-      <div class="control-group">
-        <%= f.label :title, nil, class: "control-label" %>
-        <div class="controls">
-          <%= f.text_field :title, maxlength:100 %>
-        </div>
+    <div class="form-group">
+      <%= f.label :title, nil, class: "col-sm-3 control-label" %>
+      <div class="col-sm-8">
+        <%= f.text_field :title, maxlength: 100, class: "form-control" %>
       </div>
+    </div>
 
-      <div class="control-group">
-        <%= f.label :publisher, nil, class: "control-label" %>
-        <div class="controls">
-          <%= f.text_field :publisher, maxlength:50 %>
-        </div>
+    <div class="form-group">
+      <%= f.label :publisher, nil, class: "col-sm-3 control-label" %>
+      <div class="col-sm-8">
+        <%= f.text_field :publisher, maxlength: 50, class: "form-control" %>
       </div>
+    </div>
 
-      <div class="control-group">
-        <%= f.label :published_date, nil, class: "control-label" %>
-        <div class="controls">
-          <%= f.date_select :published_date, {order: [:month, :day, :year], :prompt => true, use_short_month: true, start_year: 1800, end_year: DateTime.now.year, default: Time.now, date_separator: " / "}, {style: "width: 90px;"} %>
-        </div>
+    <div class="form-group">
+      <%= f.label :published_date, nil, class: "col-sm-3 control-label" %>
+      <div class="col-sm-8">
+        <%= f.date_select :published_date, { order: [:month, :day, :year], prompt: true, use_short_month: true, start_year: 1800, end_year: DateTime.now.year, default: Time.now }, { class: "form-control", style: "float: left; width: 90px;" } %>
       </div>
+    </div>
 
-      <div class="control-group">
-        <%= f.label :pages, nil, class: "control-label" %>
-        <div class="controls">
-          <%= f.text_field :pages, maxlength:5 %>
-        </div>
+    <div class="form-group">
+      <%= f.label :pages, nil, class: "col-sm-3 control-label" %>
+      <div class="col-sm-8">
+        <%= f.text_field :pages, maxlength: 5, class: "form-control" %>
       </div>
+    </div>
 
-      <div class="control-group">
-        <%= f.label :description, nil, class: "control-label" %>
-        <div class="controls">
-          <%= f.text_area :description, rows: 15 %>
-        </div>
+    <div class="form-group">
+      <%= f.label :description, nil, class: "col-sm-3 control-label" %>
+      <div class="col-sm-8">
+        <%= f.text_area :description, rows: 15, class: "form-control" %>
       </div>
+    </div>
 
-      <div class="control-group">
-        <%= f.label :categories, nil, class: "control-label" %>
-        <div class="controls">
-          
-        <% if @categories_all.present? %>
-          <ul class="categories span4">
-          <% for category in @categories_all do %>
-            <li>
-              <label class="checkbox">
+    <div class="form-group">
+      <%= f.label :categories, nil, class: "col-sm-3 control-label" %>
+      <div class="col-sm-8">
 
-              <% if new_form == true %>
-                <%= check_box_tag "categories[]", category.id %>
+      <% if @categories_all.present? %>
+        <% for category in @categories_all do %>
+          <div class="checkbox">
+            <label>
+
+            <% if new_form == true %>
+              <%= check_box_tag "categories[]", category.id %>
+            <% else %>
+              <% if @categories.include?(category) %>
+                <%= check_box_tag "categories[]", category.id, :checked => true %>
               <% else %>
-                <% if @categories.include?(category) %>
-                  <%= check_box_tag "categories[]", category.id, :checked => true %>
-                <% else %>
-                  <%= check_box_tag "categories[]", category.id %>
-                <% end %>
+                <%= check_box_tag "categories[]", category.id %>
               <% end %>
+            <% end %>
 
-              <span><%= category.name.html_safe %></span></label>
-            </li>
-          <% end %>
-          </ul>
-        <% else %>
-          <label class="checkbox"><strong>No categories found</strong></label>
+            <%= category.name.html_safe %></label>
+          </div>
         <% end %>
+      <% else %>
+        <label class="checkbox"><strong>No categories found</strong></label>
+      <% end %>
 
-        </div>
       </div>
-      
-      <div class="control-group">
-        <div class="controls">
-          <%= f.submit button_label, class: "btn btn-primary" %>
-          <%= link_to "Cancel", cancel_path, class: "btn btn-primary" %>
-        </div>
+    </div>
+    
+    <div class="form-group">
+      <div class="col-sm-5 col-sm-offset-3">
+        <%= f.submit button_label, class: "btn btn-primary" %>
+        <%= link_to "Cancel", cancel_path, class: "btn btn-primary" %>
       </div>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 </div>

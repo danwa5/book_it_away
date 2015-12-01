@@ -13,8 +13,13 @@ class GbController < ApplicationController
       book.author = author
       book.update_attributes(book_params)
 
-      category = Category.where(name: category_params[:name]).first_or_create!
-      book.categories << category if !book.categories.include?(category)
+      if category_params[:name].present?
+        category = Category.where(name: category_params[:name]).first_or_create!
+
+        if !book.categories.include?(category)
+          book.categories << category
+        end
+      end
 
       flash[:success] = 'Author and book data successfully imported!'
       redirect_to author

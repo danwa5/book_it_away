@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Book do
   let(:book) { create(:book) }
@@ -21,16 +21,16 @@ describe Book do
   describe 'validations' do
     describe '#isbn' do
       it { is_expected.to validate_presence_of(:isbn) }
-      it { is_expected.to validate_uniqueness_of(:isbn) }
-      it { is_expected.to ensure_length_of(:isbn).is_equal_to(10) }
+      it { is_expected.to validate_uniqueness_of(:isbn).case_insensitive }
+      it { is_expected.to validate_length_of(:isbn).is_equal_to(10) }
       it { is_expected.not_to allow_value('123456789a').for(:isbn) }
     end
     describe '#title' do
       it { is_expected.to validate_presence_of(:title) }
-      it { is_expected.to ensure_length_of(:title).is_at_most(100) }
+      it { is_expected.to validate_length_of(:title).is_at_most(200) }
     end
     describe '#publisher' do
-      it { is_expected.to ensure_length_of(:publisher).is_at_most(50) }
+      it { is_expected.to validate_length_of(:publisher).is_at_most(50) }
     end
     describe '#pages' do
       it { is_expected.to validate_numericality_of(:pages).is_greater_than_or_equal_to(1) }
@@ -54,11 +54,11 @@ describe Book do
   end
 
   describe 'scopes' do
-    let!(:book_1) { create(:book, title: 'D')}
-    let!(:book_2) { create(:book, title: 'B')}
-    let!(:book_3) { create(:book, title: 'C')}
-    let!(:book_4) { create(:book, title: 'A')}
-    let!(:book_5) { create(:book, title: 'E')}
+    let!(:book_1) { create(:book, title: 'D') }
+    let!(:book_2) { create(:book, title: 'B') }
+    let!(:book_3) { create(:book, title: 'C') }
+    let!(:book_4) { create(:book, title: 'A') }
+    let!(:book_5) { create(:book, title: 'E') }
 
     describe 'default scope' do
       it 'returns books in ascending order of title' do
@@ -66,8 +66,8 @@ describe Book do
       end
     end
     describe '.last_added' do
-      it 'returns the last 4 books in descending order of created_at' do
-        expect(described_class.last_added).to eq([book_5, book_4, book_3, book_2])
+      it 'returns the last 3 books in descending order of created_at' do
+        expect(described_class.last_added).to eq([book_5, book_4, book_3])
       end
     end
   end

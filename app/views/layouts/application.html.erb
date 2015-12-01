@@ -1,28 +1,120 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="Daniel Lee">
+    <!--link rel="icon" href="../../favicon.ico" -->
+
     <title><%= full_title(yield(:title)) %></title>
-    <%= stylesheet_link_tag "application", media: "all",
-                                           "data-turbolinks-track" => true %>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Spinnaker" />
+    <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+    <%= stylesheet_link_tag "jumbotron", media: "all", "data-turbolinks-track" => true %>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
     <%= render 'layouts/shim' %>
   </head>
   <body>
     <%= render 'layouts/header' %>
-    <div class="container">
-      <div class="main">
-      
-      <% flash.each do |key, value| %>
-        <div class="alert alert-<%= key %>"><%= value %></div>
-      <% end %>
-      <%= yield %>
-      
+    <div class="jumbotron">
+      <div class="container">
+        <div id="main-tile">
+          <h1>
+            <span style="letter-spacing:0.1em;">THE BOOK LOVER</span>
+          </h1>
+          <h6><span style="letter-spacing:0.1em;">======= READ ALL ABOUT IT =======</span></h6>
+        </div>
       </div>
-      
+    </div>
+
+    <div class="container">
+      <div class="row">
+
+        <div class="col-sm-9 blog-main">
+          <% flash.each do |key, value| %>
+            <div class="alert alert-<%= key %>"><%= value %></div>
+          <% end %>
+
+          <%= yield %>
+        </div><!-- /.blog-main -->
+
+        <div class="col-sm-3 blog-sidebar">
+
+          <div class="sidebar-module sidebar-module-inset">
+            <div class="sidebar-title">
+              <h3>About Us</h3>
+            </div>
+            <div class="sidebar-body">
+              <p>This is the world's best book blog. If you haven't heard of us, you have now. So join now! If not, just make a donation to me. Thanks!</p>
+            </div>
+          </div>
+
+          <div class="sidebar-module">
+            <div class="sidebar-title">
+              <h3>What I'm Reading</h3>
+            </div>
+            <div class="sidebar-body">
+              <div class="sidebar-book">
+                <%= image_tag "books/a-walk-in-the-woods.jpg" %>
+              </div>
+            </div>
+          </div>
+
+          <div class="sidebar-module">
+            <div class="sidebar-title">
+              <h3>Featured Review</h3>
+            </div>
+            <div class="sidebar-body">
+              <div class="sidebar-review">
+                <%= image_tag "books/into-thin-air.jpg" %>
+              </div>
+            </div>
+          </div>
+
+          <div class="sidebar-module">
+            <div class="sidebar-title">
+              <h3>Follow Us</h3>
+            </div>
+            <div class="sidebar-body">
+              <%= image_tag "icon-facebook.png" %>
+              <%= image_tag "icon-twitter.png" %>
+              <%= image_tag "icon-google-plus.png" %>
+            </div>
+          </div>
+
+          <div class="sidebar-module">
+            <div class="sidebar-title">
+              <h3>Archives</h3>
+            </div>
+            <div class="sidebar-body">
+              <ol class="list-unstyled">
+                <li><a href="#">March 2014</a></li>
+                <li><a href="#">February 2014</a></li>
+                <li><a href="#">January 2014</a></li>
+                <li><a href="#">December 2013</a></li>
+                <li><a href="#">November 2013</a></li>
+                <li><a href="#">October 2013</a></li>
+                <li><a href="#">September 2013</a></li>
+                <li><a href="#">August 2013</a></li>
+                <li><a href="#">July 2013</a></li>
+                <li><a href="#">June 2013</a></li>
+                <li><a href="#">May 2013</a></li>
+                <li><a href="#">April 2013</a></li>
+              </ol>
+            </div>
+          </div>
+        </div><!-- /.blog-sidebar -->
+
+      </div><!-- /.row -->
+
+      <hr>
+
       <%= render 'layouts/footer' %>
       <%= debug(params) if Rails.env.development? %>
-            
-    </div>
+
+    </div> <!-- /container -->
   </body>
 </html>

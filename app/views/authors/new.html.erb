@@ -1,4 +1,8 @@
 <% provide(:title, 'New Author') %>
-<h1>New Author</h1>
 
-<%= render partial: 'authors/form', locals: { button_label: "Add Author", cancel_path: authors_path } %>
+<div class="blog-post">
+  <div class="page-header">
+    <h2>New Author</h2>
+  </div>
+  <%= render partial: 'authors/form', locals: { button_label: "Add Author", cancel_path: authors_path } %>
+</div>

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe User do
   let(:user) { create(:user) }
@@ -15,15 +15,15 @@ describe User do
   describe 'validations' do
     describe '#last_name' do
       it { is_expected.to validate_presence_of(:last_name) }
-      it { is_expected.to ensure_length_of(:last_name).is_at_most(50) }
+      it { is_expected.to validate_length_of(:last_name).is_at_most(50) }
     end
     describe '#first_name' do
       it { is_expected.to validate_presence_of(:first_name) }
-      it { is_expected.to ensure_length_of(:first_name).is_at_most(50) }
+      it { is_expected.to validate_length_of(:first_name).is_at_most(50) }
     end
     describe '#username' do
       it { is_expected.to validate_presence_of(:username) }
-      it { is_expected.to ensure_length_of(:username).is_at_most(20) }
+      it { is_expected.to validate_length_of(:username).is_at_most(20) }
     end
     describe '#email' do
       it { is_expected.to validate_presence_of(:email) }
@@ -31,7 +31,7 @@ describe User do
       it { expect(subject.email).to match(described_class::VALID_EMAIL_REGEX) }
     end
     describe '#password' do
-      it { is_expected.to ensure_length_of(:password).is_at_least(6) }
+      it { is_expected.to validate_length_of(:password).is_at_least(6) }
     end
   end
 

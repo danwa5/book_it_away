@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Author do
   let(:author) { create(:author) }
@@ -30,11 +30,11 @@ describe Author do
   describe 'validations' do
     describe '#last_name' do
       it { is_expected.to validate_presence_of(:last_name) }
-      it { is_expected.to ensure_length_of(:last_name).is_at_most(50) }
+      it { is_expected.to validate_length_of(:last_name).is_at_most(50) }
     end
     describe '#first_name' do
       it { is_expected.to validate_presence_of(:first_name) }
-      it { is_expected.to ensure_length_of(:first_name).is_at_most(50) }
+      it { is_expected.to validate_length_of(:first_name).is_at_most(50) }
       it { is_expected.to validate_uniqueness_of(:first_name).scoped_to(:last_name) }
     end
     describe '#nationality' do

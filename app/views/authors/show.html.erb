@@ -1,20 +1,25 @@
 <% provide(:title, @author.name) %>
 
-<h3><%= @author.name %></h3>
-<h3>Date of Birth: <%= @author.formatted_dob %></h3>
-<h3>Nationality: <%= @author.nationality %></h3>
+<div class="blog-post">
+  <div class="page-header">
+    <h2>Author Profile</h2>
+  </div>
 
-<br/>
+  <h4><%= @author.name %></h3>
+  <h4><%= @author.formatted_dob %></h3>
+  <h4><%= @author.nationality %></h3>
 
-<% if signed_in? %>
-  <%= link_to "Add Book", new_author_book_path(@author), class: "btn btn-primary" %>
-  <% if current_user.admin? %>
-    <%= link_to "Edit Author", edit_author_path, class: "btn btn-primary" %>
-    <% if !@books.any? %>
-      <%= link_to "Delete Author", author_path, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-primary" %>
+  <br/>
+
+  <% if signed_in? %>
+    <%= link_to "Add Book", new_author_book_path(@author), class: "btn btn-primary" %>
+    <% if current_user.admin? %>
+      <%= link_to "Edit Author", edit_author_path, class: "btn btn-primary" %>
+      <% if !@books.any? %>
+        <%= link_to "Delete Author", author_path, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-primary" %>
+      <% end %>
     <% end %>
   <% end %>
-<% end %>
 
 <br/><br/>
 
@@ -23,11 +28,11 @@
     
     <% @books.each_with_index do |book, index| %>
     
-    <% if index%4 == 0 %>
+    <% if index%3 == 0 %>
       <div class="books-row">
     <% end %>
     
-    <div class="book-tile">
+    <div class="book-tile col-sm-3">
       <div class="book-cover">
         <%= link_to image_tag(book.image), author_book_path(@author, book) %>
       </div>
@@ -46,7 +51,7 @@
       </div>
     </div>
 
-    <% if (index+1)%4 == 0 || (index+1) == @books.length %>
+    <% if (index+1)%3 == 0 || (index+1) == @books.length %>
       </div>
     <% end %>
   
@@ -62,3 +67,5 @@
   <% else %>
     <h2>No books found for this author</h2>
   <% end %>
+
+</div>

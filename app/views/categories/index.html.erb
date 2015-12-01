@@ -1,27 +1,34 @@
 <% provide(:title, 'All Book Categories') %>
-<h1>All Book Categories</h1>
 
-<div class="span6 offset3">
-  <table class="table table-striped">
-  <thead>
-    <tr>
-      <th class="span1">#</th>
-      <th class="span4">Name</th>
-      <th class="span1">Books</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @categories.each_with_index do |s,i| %>
-    <tr>
-      <td><span class="muted"><%= i+1 %></span></td>
-      <td><%= s.name %> (<%= link_to 'Edit', edit_category_path(s) %>)</td>
-      <td><%= s.books.count %></td>
-    </tr>
-    <% end %>
-  </tbody>
-  </table>
-  <br/>
-  <div class="span2 offset1">
-    <%= link_to "Add new category", new_category_path, class: "btn btn-primary" %>
+<div class="blog-post">
+  <div class="page-header">
+    <h2>All Book Categories</h2>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th class="col-sm-1 center">#</th>
+        <th class="col-sm-8 center">Name</th>
+        <th class="col-sm-2 center">Books</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @categories.each_with_index do |s,i| %>
+      <tr>
+        <td class="center"><span class="muted"><%= i+1 %></span></td>
+        <td><%= s.name %> (<%= link_to 'Edit', edit_category_path(s) %>)</td>
+        <td class="center"><%= s.books.count %></td>
+      </tr>
+      <% end %>
+    </tbody>
+    </table>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+      <%= link_to "Add new category", new_category_path, class: "btn btn-primary" %>
+    </div>
   </div>
 </div>

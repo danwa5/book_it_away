@@ -2,11 +2,12 @@
   <ul class="book-details">
     <li>Rating: <%= review.rating %></li>
     <li>Comments: <%= review.comments %></li>
-    <li><i class="icon-thumbs-up"></i>
-        <%= link_to review.likes, author_book_review_like_path(@author, @book, review.id), method:"put", class:"btn btn-success btn-mini" %> /
-        <i class="icon-thumbs-down"></i>
-        <%= link_to review.dislikes, author_book_review_dislike_path(@author, @book, review.id), method:"put", class:"btn btn-danger btn-mini" %></li>
-        
+    <li>
+      <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+      <%= button_to(review.likes, author_book_review_like_path(@author, @book, review.id), class:"btn btn-success btn-xs", method: :put )%> /
+      <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+      <%= button_to review.dislikes, author_book_review_dislike_path(@author, @book, review.id), class:"btn btn-danger btn-xs", method: :put %>
+    </li>
     <li>Reviewed on <%= date_format(review.created_at) %> by <%= review.user.name %>
 
     <% if current_user == review.user %>

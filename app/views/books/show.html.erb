@@ -1,51 +1,56 @@
 <% provide(:title, @book.title) %>
 
-<div id="book-main">
-  <div id="book-main-cover">
-    <%= image_tag(@book.image) %>
-  </div>
-  <div id="book-main-details">
-    <h3><%= @book.title %></h3>
-    <ul class="book-details">
-      <li>by <%= link_to @author.name, author_path(@author) %>
-      <li>ISBN: <%= @book.isbn %>
-      <li>Publisher: <%= @book.publisher %>
-      <li>Published Date: <%= date_format(@book.published_date) %>
-      <li>Pages: <%= @book.pages %>
-      <li>Book-It-Away Average Rating: <span class="star"></span> (<%= @book.reviews.count %>)
-      <li>Google Books Average Rating: <span class="g-star"></span> (<%= @book.ratings_count.nil? ? "-" : @book.ratings_count %>)
-      <li><%= @book.category_string %>
-    </ul>
-  </div>
-
-  <div id="book-description"><%= @book.description %></div>
-</div>
-
-<div id="book-timestamps">
-  <div class="row-fluid">
-    <div style="float:left; width:110px; vertical-align:middle;">
-      <%= link_to "Edit Book", edit_author_book_path(@author, @book), class:"btn btn-primary" %>
+<div class="blog-post">
+  <div id="book-main">
+    <div id="book-main-cover">
+      <%= image_tag(@book.image) %>
     </div>
-    <div style="float:left; width:400px;">
-      <small><ul class="book-details">
-        <li>Created: <%= @book.created_at %>
-        <li>Last updated: <%= @book.updated_at %>
-      </ul></small>
+    <div id="book-main-details">
+      <h3><%= @book.title %></h3>
+      <ul class="book-details">
+        <li>by <%= link_to @author.name, author_path(@author) %>
+        <li>ISBN: <%= @book.isbn %>
+        <li>Publisher: <%= @book.publisher %>
+        <li>Published Date: <%= date_format(@book.published_date) %>
+        <li>Pages: <%= @book.pages %>
+        <li>Book-It-Away Average Rating: <span class="star"></span> (<%= @book.reviews.count %>)
+        <li>Google Books Average Rating: <span class="g-star"></span> (<%= @book.ratings_count.nil? ? "-" : @book.ratings_count %>)
+        <li><%= @book.category_string %>
+      </ul>
+    </div>
+
+    <div id="book-description"><%= @book.description %></div>
+  </div>
+
+  <div id="book-timestamps">
+    <div class="row-fluid">
+      <div style="float:left; width:110px; vertical-align:middle;">
+        <%= link_to "Edit Book", edit_author_book_path(@author, @book), class:"btn btn-primary" %>
+      </div>
+      <div style="float:left; width:400px;">
+        <small><ul class="book-details">
+          <li>Created: <%= @book.created_at %>
+          <li>Last updated: <%= @book.updated_at %>
+        </ul></small>
+      </div>
     </div>
   </div>
-</div>
 
-<div id="review-main">
-  <h3>Reviews (<%= @reviews.count %>)</h3>
-  <%= link_to "Write a review", new_author_book_review_path(@author, @book), class:"btn btn-primary" %>
-  <br/><br/>
-  
-  <% if @reviews.any? %>
-    <%= render partial: 'books/review', collection: @reviews %>
-  <% end %>
+  <div id="review-main">
+    <h3>Reviews (<%= @reviews.count %>)</h3>
+    <%= link_to "Write a review", new_author_book_review_path(@author, @book), class:"btn btn-primary" %>
+    <br/><br/>
+    
+    <% if @reviews.any? %>
+      <%= render partial: 'books/review', collection: @reviews %>
+    <% end %>
+  </div>
+
+  Page Visits: <%= @visits %>
 </div>
 
 <script>
+$(document).ready(function() {
   $('.star').raty({
     score: <%= @book.reviews.count == 0 ? 0 : @book.reviews.average(:rating) %>
   });
@@ -53,6 +58,5 @@
   $('.g-star').raty({
     score: <%= @book.ratings_count == 0 || @book.ratings_count.nil? ? 0 : @book.average_rating %>
   });
+});
 </script>
-
-Page Visits: <%= @visits %>

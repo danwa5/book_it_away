@@ -9,11 +9,8 @@ class StaticPagesController < ApplicationController
   def about
   end
   
-  def contact
-  end
-  
   def search
-    @subjects_all = Subject.all.order('name ASC')
+    @categories_all = Category.all.order('name ASC')
   end
   
   def results
@@ -63,9 +60,9 @@ class StaticPagesController < ApplicationController
   end
   
   def books
-    @books_most_reviewed = Book.find_by_sql "select b.* from books b, reviews r where b.id = r.book_id group by b.id order by count(r.book_id) DESC limit 4"
+    @books_most_reviewed = Book.find_by_sql "select b.* from books b, reviews r where b.id = r.book_id group by b.id order by count(r.book_id) DESC limit 3"
     
-    @books_highest_rated = Book.find_by_sql "select b.* from books b, reviews r where b.id = r.book_id group by b.id having count(r.book_id) > 1 order by avg(r.rating) DESC limit 4"
+    @books_highest_rated = Book.find_by_sql "select b.* from books b, reviews r where b.id = r.book_id group by b.id having count(r.book_id) > 1 order by avg(r.rating) DESC limit 3"
     
     @books_latest_added = Book.last_added
     
@@ -88,7 +85,7 @@ class StaticPagesController < ApplicationController
       if results.count > 0
         process_google_books_info(results)
       else
-        flash[:alert] = "No books found. Please try another search."
+        flash[:warning] = "No books found. Please try another search."
         redirect_to search_path
       end
     end

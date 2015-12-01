@@ -1,4 +1,8 @@
 <% provide(:title, "Edit author") %>
-<h1>Update Author</h1>
 
-<%= render partial: 'authors/form', locals: { button_label: "Save Changes", cancel_path: author_path(@author) } %>
+<div class="blog-post">
+  <div class="page-header">
+    <h2>Update Author</h2>
+  </div>
+  <%= render partial: 'authors/form', locals: { button_label: "Save Changes", cancel_path: author_path(@author) } %>
+</div>

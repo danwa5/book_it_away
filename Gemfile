@@ -5,12 +5,12 @@ ruby '2.2.3'
 gem 'rails', '~> 4.1.8'
 gem 'pg', '0.15.1'
 gem 'redis', '~> 3.2.1'
-gem 'bootstrap-sass', '2.3.2.0'
+gem 'bootstrap-sass', '~> 3.3', '>= 3.3.6'
 gem 'bcrypt-ruby', '3.1.2'
 
 gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate', '0.0.9'
-gem 'sass-rails', '~> 4.0.0'
+gem 'sass-rails', '>= 3.2'
 gem 'uglifier', '2.1.1'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails', '2.2.1'
@@ -24,7 +24,6 @@ gem 'friendly_id', '~> 5.1.0'
 group :development, :test do
   gem 'rspec-rails', '~> 3.1.0'
   gem 'rspec-its', '~> 1.0.1'
-  gem 'shoulda-matchers'
   gem 'factory_girl_rails', '~> 4.5.0'
   gem 'faker', '~> 1.5.0'
   gem 'byebug'
@@ -41,6 +40,7 @@ group :test do
   gem 'simplecov', require: false
   # gem 'cucumber-rails', '1.3.0', :require => false
   gem 'database_cleaner', '~> 1.3.0'
+  gem 'shoulda-matchers'
   gem 'awesome_print'
 end
 

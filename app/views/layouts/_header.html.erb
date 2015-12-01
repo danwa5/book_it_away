@@ -1,36 +1,53 @@
-<header class="navbar navbar-fixed-top navbar-inverse">
-  <div class="navbar-inner">
-    <div class="container">
-      <%= link_to "book-it-away", root_path, id: "logo" %>
-      <nav>
-        <ul class="nav pull-right">
-          <% if signed_in? %>
-            <li><%= link_to "GB Search", search_gb_index_path %></li>
-            <li><%= link_to "Search", search_path %></li>
-            <li><%= link_to "Users", users_path %></li>
-            <li><%= link_to "Authors", authors_path %></li>
-            <li><%= link_to "Books", books_path %></li>
-            <% if current_user.admin? %>
-              <li><%= link_to "Categories", categories_path %></li>
-            <% end %>
-            <li id="fat-menu" class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                Account <b class="caret"></b>
-              </a>
-              <ul class="dropdown-menu">
-                <li><%= link_to "Profile", current_user %></li>
-                <li><%= link_to "Settings", edit_user_path(current_user) %></li>
-                <li class="divider"></li>
-                <li>
-                  <%= link_to "Sign out", signout_path, method: "delete" %>
-                </li>
-              </ul>
-            </li>
-          <% else %>
-            <li><%= link_to "Sign in", signin_path %></li>
-          <% end %>
-        </ul>
-      </nav>
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
     </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <% if signed_in? %>
+        <ul class="nav navbar-nav">
+          <li class="active"><%= link_to "BLOG", home_path %></li>
+          <li><%= link_to "GBSEARCH", search_gb_index_path %></li>
+          <li><%= link_to "SEARCH", search_path %></li>
+          <li><%= link_to "AUTHORS", authors_path %></li>
+          <li><%= link_to "BOOKS", books_path %></li>
+          <li id="fat-menu" class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">  ACCOUNT <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "PROFILE", current_user %></li>
+              <li><%= link_to "SETTINGS", edit_user_path(current_user) %></li>
+              <li class="divider"></li>
+            <% if current_user.admin? %>
+              <li><%= link_to "USERS", users_path %></li>
+              <li><%= link_to "CATEGORIES", categories_path %></li>
+              <li class="divider"></li>
+            <% end %>
+              <li>
+                <%= link_to "SIGN OUT", signout_path, method: "delete" %>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      <% else %>
+        <div class="pull-right">
+          &nbsp;&nbsp;<%= link_to('Sign Up', signup_path, class: 'btn btn-large btn-success navbar-btn') %>
+        </div>
+        <%= form_for(:session, url: sessions_path, html: { class: "navbar-form navbar-right" }) do |f| %>
+          <div class="form-group">
+            <%= f.text_field :email, class: "form-control", placeholder: "Email" %>
+          </div>
+          <div class="form-group">
+            <%= f.password_field :password, class: "form-control", placeholder: "Password" %>
+          </div>
+          <%= f.submit "Sign In", class: "btn btn-primary" %>
+        <% end %>
+      <% end %>
+    </div><!--/.navbar-collapse -->
   </div>
-</header>
+</nav>

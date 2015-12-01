@@ -6,7 +6,7 @@ class Book < ActiveRecord::Base
   has_many :reviews
   has_and_belongs_to_many :categories
 
-  accepts_nested_attributes_for :categories
+  accepts_nested_attributes_for :categories, reject_if: :not_new_book_category?
 
   attr_accessor :gbook
   
@@ -15,15 +15,15 @@ class Book < ActiveRecord::Base
     self.publisher = publisher.to_s.strip.titleize
   }
 
-  validates :isbn, presence: true, uniqueness: true, format: { with: /[0-9]{10}/}, length: { is: 10 }
-  validates :title, presence: true, length: { maximum: 100 }
+  validates :isbn, presence: true, uniqueness: { case_sensitive: false }, format: { with: /[0-9]{10}/}, length: { is: 10 }
+  validates :title, presence: true, length: { maximum: 200 }
   validates :publisher, allow_nil: true, length: { maximum: 50 }
   validates :pages, numericality: { greater_than_or_equal_to: 1, allow_blank: true }
   validates :author, presence: true
   
   default_scope -> { order('title ASC') }
 
-  scope :last_added, -> { unscope(:order).order('created_at DESC').limit(4) }
+  scope :last_added, -> { unscope(:order).order('created_at DESC').limit(3) }
   
   class << self
     def title_search(query)
@@ -96,5 +96,10 @@ class Book < ActiveRecord::Base
     unless categories_to_remove.blank?
       self.categories.delete(categories_to_remove)
     end
+  end
+
+  def not_new_book_category?
+    # TODO: reject if category name is blank or is already associated with book
+    true
   end
 end

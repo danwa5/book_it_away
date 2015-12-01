@@ -1,6 +1,12 @@
-<% provide(:title, 'The Top Books') %>
-<h1>The Top Books</h1>
+<% provide(:title, 'The Top 10') %>
 
+<div class="blog-post">
+  <div class="page-header">
+    <h2>The Top 10</h2>
+  </div>
+
+  <div class="row">
+  
 <% @books = @books_most_reviewed %>
 <%= render partial: 'top_books', locals: {top_title: "The Most Reviewed", group: "a"} %>
 
@@ -10,3 +16,5 @@
 <% @books = @books_latest_added %>
 <%= render partial: 'top_books', locals: {top_title: "The Latest Adds", group: "c"} %>
 
+  </div>
+</div>
