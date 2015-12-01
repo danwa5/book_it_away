@@ -18,7 +18,6 @@ BookApp::Application.routes.draw do
   get '/signup',     to: 'users#new'
   get '/signin',     to: 'sessions#new'
   get '/home',       to: 'static_pages#home'
-  get '/help',       to: 'static_pages#help'
   get '/about',      to: 'static_pages#about'
   get '/books',      to: 'static_pages#books'
   get '/results',    to: 'static_pages#results'
