@@ -1,20 +1,26 @@
-<% provide(:title, 'Search') %>
-<h1>Search</h1>
+<% provide(:title, 'Google Books Search') %>
 
-<div class="row">
-<%= form_tag(results_gb_index_path, method: 'get', class: "form-horizontal span5 offset2", id: "search-form") do %>
+<div class="blog-post">
+  <div class="page-header">
+    <h2>Google Books Search</h2>
+  </div>
 
-  <div class="control-group">
-    <%= label_tag :isbn, "ISBN", {class:"control-label"} %>
-    <div class="controls">
-      <%= text_field_tag :isbn, nil, {class:"input-block-level span4", maxlength:10} %>
+  <div class="row">
+  <%= form_tag(results_gb_index_path, method: "get", class: "form-horizontal", id: "search-form") do %>
+
+    <div class="form-group">
+      <%= label_tag :isbn, "ISBN", class: "col-sm-3 control-label" %>
+      <div class="col-sm-8">
+        <%= text_field_tag :isbn, nil, class: "form-control", maxlength: 10 %>
+      </div>
     </div>
-  </div>
 
-  <div class="form-actions span4">
-    <%= submit_tag "Search", class: "btn btn-primary" %>
-    <%#= button_tag "Reset", class: "btn" %>
+    <div class="form-group">
+      <div class="col-sm-4 col-sm-offset-4">
+        <%= submit_tag "Search", class: "btn btn-primary" %>
+      </div>
+    </div>
+
+  <% end %>
   </div>
-<% end %>
 </div>
-
