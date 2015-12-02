@@ -11,11 +11,11 @@ class SessionsController < ApplicationController
         sign_in user
         redirect_back_or authors_path
       else
-        flash[:error] = 'Please activate your account by following the instructions in the account confirmation email you received to proceed.'
+        flash[:danger] = 'Please activate your account by following the instructions in the account confirmation email you received to proceed.'
         render 'new'
       end
     else
-      flash[:error] = 'Invalid email/password combination'
+      flash[:danger] = 'Invalid email/password combination'
       render 'new'
     end
   end

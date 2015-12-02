@@ -55,7 +55,7 @@ class UsersController < ApplicationController
       flash[:success] = 'Welcome to the Book-It-Away App! Your account has been confirmed.'
       redirect_to authors_path
     else
-      flash[:error] = 'Sorry. User does not exist.'
+      flash[:danger] = 'Sorry. User does not exist.'
       redirect_to root_url
     end
   end

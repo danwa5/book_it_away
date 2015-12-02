@@ -24,7 +24,7 @@ class GbController < ApplicationController
       flash[:success] = 'Author and book data successfully imported!'
       redirect_to author
     else
-      flash[:error] = "Author and book data could not be imported for ISBN #{book_params[:isbn]}."
+      flash[:danger] = "Author and book data could not be imported for ISBN #{book_params[:isbn]}."
       render 'search'
     end
   end
@@ -34,14 +34,14 @@ class GbController < ApplicationController
 
   def results
     if params[:isbn].blank?
-      flash[:error] = 'ISBN is blank!'
+      flash[:danger] = 'ISBN is blank!'
       redirect_to search_gb_index_path
     end
 
     @gbook = GoogleBooksService.call(params[:isbn])
 
     if @gbook.nil?
-      flash[:error] = 'ISBN cannot be found in Google Books API!'
+      flash[:danger] = 'ISBN cannot be found in Google Books API!'
       redirect_to search_gb_index_path
     else
       @author = Author.new

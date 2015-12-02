@@ -34,7 +34,10 @@
 
         <div class="col-sm-9 blog-main">
           <% flash.each do |key, value| %>
-            <div class="alert alert-<%= key %>"><%= value %></div>
+            <div class="alert alert-<%= key %>">
+              <a class="close" data-dismiss="alert">×</a>
+              <%= value %>
+            </div>
           <% end %>
 
           <%= yield %>

@@ -44,7 +44,7 @@ class AuthorsController < ApplicationController
   
   def destroy
     if @author.books.present? || !current_user.admin
-      flash[:error] = 'Deleting this author is not permissible!'
+      flash[:danger] = 'Deleting this author is not permissible!'
       redirect_to @author
     else
       @author.destroy
