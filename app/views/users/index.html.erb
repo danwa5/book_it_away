@@ -1,19 +1,40 @@
 <% provide(:title, 'All users') %>
-<h1>All users</h1>
 
-<%= will_paginate %>
+<div class="blog-post">
+  <div class="page-header">
+    <h2>All Users</h2>
+  </div>
 
-<ul class="users">
-  <% @users.each do |user| %>
-    <li>
-      <%= link_to user.first_name + " " + user.last_name, user %>
-      <% if current_user.admin? && !current_user?(user) %>
-    |   <%= link_to "delete", user, method: :delete,
-                                  data: { confirm: "You sure?" } %>
+  <div class="row">
+    <div class="col-sm-12">
+    <%= will_paginate %>
+
+    <div class="table-responsive">
+      <table class="table table-condensed">
+        <tr class="active">
+          <td><strong>Username</strong></td>
+          <td><strong>Name</strong></td>
+          <td class="center"><strong>Confirmed?</strong></td>
+          <td class="center"><strong>Admin</strong></td>
+          <td class="center"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></td>
+        </tr>
+      <% @users.each do |user| %>
+        <tr<%= user.admin ? ' class=warning' : '' %>>
+          <td><%= link_to user.username, user %></td>
+          <td><%= user.name %></td>
+          <td class="center"><%= user.email_confirmed ? date_format(user.created_at) : 'No' %></td>
+          <td class="center"><%= user.admin ? 'Yes' : 'No' %></td>
+          <% if current_user.admin? && !current_user?(user) %>
+            <td class="center"><%= link_to '<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>'.html_safe, user, method: :delete, data: { confirm: "You sure?" } %></td>
+          <% else %>
+            <td></td>
+          <% end %>
+        </tr>
       <% end %>
-    </li>
-  <% end %>
-</ul>
+      </table>
+    </div>
 
-<%= will_paginate %>
-
+    <%= will_paginate %>
+    </div>
+  </div>
+</div>

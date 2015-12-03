@@ -60,6 +60,12 @@ describe User do
     it { is_expected.to respond_to(:authenticate) }
     it { is_expected.to respond_to(:admin) }
   end
+
+  describe '#to_param' do
+    it 'must be the same as the username' do
+      expect(subject.to_param).to eq(subject.username)
+    end
+  end
   
   describe '#admin' do
     context 'user is not an admin' do

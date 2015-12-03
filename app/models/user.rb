@@ -23,6 +23,10 @@ class User < ActiveRecord::Base
       Digest::SHA1.hexdigest(token.to_s)
     end
   end
+
+  def to_param
+    username
+  end
   
   def name
     first_name + ' ' + last_name

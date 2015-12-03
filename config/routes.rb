@@ -1,5 +1,5 @@
 BookApp::Application.routes.draw do
-  resources :users do
+  resources :users, path: 'account' do
     member do
       get :confirm_email
     end
