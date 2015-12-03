@@ -2,10 +2,10 @@
 
 <div class="blog-post">
   <div id="book-main">
-    <div id="book-main-cover">
+    <div class="book-main-cover">
       <%= image_tag(@book.image) %>
     </div>
-    <div id="book-main-details">
+    <div class="book-main-details">
       <h3><%= @book.title %></h3>
       <ul class="book-details">
         <li>by <%= link_to @author.name, author_path(@author) %>

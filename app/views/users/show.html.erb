@@ -1,8 +1,8 @@
-<% provide(:title, @user.name) %>
+<% provide(:title, "Account Settings") %>
 
 <div class="blog-post">
   <div class="page-header">
-    <h2>My Profile</h2>
+    <h2>Account Settings <small>(<%= link_to "edit", edit_user_path(current_user) %>)</small></h2>
   </div>
 
   <div class="row">

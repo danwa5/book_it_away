@@ -17,20 +17,17 @@
           <li><%= link_to "AUTHORS", authors_path %></li>
           <li><%= link_to "BOOKS", books_path %></li>
           <li id="fat-menu" class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">  ACCOUNT <span class="caret"></span>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.first_name.upcase %> <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-              <li><%= link_to "PROFILE", current_user %></li>
-              <li><%= link_to "SETTINGS", edit_user_path(current_user) %></li>
+              <li><%= link_to "SETTINGS", current_user %></li>
               <li class="divider"></li>
             <% if current_user.admin? %>
               <li><%= link_to "USERS", users_path %></li>
               <li><%= link_to "CATEGORIES", categories_path %></li>
               <li class="divider"></li>
             <% end %>
-              <li>
-                <%= link_to "SIGN OUT", signout_path, method: "delete" %>
-              </li>
+              <li><%= link_to "SIGN OUT", signout_path, method: "delete" %></li>
             </ul>
           </li>
         </ul>

@@ -119,6 +119,10 @@ body {
   margin-left: 15px;
 }
 
+.search-result {
+  padding-top: 20px;
+}
+
 /*
  * star rating in form
  */
@@ -288,17 +292,17 @@ ul.categories {
   margin-top: 40px;
 }
 
-#book-main-cover {
+.book-main-cover {
   float: left;
 }
 
-#book-main-cover img {
+.book-main-cover img {
   padding: 3px;
   border: 1px solid #cccccc;
   background-color: ff0
 }
 
-#book-main-details {
+.book-main-details {
   float: left;
   padding-left: 25px;
 }
