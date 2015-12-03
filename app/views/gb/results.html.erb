@@ -1,102 +1,50 @@
 <% provide(:title, @gbook.title) %>
 
-<div id="book-main">
-  <div id="book-main-cover">
-    <%= image_tag(@gbook.image_link) %>
-  </div>
-  <div id="book-main-details">
-    <h3><%= @gbook.title %></h3>
-    <ul class="book-details">
-      <li>by <%= @gbook.authors %>
-      <li>ISBN: <%= @gbook.isbn_10 %>
-      <li>Publisher: <%= @gbook.publisher %>
-      <li>Published Date: <%= @gbook.published_date %>
-      <li>Pages: <%= @gbook.page_count %>
-      <li>Google Books Ratings Count: <span class="star"></span> (<%= @gbook.ratings_count %>)
-      <li>Google Books Average Rating: <span class="g-star"></span> (<%= @gbook.average_rating %>)
-      <li>Categories: <%= @gbook.categories %>
-    </ul>
+<div class="blog-post">
+  <div id="book-main">
+    <div class="book-main-cover">
+      <%= image_tag(@gbook.image_link) %>
+    </div>
+    <div class="book-main-details">
+      <h3><%= @gbook.title %></h3>
+      <ul class="book-details">
+        <li>by <%= @gbook.authors %>
+        <li>ISBN: <%= @gbook.isbn_10 %>
+        <li>Publisher: <%= @gbook.publisher %>
+        <li>Published Date: <%= @gbook.published_date %>
+        <li>Pages: <%= @gbook.page_count %>
+        <li>Google Books Ratings Count: <span class="star"></span> (<%= @gbook.ratings_count %>)
+        <li>Google Books Average Rating: <span class="g-star"></span> (<%= @gbook.average_rating %>)
+        <li>Categories: <%= @gbook.categories %>
+      </ul>
+    </div>
+
+    <div id="book-description"><p><%= @gbook.description %></p></div>
   </div>
 
-  <div id="book-description"><%= @gbook.description %></div>
-</div>
-
-<div class="row">
-  <div class="span7 offset2">
+  <div class="row">
     <%= form_for(@author, url: {action: "create"}, html: {class:"form-horizontal"}) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
 
-      <div class="control-group">
-        <%= f.label :author_last_name, nil, class: "control-label" %>
-        <div class="controls">
-          <%= f.text_field :last_name %>
-        </div>
-      </div>
-
-      <div class="control-group">
-        <%= f.label :author_first_name, nil, class: "control-label" %>
-        <div class="controls">
-          <%= f.text_field :first_name %>
-        </div>
-      </div>
+      <%= f.hidden_field :last_name %>
+      <%= f.hidden_field :first_name %>
 
       <%= f.fields_for :books do |b| %>
-        <div class="control-group">
-          <%= b.label :title, nil, class: "control-label" %>
-          <div class="controls">
-            <%= b.text_field :title %>
-          </div>
-        </div>
-
-        <div class="control-group">
-          <%= b.label :isbn, 'ISBN', class: "control-label" %>
-          <div class="controls">
-            <%= b.text_field :isbn %>
-          </div>
-        </div>
-
-        <div class="control-group">
-          <%= b.label :publisher, nil, class: "control-label" %>
-          <div class="controls">
-            <%= b.text_field :publisher %>
-          </div>
-        </div>
-
-        <div class="control-group">
-          <%= b.label :published_date, nil, class: "control-label" %>
-          <div class="controls">
-            <%= b.text_field :published_date %>
-          </div>
-        </div>
-
-        <div class="control-group">
-          <%= b.label :pages, nil, class: "control-label" %>
-          <div class="controls">
-            <%= b.text_field :pages %>
-          </div>
-        </div>
-
-        <div class="control-group">
-          <%= b.label :description, nil, class: "control-label" %>
-          <div class="controls">
-            <%= b.text_area :description, rows: 15 %>
-          </div>
-        </div>
+        <%= b.hidden_field :title %>
+        <%= b.hidden_field :isbn %>
+        <%= b.hidden_field :publisher %>
+        <%= b.hidden_field :published_date %>
+        <%= b.hidden_field :pages %>
+        <%= b.hidden_field :description %>
 
         <%= b.fields_for :categories do |c| %>
-          <div class="control-group">
-            <%= c.label :name, 'Category', class: "control-label" %>
-            <div class="controls">
-              <%= c.text_field :name %>
-            </div>
-          </div>
+          <%= c.hidden_field :name %>
         <% end %>
       <% end %>
 
-      <div class="control-group">
-        <div class="controls">
+      <div class="form-group">
+        <div class="col-sm-4 col-sm-offset-4">
           <%= f.submit 'Import Author and Book', class: "btn btn-primary" %>
-          <%#= link_to "Cancel", cancel_path, class: "btn btn-primary" %>
         </div>
       </div>
     <% end %>
