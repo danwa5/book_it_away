@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Author do
+RSpec.describe Author, :type => :model do
   let(:author) { create(:author) }
   let(:countries) { %w[Australia Brazil Canada Germany France Spain Sweden UK USA] }
   subject { author }

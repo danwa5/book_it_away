@@ -55,9 +55,10 @@ FactoryGirl.define do
     name 'Travel'
   end
 
-  # factory :book_category do
-  #   association :book
-  #   association :category
-  # end
-
+  factory :review do
+    association :user
+    association :book
+    rating { rand(1..5) }
+    comments { Faker::Hipster.paragraph(2) }
+  end
 end

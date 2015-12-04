@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe User do
+RSpec.describe User, :type => :model do
   let(:user) { create(:user) }
   subject { user }
 

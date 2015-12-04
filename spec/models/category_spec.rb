@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Category do
+RSpec.describe Category, :type => :model do
   let(:category) { create(:category) }
   subject { category }
 

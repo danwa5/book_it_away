@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Book do
+RSpec.describe Book, :type => :model do
   let(:book) { create(:book) }
   subject { book }
 
@@ -44,7 +44,7 @@ describe Book do
     it 'strips and titleizes the book\'s title' do
       subject.title = ' the old man and the sea '
       subject.save
-      expect(subject.title).to eq ('The Old Man and the Sea')
+      expect(subject.title).to eq('The Old Man and the Sea')
     end
     it 'strips and titleizes the book\'s publisher' do
       subject.publisher = ' world publishing '

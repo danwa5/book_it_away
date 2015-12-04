@@ -23,10 +23,10 @@ gem 'friendly_id', '~> 5.1.0'
 gem 'multi_json', '1.11.2'
 
 group :development, :test do
-  gem 'rspec-rails', '~> 3.1.0'
+  gem 'rspec-rails', '~> 3.4'
   gem 'rspec-its', '~> 1.0.1'
   gem 'factory_girl_rails', '~> 4.5.0'
-  gem 'faker', '~> 1.5.0'
+  gem 'faker', '~> 1.6.0'
   gem 'byebug'
   # The following optional lines are part of the advanced setup.
   # gem 'guard-rspec', '2.5.0'
