@@ -65,22 +65,9 @@ class UsersController < ApplicationController
       params.require(:user).permit(:last_name, :first_name, :name, :username, :email,
                                    :password, :password_confirmation)
     end
-    
-    # Before filters
-
-    def signed_in_user
-      unless signed_in?
-        store_location
-        redirect_to signin_url, notice: 'Please sign in.'
-      end
-    end
 
     def correct_user
       @user = User.find_by(username: params[:id])
       redirect_to(root_url) unless current_user?(@user)
-    end
-    
-    def admin_user
-      redirect_to(root_url) unless current_user.admin?
     end
 end

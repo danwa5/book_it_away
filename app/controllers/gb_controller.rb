@@ -1,4 +1,6 @@
 class GbController < ApplicationController
+  before_action :signed_in_user
+  before_action :admin_user
 
   def create
     author = Author.where(last_name: author_params[:last_name], first_name: author_params[:first_name]).first_or_initialize

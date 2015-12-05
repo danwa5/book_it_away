@@ -15,37 +15,36 @@ describe 'Authentication' do
     before { visit signin_path }
 
     describe 'with invalid information' do
-      before { click_button 'Sign In' }
+      before { click_button 'Sign In', match: :first }
 
-      it { should have_title('Sign In') }
-      it { should have_selector('div.alert.alert-error', text: 'Invalid') }
+      it { is_expected.to have_title('Sign In') }
+      it { is_expected.to have_selector('div.alert.alert-danger', text: 'Invalid email/password combination') }
 
       describe 'after visiting another page' do
-        before { click_link 'Home' }
-        it { should_not have_selector('div.alert.alert-error') }
+        before { visit authors_path }
+        it { is_expected.to have_selector('div.alert.alert-danger', text: 'Please sign in') }
       end
     end
     
     describe 'with valid information' do
       let(:user) { create(:user) }
-      #before { sign_in user }
-      before do
-        fill_in 'Email',    with: user.email.upcase
-        fill_in 'Password', with: user.password
-        click_button 'Sign in'
-      end
+      before { sign_in user }
 
       it 'should redirect user to authors index page' do
         expect(current_path).to eq(authors_path)
       end
-      it { should have_link('Profile',     href: user_path(user)) }
-      it { should have_link('Settings',    href: edit_user_path(user)) }
-      it { should have_link('Sign out',    href: signout_path) }
-      it { should_not have_link('Sign In', href: signin_path) }
+      it { is_expected.to have_link('BLOG',     href: home_path) }
+      it { is_expected.to have_link('SETTINGS', href: user_path(user)) }
+      it { is_expected.to have_link('SIGN OUT', href: signout_path) }
       
       describe 'followed by signout' do
-        before { first(:link, 'Sign out').click }
-        it { should have_link('Sign In') }
+        before do
+          visit signout_path
+          # click_link('SIGN OUT')
+        end
+        it 'signs out user' do
+          is_expected.to have_button('Sign In')
+        end
       end
     end
   end
@@ -57,14 +56,14 @@ describe 'Authentication' do
       describe 'when attempting to visit a protected page' do
         before do
           visit edit_user_path(user)
-          fill_in 'Email',    with: user.email
-          fill_in 'Password', with: user.password
-          click_button 'Sign in'
+          fill_in 'Email', with: user.email, match: :first
+          fill_in 'Password', with: user.password, match: :first
+          click_button 'Sign In', match: :first
         end
 
         describe 'after signing in' do
           it 'should render the desired protected page' do
-            expect(page).to have_title('Edit user')
+            expect(page).to have_title('Update Account Settings')
           end
         end
       end
@@ -72,15 +71,15 @@ describe 'Authentication' do
       describe 'in the Users controller' do
         describe 'visiting the edit page' do
           before { visit edit_user_path(user) }
-          it { should have_title('Sign In') }
+          it { is_expected.to have_title('Sign In') }
         end
         describe 'submitting to the update action' do
           before { patch user_path(user) }
-          xit { expect(response).to redirect_to(signin_path) }
+          it { expect(response).to redirect_to(signin_path) }
         end
         describe 'visiting the user index' do
           before { visit users_path }
-          it { should have_title('Sign In') }
+          it { is_expected.to have_title('Sign In') }
         end
       end
     end

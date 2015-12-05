@@ -1,5 +1,4 @@
 class CategoriesController < ApplicationController
-
   before_action :signed_in_user
   before_action :admin_user
   before_action :set_category, only: [:edit, :update]
@@ -18,7 +17,7 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new(category_params)
     if @category.save
-      flash[:success] = "Category successfully added!"
+      flash[:success] = 'Category successfully added!'
       redirect_to categories_url
     else
       render 'new'
@@ -27,7 +26,7 @@ class CategoriesController < ApplicationController
 
   def update
     if @category.update_attributes(category_params)
-      flash[:success] = "Category updated!"
+      flash[:success] = 'Category updated!'
       redirect_to categories_url
     else
       render 'edit'
@@ -44,9 +43,4 @@ class CategoriesController < ApplicationController
     def category_params
       params.require(:category).permit(:name)
     end
-    
-    def admin_user
-      redirect_to(root_url) unless current_user.admin?
-    end
-
 end

@@ -15,8 +15,8 @@ def sign_in(user, options={})
     user.update_attribute(:remember_token, User.encrypt(remember_token))
   else
     visit signin_path
-    fill_in "Email",    with: user.email
-    fill_in "Password", with: user.password
-    click_button "Sign in"
+    fill_in('Email', with: user.email, match: :first)
+    fill_in('Password', with: user.password, match: :first)
+    click_button 'Sign In', match: :first
   end
 end

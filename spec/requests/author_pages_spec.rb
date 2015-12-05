@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe 'AuthorPages' do
   let!(:user) { create(:user) }
@@ -102,7 +102,7 @@ describe 'AuthorPages' do
         end
 
         it 'should get redirected back to edit page with error message' do
-          is_expected.to have_content('The form contains 2 errors.')
+          is_expected.to have_content('The form contains the 2 errors below')
         end
       end
       context 'with valid information' do
