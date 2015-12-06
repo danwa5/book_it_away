@@ -41,11 +41,11 @@ class UsersController < ApplicationController
   
   def destroy
     user = User.find_by(username: params[:id], admin: false)
-    if user
+    if user && !current_user?(user)
       user.destroy
       flash[:success] = "User #{params[:id]} has been deleted."
     else
-      flash[:warning] = "There was a problem deleting user #{params[:id]}"
+      flash[:danger] = "There was a problem deleting user #{params[:id]}"
     end
     redirect_to users_path
   end

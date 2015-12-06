@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'User pages', type: :feature do
+RSpec.describe 'User pages' do
   subject { page }
 
   context 'regular user' do
@@ -56,6 +56,18 @@ RSpec.describe 'User pages', type: :feature do
           expect {
             find(:xpath, "//a[@href='/account/#{a_regular_user.username}' and @class='delete-icon']").click
           }.to change(User, :count).by(-1)
+        end
+      end
+
+      describe 'delete requests to delete admin user' do
+        it 'does not delete admin user' do
+          expect {
+            delete user_path(another_admin_user)
+          }.not_to change(User, :count)
+        end
+        it 'must get redirected with warning message' do
+          delete user_path(another_admin_user)
+          expect(current_path).to eq(users_path)
         end
       end
     end
