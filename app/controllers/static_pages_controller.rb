@@ -5,7 +5,7 @@ class StaticPagesController < ApplicationController
   end
   
   def search
-    @categories_all = Category.all.order('name ASC')
+    @categories_all = Category.all
   end
   
   def results

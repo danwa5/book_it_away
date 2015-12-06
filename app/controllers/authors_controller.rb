@@ -10,7 +10,7 @@ class AuthorsController < ApplicationController
   end
   
   def show
-    @books = @author.books.each do |b|
+    @books = @author.books.sequential.each do |b|
       b.load_google_books_data
     end
   end

@@ -21,8 +21,7 @@ class Book < ActiveRecord::Base
   validates :pages, numericality: { greater_than_or_equal_to: 1, allow_blank: true }
   validates :author, presence: true
   
-  default_scope -> { order('title ASC') }
-
+  scope :sequential, -> { order('title ASC') }
   scope :last_added, -> { unscope(:order).order('created_at DESC').limit(3) }
   
   class << self
