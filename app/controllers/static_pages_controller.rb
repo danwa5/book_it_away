@@ -54,16 +54,9 @@ class StaticPagesController < ApplicationController
     end
   end
   
-  def books
-    @books_most_reviewed = Book.find_by_sql "select b.* from books b, reviews r where b.id = r.book_id group by b.id order by count(r.book_id) DESC limit 3"
-    
-    @books_highest_rated = Book.find_by_sql "select b.* from books b, reviews r where b.id = r.book_id group by b.id having count(r.book_id) > 1 order by avg(r.rating) DESC limit 3"
-    
-    @books_latest_added = Book.last_added
-    
-    process_google_books_info(@books_most_reviewed)
-    process_google_books_info(@books_highest_rated)
-    process_google_books_info(@books_latest_added)
+  def top10
+    @books = Book.highest_rated.limit(10)
+    process_google_books_info(@books)
   end
   
   private

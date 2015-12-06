@@ -1,0 +1,11 @@
+<% provide(:title, 'The Top 10') %>
+
+<div class="blog-post">
+  <div class="page-header">
+    <h2 class="top10">The Top 10</h2>
+  </div>
+
+  <div class="row">
+    <%= render partial: 'top_books', locals: { top_title: "The Top 10" } %>
+  </div>
+</div>

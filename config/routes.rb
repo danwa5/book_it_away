@@ -18,7 +18,7 @@ BookApp::Application.routes.draw do
   get '/signup',     to: 'users#new'
   get '/signin',     to: 'sessions#new'
   get '/home',       to: 'static_pages#home'
-  get '/books',      to: 'static_pages#books'
+  get '/top10',      to: 'static_pages#top10'
   get '/results',    to: 'static_pages#results'
   get '/search',     to: 'static_pages#search'
   get '/signout', to: 'sessions#destroy'

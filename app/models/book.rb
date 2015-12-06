@@ -23,6 +23,7 @@ class Book < ActiveRecord::Base
   
   scope :sequential, -> { order('title ASC') }
   scope :last_added, -> { unscope(:order).order('created_at DESC').limit(3) }
+  scope :highest_rated, -> { joins(:reviews).group("books.id").order("avg(reviews.rating) desc") }
   
   class << self
     def title_search(query)

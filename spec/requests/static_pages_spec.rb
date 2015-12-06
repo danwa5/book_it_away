@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'Static pages' do
+RSpec.describe 'Static pages' do
   let(:user) { create(:user) }
   before { sign_in user }
 
@@ -17,5 +17,11 @@ describe 'Static pages' do
     before { visit search_path }
     it { is_expected.to have_content('Search') }
     it { is_expected.to have_title(full_title('Search')) }
+  end
+
+  describe 'Top 10 page' do
+    before { visit top10_path }
+    it { is_expected.to have_content('The Top 10') }
+    it { is_expected.to have_title(full_title('The Top 10')) }
   end
 end
