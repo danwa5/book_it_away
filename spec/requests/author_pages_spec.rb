@@ -8,6 +8,12 @@ describe 'AuthorPages' do
   before { sign_in user }
 
   subject { page }
+
+  def google_books_stub_request(isbn)
+    stub_request(:get, /www.googleapis.com\/books\/v1\/volumes.+#{isbn}.+/).
+      with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
+      to_return(:status => 200, :body => "", :headers => {})
+  end
   
   describe 'index page' do
     before { visit authors_path }
@@ -45,20 +51,20 @@ describe 'AuthorPages' do
       it { is_expected.not_to have_link('Edit Author') }
       it { is_expected.not_to have_link('Delete Author') }
       
+      context 'when the author has no book entries' do
+        it 'deleting author is not permitted' do
+          expect {
+            delete author_path(author)
+          }.not_to change(Author, :count)
+        end
+      end
       context 'when the author has a book entry' do
         let!(:book) { create(:book, author: author) }
-        before { visit author_path(author) }
-        it { is_expected.to have_link('Edit', href: edit_author_book_path(author, book)) }
-      end
-      context 'when the author has no book entries' do
         before do
-          delete :destroy, { id: author }
+          google_books_stub_request(book.isbn)
+          visit author_path(author)
         end
-        xit 'deleting author is not permitted' do
-          # expect {
-          #   delete :destroy, id: author
-          # }.not_to change(Author, :count)
-        end
+        it { is_expected.to have_link('Edit', href: edit_author_book_path(author, book)) }
       end
     end
     context 'when an admin user is signed in' do
@@ -70,10 +76,24 @@ describe 'AuthorPages' do
       it { is_expected.to have_link('Edit Author') }
       it { is_expected.to have_link('Delete Author') }
 
+      context 'when the author has no book entries' do
+        it 'deleting author is permitted' do
+          expect(author.books.count).to eq(0)
+          expect { click_link 'Delete Author' }.to change(Author, :count).by(-1)
+        end
+      end
       context 'when the author has a book entry' do
         let!(:book) { create(:book, author: author) }
-        before { visit author_path(author) }
+        before do
+          google_books_stub_request(book.isbn)
+          visit author_path(author)
+        end
         it { is_expected.to have_link('Edit', href: edit_author_book_path(author, book)) }
+        it 'deleting author is not permitted' do
+          expect {
+            delete author_path(author)
+          }.not_to change(Author, :count)
+        end
       end
     end
   end
@@ -82,7 +102,7 @@ describe 'AuthorPages' do
     context 'when a non-admin user is signed in' do
       it 'should get redirected to author show page' do
         visit edit_author_path(author)
-        expect(current_path).to eq(author_path(author))
+        expect(current_path).to eq(authors_path)
       end
     end
     context 'when an admin user is signed in' do

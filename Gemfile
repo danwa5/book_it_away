@@ -42,6 +42,7 @@ group :test do
   # gem 'cucumber-rails', '1.3.0', :require => false
   gem 'database_cleaner', '~> 1.3.0'
   gem 'shoulda-matchers'
+  gem 'webmock'
   gem 'awesome_print'
 end
 

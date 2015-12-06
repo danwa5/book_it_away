@@ -8,7 +8,7 @@ class GoogleBooksService
     begin
       GoogleBooks.search('isbn: ' + isbn.to_s).first
     rescue SocketError => e
-      puts e.message
+      Rails.logger.info "GoogleBooksService.call failed for ISBN #{isbn}"
     end
   end
 end

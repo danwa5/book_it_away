@@ -1,5 +1,6 @@
 class AuthorsController < ApplicationController
   before_action :signed_in_user
+  before_action :admin_user, only: [:new, :create, :edit, :update, :destroy]
   before_action :find_author, only: [:show, :edit, :update, :destroy]
   
   def index
@@ -15,7 +16,6 @@ class AuthorsController < ApplicationController
   end
   
   def new
-    redirect_to authors_path if !current_user.admin
     @author = Author.new
   end
   
@@ -30,7 +30,6 @@ class AuthorsController < ApplicationController
   end
   
   def edit
-    redirect_to author_path(@author) if !current_user.admin
   end
   
   def update
@@ -43,17 +42,21 @@ class AuthorsController < ApplicationController
   end
   
   def destroy
-    if @author.books.present? || !current_user.admin
+    if @author.books.any?
       flash[:danger] = 'Deleting this author is not permissible!'
       redirect_to @author
     else
       @author.destroy
       flash[:success] = 'Author deleted.'
-      redirect_to authors_url
+      redirect_to authors_path
     end
   end
   
   private
+
+  def admin_user
+    redirect_to(authors_path) unless current_user.admin?
+  end
 
   def find_author
     @author = Author.friendly.find(params[:id])

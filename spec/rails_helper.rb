@@ -4,6 +4,7 @@ require 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'capybara/rails'
+require 'webmock/rspec'
 require 'shoulda/matchers'
 require 'simplecov'
 SimpleCov.start
@@ -32,6 +33,8 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 end
+
+WebMock.disable_net_connect!(:allow_localhost => true)
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
