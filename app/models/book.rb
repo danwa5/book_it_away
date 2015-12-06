@@ -47,7 +47,7 @@ class Book < ActiveRecord::Base
   end
 
   def image
-    gbook.present? ? gbook.try(:image_link).to_s : 'image_unavailable.jpg'
+    gbook.present? ? gbook.try(:image_link).to_s : 'books/image_unavailable.jpg'
   end
   
   def description

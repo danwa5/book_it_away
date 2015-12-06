@@ -125,7 +125,7 @@ RSpec.describe Book, :type => :model do
       context 'book is not available in GoogleBooks' do
         it 'returns a generic image unavailable link' do
           book.gbook = nil
-          expect(book.image).to eq('image_unavailable.jpg')
+          expect(book.image).to eq('books/image_unavailable.jpg')
         end
       end
     end
