@@ -1,4 +1,4 @@
-<% provide(:title, 'All users') %>
+<% provide(:title, 'All Users') %>
 
 <div class="blog-post">
   <div class="page-header">
@@ -24,8 +24,8 @@
           <td><%= user.name %></td>
           <td class="center"><%= user.email_confirmed ? date_format(user.created_at) : 'No' %></td>
           <td class="center"><%= user.admin ? 'Yes' : 'No' %></td>
-          <% if current_user.admin? && !current_user?(user) %>
-            <td class="center"><%= link_to '<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>'.html_safe, user, method: :delete, data: { confirm: "You sure?" } %></td>
+          <% if current_user.admin? && !current_user?(user) && !user.admin %>
+            <td class="center"><%= link_to '<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>'.html_safe, user, method: :delete, data: { confirm: "You sure?" }, class: 'delete-icon' %></td>
           <% else %>
             <td></td>
           <% end %>
