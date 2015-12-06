@@ -7,7 +7,7 @@ class Author < ActiveRecord::Base
   accepts_nested_attributes_for :books
   
   before_save { 
-    self.last_name = last_name.strip.titleize
+    self.last_name = last_name.strip.titleize_lastname
     self.first_name = first_name.strip.titleize
   }
   

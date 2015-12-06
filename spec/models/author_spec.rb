@@ -20,10 +20,10 @@ RSpec.describe Author, :type => :model do
   describe 'before_save callback' do
     it 'strips and titleizes the author\'s first and last names' do
       subject.first_name = ' larry'
-      subject.last_name = 'robinson '
+      subject.last_name = " o'donnell-robinson "
       subject.save
       expect(subject.first_name).to eq('Larry')
-      expect(subject.last_name).to eq('Robinson')
+      expect(subject.last_name).to eq("O'Donnell-Robinson")
     end
   end
 
