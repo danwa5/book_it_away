@@ -3,10 +3,10 @@
     <% @books.each_with_index do |book, index| %>
     <div class="row">
       <div class="search-result">
-        <div class="col-sm-3 book-main-cover">
+        <div class="col-md-3 col-sm-4 col-xs-5 book-main-cover">
           <%= link_to image_tag(book.image), author_book_path(book.author, book) %>
         </div>
-        <div class="col-sm-9 col-xs-6">
+        <div class="col-md-9 col-sm-8 col-xs-7">
           <div class="book-tile-details">
             <ul class="book-details">
             <li><h4><%= link_to book.title, author_book_path(book.author, book) %></h4></li>

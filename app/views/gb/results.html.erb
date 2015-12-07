@@ -1,6 +1,10 @@
 <% provide(:title, "Google Books Import") %>
 
 <div class="blog-post">
+  <div class="page-header">
+    <h2>Google Books Import</h2>
+  </div>
+
   <div id="book-main">
     <div class="book-main-cover">
       <%= image_tag(@gbook.image_link) %>
@@ -43,7 +47,7 @@
       <% end %>
 
       <div class="form-group">
-        <div class="col-sm-4 col-sm-offset-4">
+        <div class="col-sm-4 col-sm-offset-4 center">
           <%= f.submit 'Import Author and Book', class: "btn btn-primary" %>
         </div>
       </div>
