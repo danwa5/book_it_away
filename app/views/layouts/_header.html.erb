@@ -11,20 +11,20 @@
     <div id="navbar" class="navbar-collapse collapse">
       <% if signed_in? %>
         <ul class="nav navbar-nav">
-          <li class="active"><%= link_to "BLOG", home_path %></li>
-          <li><%= link_to "SEARCH", search_path %></li>
-          <li><%= link_to "AUTHORS", authors_path %></li>
-          <li><%= link_to "TOP 10", top10_path %></li>
+          <li<%= current_page?(root_path) || current_page?(blog_path) ? ' class=active' : '' %>><%= link_to "BLOG", blog_path %></li>
+          <li<%= current_page?(search_path) || current_page?(results_path) ? ' class=active' : '' %>><%= link_to "SEARCH", search_path %></li>
+          <li<%= current_controller?(%w(authors books)) ? ' class=active' : '' %>><%= link_to "AUTHORS", authors_path %></li>
+          <li<%= current_page?(top10_path) ? ' class=active' : '' %>><%= link_to "TOP 10", top10_path %></li>
           <li id="fat-menu" class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.first_name.upcase %> <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-              <li><%= link_to "SETTINGS", current_user %></li>
+              <li<%= request.path.match(/account\/#{current_user.username}/) ? ' class=active' : '' %>><%= link_to "SETTINGS", current_user %></li>
               <li class="divider"></li>
             <% if current_user.admin? %>
-              <li><%= link_to "IMPORT", search_gb_index_path %></li>
-              <li><%= link_to "USERS", users_path %></li>
-              <li><%= link_to "CATEGORIES", categories_path %></li>
+              <li<%= current_controller?('gb') ? ' class=active' : '' %>><%= link_to "IMPORT", search_gb_index_path %></li>
+              <li<%= current_page?(users_path) ? ' class=active' : '' %>><%= link_to "USERS", users_path %></li>
+              <li<%= current_controller?('categories') ? ' class=active' : '' %>><%= link_to "CATEGORIES", categories_path %></li>
               <li class="divider"></li>
             <% end %>
               <li><%= link_to "SIGN OUT", signout_path %></li>

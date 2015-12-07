@@ -20,6 +20,7 @@ describe 'AuthorPages' do
     
     it { is_expected.to have_title('All Authors') }
     it { is_expected.to have_text('All Authors') }
+    it { is_expected.to have_selector('li.active', text: 'AUTHORS') }
     
     it 'should list each author' do
       Author.all.each do |author|

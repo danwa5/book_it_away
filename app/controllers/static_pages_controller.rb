@@ -1,7 +1,7 @@
 class StaticPagesController < ApplicationController
-  before_action :signed_in_user, except: [:home]
+  before_action :signed_in_user, except: [:blog]
 
-  def home
+  def blog
   end
   
   def search

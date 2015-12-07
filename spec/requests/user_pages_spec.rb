@@ -30,6 +30,7 @@ RSpec.describe 'User pages' do
 
       it { is_expected.to have_title('All Users') }
       it { is_expected.to have_content('All Users') }
+      it { is_expected.to have_selector('li.active', text: 'USERS') }
 
       describe 'pagination' do
         before(:all) { 30.times { create(:user) } }
@@ -80,6 +81,7 @@ RSpec.describe 'User pages' do
       it { is_expected.to have_content('Account Settings') }
       it { is_expected.to have_title(full_title('Account Settings')) }
       it { is_expected.to have_link('edit', href: edit_user_path(user)) }
+      it { is_expected.to have_selector('li.active', text: 'SETTINGS') }
     end
 
     describe 'new page' do
@@ -149,6 +151,7 @@ RSpec.describe 'User pages' do
       describe 'page' do
         it { is_expected.to have_content('Update Account Settings') }
         it { is_expected.to have_title('Update Account Settings') }
+        it { is_expected.to have_selector('li.active', text: 'SETTINGS') }
       end
 
       describe 'with invalid information' do

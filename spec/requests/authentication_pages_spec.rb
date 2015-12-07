@@ -33,7 +33,7 @@ describe 'Authentication' do
       it 'should redirect user to authors index page' do
         expect(current_path).to eq(authors_path)
       end
-      it { is_expected.to have_link('BLOG',     href: home_path) }
+      it { is_expected.to have_link('BLOG',     href: blog_path) }
       it { is_expected.to have_link('SETTINGS', href: user_path(user)) }
       it { is_expected.to have_link('SIGN OUT', href: signout_path) }
       

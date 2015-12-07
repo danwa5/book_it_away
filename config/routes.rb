@@ -17,7 +17,7 @@ BookApp::Application.routes.draw do
   
   get '/signup',     to: 'users#new'
   get '/signin',     to: 'sessions#new'
-  get '/home',       to: 'static_pages#home'
+  get '/blog',       to: 'static_pages#blog'
   get '/top10',      to: 'static_pages#top10'
   get '/results',    to: 'static_pages#results'
   get '/search',     to: 'static_pages#search'
@@ -36,7 +36,7 @@ BookApp::Application.routes.draw do
     end
   end
 
-  root 'static_pages#home'
+  root 'static_pages#blog'
 
   #unless Rails.application.config.consider_all_requests_local
   #  match '*not_found', to: 'errors#error_404'

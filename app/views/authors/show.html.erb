@@ -1,4 +1,4 @@
-<% provide(:title, @author.name) %>
+<% provide(:title, "#{@author.name}".html_safe) %>
 
 <div class="blog-post">
   <div class="page-header">
