@@ -38,12 +38,13 @@ describe 'Authentication' do
       it { is_expected.to have_link('SIGN OUT', href: signout_path) }
       
       describe 'followed by signout' do
-        before do
-          visit signout_path
-          # click_link('SIGN OUT')
-        end
+        before { click_link('SIGN OUT') }
         it 'signs out user' do
           is_expected.to have_button('Sign In')
+        end
+        it 'redirects user if user tries to access private page' do
+          visit authors_path
+          expect(current_path).to eq(signin_path)
         end
       end
     end
