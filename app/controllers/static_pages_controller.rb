@@ -9,49 +9,8 @@ class StaticPagesController < ApplicationController
   end
   
   def results
-    @results = Array.new
-    
-    if !params[:author].blank? || !params[:title].blank? || !params[:isbn].blank? || !params[:pages].blank? || !params[:categories].blank?
-      query = Book.where("1=1")
-      
-      if not params[:author].blank?
-        query = Book.author_search(params[:author])
-      end
-         
-      if not params[:title].blank?
-        if Rails.env.production?
-          query = query.where("title ilike ?", "%#{params[:title]}%")
-        else
-          query = query.where("title like ?", "%#{params[:title]}%")
-        end
-      end
-      
-      if not params[:isbn].blank?
-        query = query.where("isbn = ?", "#{params[:isbn]}")
-      end
-      
-      if not params[:pages].blank?
-        query = query.where("pages " + params[:page_operator] + " ?", "#{params[:pages]}")
-      end
-      
-      if not params[:categories].blank?
-        categories = params[:categories]
-        categories.each do |category|
-          query = query & Book.joins(:categories).where("name = ?", "#{category}")
-        end
-      end
-      
-      @results = query.take(12)
-      display_results(@results)
-      
-    elsif !params[:query].blank?
-      @results = Book.title_search(params[:query])
-      author_results = Book.author_search(params[:query])
-      @results = @results.concat(author_results).take(12)
-      display_results(@results)
-    else
-      redirect_to search_path
-    end
+    @books = SearchForm.search(search_params)
+    display_results(@books)
   end
   
   def top10
@@ -69,13 +28,16 @@ class StaticPagesController < ApplicationController
       end
     end
     
-    def display_results(results)
-      if results.count > 0
-        process_google_books_info(results)
+    def display_results(books)
+      if books.count > 0
+        process_google_books_info(books)
       else
-        flash[:warning] = "No books found. Please try another search."
+        flash[:warning] = 'No books found. Please try another search.'
         redirect_to search_path
       end
     end
-  
+
+    def search_params
+      params.permit(:author, :title, :isbn, :pages, :page_operator, :categories => [])
+    end
 end
