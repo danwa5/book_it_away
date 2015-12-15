@@ -40,6 +40,17 @@
         <%= b.hidden_field :published_date %>
         <%= b.hidden_field :pages %>
         <%= b.hidden_field :description %>
+        <%= hidden_field_tag :cover_image, @gbook.image_link(zoom:1) %>
+
+        <div class="form-group">
+          <div class="col-sm-offset-1 col-sm-11">
+            <div class="checkbox">
+              <label>
+                 <%= check_box_tag :import_cover_image, true, { checked: true } %> Import Cover Image
+              </label>
+            </div>
+          </div>
+        </div>
 
         <%= b.fields_for :categories do |c| %>
           <%= c.hidden_field :name %>

@@ -9,6 +9,15 @@ class Book < ActiveRecord::Base
   accepts_nested_attributes_for :categories, reject_if: :not_new_book_category?
 
   attr_accessor :gbook
+
+  dragonfly_accessor :cover_image do
+    storage_options :storage_config
+    copy_to(:cover_small_image) { |a| a.thumb('128x') }
+  end
+
+  dragonfly_accessor :cover_small_image do
+    storage_options :storage_config
+  end
   
   before_save {
     self.title = book_title_case(title)
@@ -48,7 +57,14 @@ class Book < ActiveRecord::Base
   end
 
   def image
-    gbook.present? ? gbook.try(:image_link).to_s : 'books/image_unavailable.jpg'
+    if cover_small_image
+      cover_small_image.url
+    elsif gbook.present?
+      gbook.try(:image_link).to_s
+    else
+      'books/image_unavailable.jpg'
+    end
+    # gbook.present? ? gbook.try(:image_link).to_s : 'books/image_unavailable.jpg'
   end
   
   def description
@@ -101,5 +117,11 @@ class Book < ActiveRecord::Base
   def not_new_book_category?
     # TODO: reject if category name is blank or is already associated with book
     true
+  end
+
+  private
+
+  def storage_config(a)
+    { path: "books/#{id}/#{isbn}/#{a.attribute}-#{Time.now.utc.to_i}.jpg" }
   end
 end

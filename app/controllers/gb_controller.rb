@@ -13,6 +13,7 @@ class GbController < ApplicationController
 
     if author.save
       book.author = author
+      book.cover_image_url = params[:cover_image] if params[:import_cover_image] == 'true'
       book.update_attributes(book_params)
 
       if category_params[:name].present?
@@ -46,10 +47,9 @@ class GbController < ApplicationController
       flash[:danger] = 'ISBN cannot be found in Google Books API!'
       redirect_to search_gb_index_path
     else
-      @author = Author.new
-      @author.last_name = @gbook.authors_array.first.rpartition(' ').last
-      @author.first_name = @gbook.authors_array.first.rpartition(' ').first
-      @author.nationality = 'USA'
+      @author = Author.new(nationality: 'USA')
+      @author.last_name = @gbook.authors_array.first.partition(' ').last
+      @author.first_name = @gbook.authors_array.first.partition(' ').first
 
       @book = @author.books.build(
         title: @gbook.title,
@@ -69,8 +69,9 @@ class GbController < ApplicationController
   private
 
   def author_params
-    params.require(:author).permit(:last_name, :first_name,
-      books_attributes: [:isbn, :title, :publisher, :published_date, :pages, :description, categories_attributes: [:name]])
+    params.require(:author).permit(:last_name, :first_name, :cover_image, :import_cover_image,
+      books_attributes: [:isbn, :title, :publisher, :published_date, :pages, :description,
+      categories_attributes: [:name]])
   end
 
 end
