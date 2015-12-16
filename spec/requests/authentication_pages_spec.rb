@@ -1,14 +1,13 @@
 require 'rails_helper'
 
-describe 'Authentication' do
+RSpec.describe 'Authentication', type: :request do
 
   subject { page }
 
   describe 'signin page' do
     before { visit signin_path }
-
-    it { should have_content('Sign In') }
-    it { should have_title('Sign In') }
+    it { is_expected.to have_content('Sign In') }
+    it { is_expected.to have_title('Sign In') }
   end
   
   describe 'signin' do
@@ -17,8 +16,10 @@ describe 'Authentication' do
     describe 'with invalid information' do
       before { click_button 'Sign In', match: :first }
 
-      it { is_expected.to have_title('Sign In') }
-      it { is_expected.to have_selector('div.alert.alert-danger', text: 'Invalid email/password combination') }
+      it 'redirects to signin page with error message' do
+        expect(current_path).to eq(signin_path)
+        is_expected.to have_selector('div.alert.alert-danger', text: 'Invalid email/password combination')
+      end
 
       describe 'after visiting another page' do
         before { visit authors_path }
@@ -27,24 +28,34 @@ describe 'Authentication' do
     end
     
     describe 'with valid information' do
-      let(:user) { create(:user) }
-      before { sign_in user }
-
-      it 'should redirect user to authors index page' do
-        expect(current_path).to eq(authors_path)
-      end
-      it { is_expected.to have_link('BLOG',     href: blog_path) }
-      it { is_expected.to have_link('SETTINGS', href: user_path(user)) }
-      it { is_expected.to have_link('SIGN OUT', href: signout_path) }
-      
-      describe 'followed by signout' do
-        before { click_link('SIGN OUT') }
-        it 'signs out user' do
-          is_expected.to have_button('Sign In')
-        end
-        it 'redirects user if user tries to access private page' do
-          visit authors_path
+      context 'by unconfirmed user' do
+        let(:user) { create(:unconfirmed_user) }
+        before { sign_in user }
+        it 'redirects to signin page with error message' do
           expect(current_path).to eq(signin_path)
+          is_expected.to have_selector('div.alert.alert-danger', text: 'Please activate your account')
+        end
+      end
+      context 'by confirmed user' do
+        let(:user) { create(:user) }
+        before { sign_in user }
+
+        it 'should redirect user to authors index page' do
+          expect(current_path).to eq(authors_path)
+        end
+        it { is_expected.to have_link('BLOG',     href: blog_path) }
+        it { is_expected.to have_link('SETTINGS', href: user_path(user)) }
+        it { is_expected.to have_link('SIGN OUT', href: signout_path) }
+
+        describe 'followed by signout' do
+          before { click_link('SIGN OUT') }
+          it 'signs out user' do
+            is_expected.to have_button('Sign In')
+          end
+          it 'redirects user if user tries to access private page' do
+            visit authors_path
+            expect(current_path).to eq(signin_path)
+          end
         end
       end
     end
@@ -88,28 +99,28 @@ describe 'Authentication' do
     describe 'as wrong user' do
       let(:user) { create(:user) }
       let(:wrong_user) { create(:user, email: Faker::Internet.email) }
-      before { sign_in user, no_capybara: true }
+      before { sign_in user }
 
       describe 'submitting a GET request to the Users#edit action' do
         before { get edit_user_path(wrong_user) }
-        xit { expect(response.body).not_to match(full_title('Edit user')) }
-        xit { expect(response).to redirect_to(root_url) }
+        it { expect(response.body).not_to match(full_title('Account Settings')) }
+        it { expect(response).to redirect_to(signin_path) }
       end
       describe 'submitting a PATCH request to the Users#update action' do
         before { patch user_path(wrong_user) }
-        xit { expect(response).to redirect_to(root_url) }
+        it { expect(response).to redirect_to(signin_path) }
       end
     end
     
     describe 'as non-admin user' do
-      let(:user) { FactoryGirl.create(:user) }
-      let(:non_admin) { FactoryGirl.create(:user) }
+      let(:user) { create(:user) }
+      let(:non_admin) { create(:user) }
 
-      before { sign_in non_admin, no_capybara: true }
+      before { sign_in non_admin }
 
       describe 'submitting a DELETE request to the Users#destroy action' do
         before { delete user_path(user) }
-        xit { expect(response).to redirect_to(root_url) }
+        it { expect(response).to redirect_to(signin_path) }
       end
     end
   end

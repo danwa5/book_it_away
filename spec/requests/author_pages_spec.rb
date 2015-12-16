@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'AuthorPages' do
+RSpec.describe 'Author Pages', type: :request do
   let!(:user) { create(:user) }
   let!(:admin_user) { create(:admin_user) }
   let!(:author) { create(:author) }
@@ -66,6 +66,7 @@ describe 'AuthorPages' do
           visit author_path(author)
         end
         it { is_expected.to have_link('Edit', href: edit_author_book_path(author, book)) }
+
       end
     end
     context 'when an admin user is signed in' do
@@ -78,9 +79,14 @@ describe 'AuthorPages' do
       it { is_expected.to have_link('Delete Author') }
 
       context 'when the author has no book entries' do
-        it 'deleting author is permitted' do
+        it 'can delete author' do
           expect(author.books.count).to eq(0)
           expect { click_link 'Delete Author' }.to change(Author, :count).by(-1)
+        end
+        it 'redirects to index page with error message' do
+          click_link 'Delete Author'
+          expect(current_path).to eq(authors_path)
+          is_expected.to have_selector('div.alert.alert-success', text: 'Author deleted')
         end
       end
       context 'when the author has a book entry' do
@@ -90,7 +96,8 @@ describe 'AuthorPages' do
           visit author_path(author)
         end
         it { is_expected.to have_link('Edit', href: edit_author_book_path(author, book)) }
-        it 'deleting author is not permitted' do
+        it { is_expected.not_to have_link('Delete Author') }
+        it 'cannot delete author' do
           expect {
             delete author_path(author)
           }.not_to change(Author, :count)

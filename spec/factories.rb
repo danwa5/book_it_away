@@ -11,6 +11,10 @@ FactoryGirl.define do
     factory :admin_user do
       admin true
     end
+
+    factory :unconfirmed_user do
+      email_confirmed false
+    end
   end
   
   factory :author do

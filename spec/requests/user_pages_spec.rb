@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'User pages' do
+RSpec.describe 'User Pages', type: :request do
   subject { page }
 
   context 'regular user' do
