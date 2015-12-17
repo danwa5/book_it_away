@@ -29,7 +29,7 @@ BookApp::Application.routes.draw do
   resources :authors, only: [], path: '' do
     resources :books, only: [:new, :create]
     resources :books, only: [:show, :edit, :update, :destroy], path: '' do
-      resources :reviews do
+      resources :reviews, only: [:new, :create, :edit, :update] do
         put :like
         put :dislike
       end
