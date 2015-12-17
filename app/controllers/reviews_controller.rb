@@ -1,4 +1,6 @@
 class ReviewsController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound, with: :handle_record_not_found
+
   before_action :signed_in_user
   before_action :find_review, only: [:edit, :update, :like, :dislike]
 
@@ -64,4 +66,7 @@ class ReviewsController < ApplicationController
     params.require(:review).permit(:rating, :comments, :likes, :dislikes, :book_id, :user_id)
   end
   
+  def handle_record_not_found(err)
+    redirect_to root_path
+  end
 end

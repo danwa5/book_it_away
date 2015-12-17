@@ -1,4 +1,6 @@
 class CategoriesController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound, with: :handle_record_not_found
+
   before_action :signed_in_user
   before_action :admin_user
   before_action :set_category, only: [:edit, :update]
@@ -34,13 +36,16 @@ class CategoriesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_category
-      @category = Category.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_category
+    @category = Category.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def category_params
-      params.require(:category).permit(:name)
-    end
+  def category_params
+    params.require(:category).permit(:name)
+  end
+
+  def handle_record_not_found(err)
+    redirect_to root_path
+  end
 end
