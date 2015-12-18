@@ -75,8 +75,4 @@ class BooksController < ApplicationController
   def book_params
     params.require(:book).permit!
   end
-
-  def handle_record_not_found(err)
-    redirect_to root_path
-  end
 end

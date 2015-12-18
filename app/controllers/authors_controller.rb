@@ -67,8 +67,4 @@ class AuthorsController < ApplicationController
   def user_params
     params.require(:author).permit(:last_name, :first_name, :dob, :nationality)
   end
-
-  def handle_record_not_found(err)
-    redirect_to root_path
-  end
 end

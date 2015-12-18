@@ -14,7 +14,11 @@ class ApplicationController < ActionController::Base
   #              ActiveRecord::RecordNotFound, with: lambda { |exception| render_error 404, exception }
   #end
   
-  #private
+  private
+
+  def handle_record_not_found(err)
+    redirect_to root_path
+  end
   
   #  def render_error(status, exception)
   #  respond_to do |format|

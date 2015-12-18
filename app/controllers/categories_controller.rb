@@ -44,8 +44,4 @@ class CategoriesController < ApplicationController
   def category_params
     params.require(:category).permit(:name)
   end
-
-  def handle_record_not_found(err)
-    redirect_to root_path
-  end
 end
