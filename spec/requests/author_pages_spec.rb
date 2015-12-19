@@ -65,8 +65,8 @@ RSpec.describe 'Author Pages', type: :request do
           google_books_stub_request(book.isbn)
           visit author_path(author)
         end
+        it { is_expected.to have_css('div.book-tile') }
         it { is_expected.to have_link('Edit', href: edit_author_book_path(author, book)) }
-
       end
     end
     context 'when an admin user is signed in' do
@@ -95,6 +95,7 @@ RSpec.describe 'Author Pages', type: :request do
           google_books_stub_request(book.isbn)
           visit author_path(author)
         end
+        it { is_expected.to have_css('div.book-tile') }
         it { is_expected.to have_link('Edit', href: edit_author_book_path(author, book)) }
         it { is_expected.not_to have_link('Delete Author') }
         it 'cannot delete author' do

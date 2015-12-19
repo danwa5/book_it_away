@@ -5,67 +5,55 @@
     <h2>Author Profile</h2>
   </div>
 
-  <h4><%= @author.name %></h3>
-  <h4><%= @author.formatted_dob %></h3>
-  <h4><%= @author.nationality %></h3>
+  <div class="row">
+    <div class="col-sm-12">
 
-  <br/>
+      <h4><%= @author.name %></h4>
+      <h4><%= @author.formatted_dob %></h4>
+      <h4><%= @author.nationality %></h4>
 
-  <% if signed_in? %>
-    <%= link_to "Add Book", new_author_book_path(@author), class: "btn btn-primary" %>
-    <% if current_user.admin? %>
-      <%= link_to "Edit Author", edit_author_path, class: "btn btn-primary" %>
-      <% if !@books.any? %>
-        <%= link_to "Delete Author", @author, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-primary" %>
-      <% end %>
-    <% end %>
-  <% end %>
+      <br/>
 
-<br/><br/>
-
-  <% if @books.any? %>
-    <h2><%= pluralize(@books.count, "book") %> found</h2>
-    
-    <% @books.each_with_index do |book, index| %>
-    
-    <% if index%3 == 0 %>
-      <div class="books-row">
-    <% end %>
-    
-    <div class="book-tile col-sm-3">
-      <div class="book-cover">
-        <%= link_to image_tag(book.image), author_book_path(@author, book) %>
-      </div>
-  
-      <div class="book-tile-details">
-        <ul class="book-details">
-        <li><%= link_to book.title, author_book_path(@author, book) %>
-        <li>ISBN <%= book.isbn %>
-        <li><%= book.publisher %>
-        <li><span class="star<%= index %>"></span> (<%= book.reviews.count %>)<br/>
-        <%= link_to "Edit", edit_author_book_path(@author, book) %>
-        <% if current_user.admin? %>
-        | <%= link_to "Delete", ([@author, book]), method: :delete, data: { confirm: "Are you sure?" } %>
+      <%= link_to "Add Book", new_author_book_path(@author), class: "btn btn-primary" %>
+      <% if current_user.admin? %>
+        <%= link_to "Edit Author", edit_author_path, class: "btn btn-primary" %>
+        <% if !@books.any? %>
+          <%= link_to "Delete Author", @author, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-primary" %>
         <% end %>
-        </ul>
+      <% end %>
+
+      <div class="book-container">
+      <% if @books.empty? %>
+        <h4>No books found for this author</h4>
+      <% else %>
+        <% @books.each_with_index do |book, index| %>
+          <div class="book-tile col-md-3 col-sm-4 col-xs-6">
+            <div class="book-cover">
+              <%= link_to image_tag(book.image), author_book_path(@author, book) %>
+            </div>
+            <div class="book-tile-details">
+              <ul class="book-details">
+              <li><%= link_to book.title, author_book_path(@author, book) %></li>
+              <li>ISBN <%= book.isbn %></li>
+              <li><%= book.publisher %></li>
+              <li><span class="star<%= index %>"></span> (<%= book.reviews.count %>)<br/>
+              <%= link_to "Edit", edit_author_book_path(@author, book) %>
+              <% if current_user.admin? %>
+              | <%= link_to "Delete", ([@author, book]), method: :delete, data: { confirm: "Are you sure?" } %>
+              <% end %></li>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+        <script>
+        <% @books.each_with_index do |book, index| %>
+          $('.star<%= index %>').raty({
+            score: <%= book.reviews.count == 0 ? 0 : book.reviews.average(:rating) %>
+          });
+        <% end %>
+        </script>
+      <% end %>
       </div>
     </div>
-
-    <% if (index+1)%3 == 0 || (index+1) == @books.length %>
-      </div>
-    <% end %>
-  
-    <% end %>
-    
-    <script>
-    <% @books.each_with_index do |book, index| %>
-      $('.star<%= index %>').raty({
-        score: <%= book.reviews.count == 0 ? 0 : book.reviews.average(:rating) %>
-      });
-    <% end %>
-    </script>
-  <% else %>
-    <h2>No books found for this author</h2>
-  <% end %>
-
+  </div>
 </div>
