@@ -1,6 +1,4 @@
 class CategoriesController < ApplicationController
-  rescue_from ActiveRecord::RecordNotFound, with: :handle_record_not_found
-
   before_action :signed_in_user
   before_action :admin_user
   before_action :set_category, only: [:edit, :update]
