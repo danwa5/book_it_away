@@ -8,9 +8,8 @@ BookApp::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :categories, except: [:show, :destroy]
 
-  resources :gb, only: [:create] do
+  resources :imports, only: [:index, :create] do
     collection do
-      get :search
       get :results
     end
   end

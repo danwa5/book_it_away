@@ -1,6 +1,9 @@
-class GbController < ApplicationController
+class ImportsController < ApplicationController
   before_action :signed_in_user
   before_action :admin_user
+
+  def index
+  end
 
   def create
     author = Author.where(last_name: author_params[:last_name], first_name: author_params[:first_name]).first_or_initialize
@@ -28,41 +31,38 @@ class GbController < ApplicationController
       redirect_to author
     else
       flash[:danger] = "Author and book data could not be imported for ISBN #{book_params[:isbn]}."
-      render 'search'
+      render 'index'
     end
-  end
-
-  def search
   end
 
   def results
     if params[:isbn].blank?
       flash[:danger] = 'ISBN is blank!'
-      redirect_to search_gb_index_path
-    end
-
-    @gbook = GoogleBooksService.call(params[:isbn])
-
-    if @gbook.nil?
-      flash[:danger] = 'ISBN cannot be found in Google Books API!'
-      redirect_to search_gb_index_path
+      redirect_to imports_path
     else
-      @author = Author.new(nationality: 'USA')
-      @author.last_name = @gbook.authors_array.first.partition(' ').last
-      @author.first_name = @gbook.authors_array.first.partition(' ').first
+      @gbook = GoogleBooksService.call(params[:isbn])
 
-      @book = @author.books.build(
-        title: @gbook.title,
-        isbn: @gbook.isbn_10,
-        publisher: @gbook.publisher,
-        published_date: @gbook.published_date,
-        pages: @gbook.page_count,
-        description: @gbook.description,
-      )
+      if @gbook.nil?
+        flash[:danger] = 'ISBN cannot be found in Google Books API!'
+        redirect_to imports_path
+      else
+        @author = Author.new(nationality: 'USA')
+        @author.last_name = @gbook.authors_array.first.partition(' ').last
+        @author.first_name = @gbook.authors_array.first.partition(' ').first
 
-      @book.categories.build(
-        name: @gbook.categories
-      )
+        @book = @author.books.build(
+          title: @gbook.title,
+          isbn: @gbook.isbn_10,
+          publisher: @gbook.publisher,
+          published_date: @gbook.published_date,
+          pages: @gbook.page_count,
+          description: @gbook.description,
+        )
+
+        @book.categories.build(
+          name: @gbook.categories
+        )
+      end
     end
   end
 

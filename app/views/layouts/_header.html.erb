@@ -22,7 +22,7 @@
               <li<%= request.path.match(/account\/#{current_user.username}/) ? ' class=active' : '' %>><%= link_to "SETTINGS", current_user %></li>
               <li class="divider"></li>
             <% if current_user.admin? %>
-              <li<%= current_controller?('gb') ? ' class=active' : '' %>><%= link_to "IMPORT", search_gb_index_path %></li>
+              <li<%= current_controller?('imports') ? ' class=active' : '' %>><%= link_to "IMPORT", imports_path %></li>
               <li<%= current_page?(users_path) ? ' class=active' : '' %>><%= link_to "USERS", users_path %></li>
               <li<%= current_controller?('categories') ? ' class=active' : '' %>><%= link_to "CATEGORIES", categories_path %></li>
               <li class="divider"></li>

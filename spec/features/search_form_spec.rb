@@ -10,6 +10,10 @@ RSpec.describe 'SearchForm', type: :feature do
 
   before { sign_in user }
 
+  describe 'class methods' do
+    it { expect(SearchForm.model_name.name).to eq('SearchForm') }
+  end
+
   describe 'GET /results' do
     before { google_books_stub_request }
     context 'when searching by author name' do

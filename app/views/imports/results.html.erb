@@ -30,16 +30,16 @@
     <%= form_for(@author, url: {action: "create"}, html: {class:"form-horizontal"}) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
 
-      <%= f.hidden_field :last_name %>
-      <%= f.hidden_field :first_name %>
+      <%= f.hidden_field :last_name, id: 'last_name' %>
+      <%= f.hidden_field :first_name, id: 'first_name' %>
 
       <%= f.fields_for :books do |b| %>
-        <%= b.hidden_field :title %>
-        <%= b.hidden_field :isbn %>
-        <%= b.hidden_field :publisher %>
-        <%= b.hidden_field :published_date %>
-        <%= b.hidden_field :pages %>
-        <%= b.hidden_field :description %>
+        <%= b.hidden_field :title, id: 'title' %>
+        <%= b.hidden_field :isbn, id: 'isbn' %>
+        <%= b.hidden_field :publisher, id: 'publisher' %>
+        <%= b.hidden_field :published_date, id: 'published_date' %>
+        <%= b.hidden_field :pages, id: 'pages' %>
+        <%= b.hidden_field :description, id: 'description' %>
         <%= hidden_field_tag :cover_image, @gbook.image_link(zoom:1) %>
 
         <div class="form-group">
@@ -53,7 +53,7 @@
         </div>
 
         <%= b.fields_for :categories do |c| %>
-          <%= c.hidden_field :name %>
+          <%= c.hidden_field :name, id: 'category_name' %>
         <% end %>
       <% end %>
 
