@@ -34,7 +34,7 @@
             <div class="book-tile-details">
               <ul class="book-details">
               <li><%= link_to book.title, author_book_path(@author, book) %></li>
-              <li>ISBN <%= book.isbn %></li>
+              <li><%= book.isbn %></li>
               <li><%= book.publisher %></li>
               <li><span class="star<%= index %>"></span> (<%= book.reviews.count %>)<br/>
               <%= link_to "Edit", edit_author_book_path(@author, book) %>

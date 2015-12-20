@@ -23,7 +23,7 @@ class StaticPagesController < ApplicationController
     def process_google_books_info(books)
       unless books.blank?
         books.each do |b|
-          b.load_google_books_data
+          b.load_google_books_data if b.cover_image.nil?
         end
       end
     end
