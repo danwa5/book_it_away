@@ -32,7 +32,7 @@ class Book < ActiveRecord::Base
   
   scope :sequential, -> { order('title ASC') }
   scope :last_added, -> { unscope(:order).order('created_at DESC').limit(3) }
-  scope :highest_rated, -> { joins(:reviews).group("books.id").order("avg(reviews.rating) desc") }
+  scope :highest_rated, -> { joins(:reviews).group("books.id").order("avg(reviews.rating) desc, count(reviews.id) desc") }
   
   class << self
     def title_search(query)
@@ -68,7 +68,6 @@ class Book < ActiveRecord::Base
     else
       'books/image_unavailable.jpg'
     end
-    # gbook.present? ? gbook.try(:image_link).to_s : 'books/image_unavailable.jpg'
   end
 
   def average_rating

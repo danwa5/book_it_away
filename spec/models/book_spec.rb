@@ -71,9 +71,10 @@ RSpec.describe Book, :type => :model do
       end
     end
     describe '.highest_rated' do
-      let!(:review_1) { create(:review, book: book_1, rating: 5.0)}
-      let!(:review_3) { create(:review, book: book_3, rating: 0.5)}
-      let!(:review_5) { create(:review, book: book_5, rating: 2.0)}
+      let!(:review_a) { create(:review, book: book_1, rating: 5.0)}
+      let!(:review_b) { create(:review, book: book_3, rating: 2.0)}
+      let!(:review_c) { create(:review, book: book_5, rating: 1.5)}
+      let!(:review_d) { create(:review, book: book_5, rating: 2.5)}
       it 'returns the highest rated books' do
         expect(described_class.highest_rated).to eq([book_1, book_5, book_3])
       end
