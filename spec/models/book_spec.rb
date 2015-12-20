@@ -97,7 +97,7 @@ RSpec.describe Book, :type => :model do
     describe '.author_search' do
       it 'returns an array of books based on author name search' do
         expect(described_class.author_search('krakauer').count).to eq(2)
-        expect(described_class.author_search('krakauer')).to eq([book_1, book_3])
+        expect(described_class.author_search('krakauer')).to include(book_1, book_3)
       end
     end
   end
