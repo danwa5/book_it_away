@@ -4,12 +4,6 @@ RSpec.describe Book, :type => :model do
   let(:book) { create(:book) }
   subject { book }
 
-  def google_books_stub_request(isbn)
-    stub_request(:get, /www.googleapis.com\/books\/v1\/volumes.+#{isbn}.+/).
-      with(:headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).
-      to_return(:status => 200, :body => "", :headers => {})
-  end
-
   it 'has a valid factory' do
     expect(FactoryGirl.build(:book)).to be_valid
   end
@@ -108,10 +102,8 @@ RSpec.describe Book, :type => :model do
   end
 
   describe 'instance methods from GoogleBooks API' do
-    let(:isbn) { '0330470027' }
-    let(:gbook) { google_books_stub_request(isbn) }
-    # let(:gbook) { GoogleBooksService.call(isbn) }
-    let!(:book) { create(:book, isbn: isbn, title: 'Into Thin Air', gbook: gbook) }
+    let(:gbook) { mock_google_books_object }
+    let!(:book) { create(:book, :with_cover_image, gbook: gbook) }
 
     describe '#load_google_books_data' do
       context 'isbn exists in GoogleBooks' do
@@ -120,42 +112,93 @@ RSpec.describe Book, :type => :model do
         end
       end
       context 'isbn does not exist in GoogleBooks' do
-        pending
+        it 'returns nil' do
+          book.gbook = nil
+          expect(book.gbook).to be_nil
+        end
       end
     end
 
-    describe '#image' do
-      context 'book is available in GoogleBooks' do
-        xit 'returns the book\'s cover image' do
-          expect(book.image).to be_present
+    describe '#publisher' do
+      context 'database value exists' do
+        it { expect(book.publisher).to eq(book[:publisher]) }
+      end
+      context 'database value does not exist but book is available in GoogleBooks' do
+        it do
+          book[:publisher] = nil
+          expect(book.publisher).to eq('Coconut Publishing')
         end
       end
-      context 'book is not available in GoogleBooks' do
-        it 'returns a generic image unavailable link' do
+      context 'database value does not exist and book is not available in GoogleBooks' do
+        it do
+          book[:publisher] = nil
           book.gbook = nil
-          expect(book.image).to eq('books/image_unavailable.jpg')
+          expect(book.publisher).to eq('')
+        end
+      end
+    end
+
+    describe '#pages' do
+      context 'database value exists' do
+        it { expect(book.pages).to eq(book[:pages]) }
+      end
+      context 'database value does not exist but book is available in GoogleBooks' do
+        it do
+          book[:pages] = nil
+          expect(book.pages).to eq('123')
+        end
+      end
+      context 'database value does not exist and book is not available in GoogleBooks' do
+        it do
+          book[:pages] = nil
+          book.gbook = nil
+          expect(book.pages).to eq('')
         end
       end
     end
 
     describe '#description' do
-      context 'book is available in GoogleBooks' do
-        xit 'returns the book\'s description' do
-          expect(book.description).to be_present
+      context 'database value exists' do
+        it { expect(book.description).to eq(book[:description]) }
+      end
+      context 'database value does not exist but book is available in GoogleBooks' do
+        it do
+          book[:description] = nil
+          expect(book.description).to eq('My first book.')
         end
       end
-      context 'book is not available in GoogleBooks' do
-        it 'returns an empty string' do
+      context 'database value does not exist and book is not available in GoogleBooks' do
+        it do
+          book[:description] = nil
           book.gbook = nil
           expect(book.description).to eq('')
         end
       end
     end
 
+    describe '#image' do
+      context 'cover image has been imported' do
+        it { expect(book.image).to eq(book.cover_small_image.url) }
+      end
+      context 'cover image has not been imported but book is available in GoogleBooks' do
+        it do
+          book.cover_small_image = nil
+          expect(book.image).to eq('http://example.com/cover_image.jpg')
+        end
+      end
+      context 'cover image has not been imported and book is not available in GoogleBooks' do
+        it do
+          book.cover_small_image = nil
+          book.gbook = nil
+          expect(book.image).to eq('books/image_unavailable.jpg')
+        end
+      end
+    end
+
     describe '#average_rating' do
       context 'book is available in GoogleBooks' do
-        xit 'returns an average rating >= 0' do
-          expect(book.average_rating).to be >= 0
+        it 'returns the book\'s average rating' do
+          expect(book.average_rating).to eq('4.5')
         end
       end
       context 'book is not available in GoogleBooks' do
@@ -168,8 +211,8 @@ RSpec.describe Book, :type => :model do
 
     describe '#ratings_count' do
       context 'book is available in GoogleBooks' do
-        xit 'returns a rating count > 0' do
-          expect(book.ratings_count).to be > 0
+        it 'returns the book\'s rating count' do
+          expect(book.ratings_count).to eq('987')
         end
       end
       context 'book is not available in GoogleBooks' do
@@ -237,5 +280,24 @@ RSpec.describe Book, :type => :model do
         expect(fiction_book.categories.count).to eq(0)
       end
     end
+  end
+
+  def mock_google_books_object
+    attributes = {
+      'authors_array' => ['Coconut de Jones'],
+      'authors' => 'Coconut de Jones',
+      'title' => 'Peas and Carrots',
+      'isbn_10' => '1234567890',
+      'publisher' => 'Coconut Publishing',
+      'published_date' => '2015-12-31',
+      'page_count' => '123',
+      'description' => 'My first book.',
+      'categories' => 'Fiction',
+      'image_link' => 'http://example.com/cover_image.jpg',
+      'ratings_count' => '987',
+      'average_rating' => '4.5'
+    }.to_json
+
+    gbook = double('GoogleBooks::Item', JSON.parse(attributes))
   end
 end

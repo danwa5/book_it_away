@@ -56,6 +56,10 @@ class Book < ActiveRecord::Base
     self[:pages].present? ? self[:pages] : gbook.try(:page_count).to_s
   end
 
+  def description
+    self[:description].present? ? self[:description] : gbook.try(:description).to_s
+  end
+
   def image
     if cover_small_image
       cover_small_image.url
@@ -66,11 +70,7 @@ class Book < ActiveRecord::Base
     end
     # gbook.present? ? gbook.try(:image_link).to_s : 'books/image_unavailable.jpg'
   end
-  
-  def description
-    self[:description].present? ? self[:description] : gbook.try(:description).to_s
-  end
-  
+
   def average_rating
     gbook.present? ? gbook.try(:average_rating) : 'N/A'
   end

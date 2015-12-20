@@ -30,6 +30,7 @@ FactoryGirl.define do
     title { Faker::Book.title }
     publisher { Faker::Book.publisher }
     pages { Faker::Number.number(3) }
+    description { Faker::Hipster.sentence }
 
     factory :travel_book do
       after(:create) do |book, _|
@@ -52,6 +53,10 @@ FactoryGirl.define do
           book.categories << category
         end
       end
+    end
+
+    trait :with_cover_image do
+      cover_small_image { Rails.root.join('spec/fixtures/images/cover.jpg') }
     end
   end
 

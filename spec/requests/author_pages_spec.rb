@@ -198,4 +198,11 @@ RSpec.describe 'Author Pages', type: :request do
       end
     end
   end
+
+  describe 'invalid page' do
+    it 'redirects user when tries to visit invalid path' do
+      visit '/no-such-author'
+      expect(current_path).to eq(root_path)
+    end
+  end
 end
