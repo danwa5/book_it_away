@@ -18,7 +18,7 @@ RSpec.describe Author, :type => :model do
   end
 
   describe 'before_save callback' do
-    it 'strips and titleizes the author\'s first and last names' do
+    it 'strips leading and trailing whitespace and titleizes the author\'s first and last names' do
       subject.first_name = ' larry'
       subject.last_name = " o'donnell-robinson "
       subject.save
@@ -39,6 +39,15 @@ RSpec.describe Author, :type => :model do
     end
     describe '#nationality' do
       it { is_expected.to validate_inclusion_of(:nationality).in_array(countries) }
+    end
+  end
+
+  # Defined in config/initializers/string.rb
+  describe '#titleize_lastname' do
+    it 'capitalizes the first letter of last name (if appropriate)' do
+      expect('Decker'.titleize_lastname).to eq('Decker')
+      expect('De Leon'.titleize_lastname).to eq('de Leon')
+      expect('Del Monte'.titleize_lastname).to eq('del Monte')
     end
   end
 
