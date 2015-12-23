@@ -26,7 +26,7 @@
     <div class="form-group">
       <%= f.label :nationality, nil, class: "col-sm-3 control-label" %>
       <div class="col-sm-8">
-        <%= f.select :nationality, author_nationalities, {}, { class: "form-control" } %>
+        <%= f.select :nationality, author_nationalities, { include_blank: '' }, { class: "form-control" } %>
       </div>
     </div>
 

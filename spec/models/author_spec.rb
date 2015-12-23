@@ -38,7 +38,6 @@ RSpec.describe Author, :type => :model do
       it { is_expected.to validate_uniqueness_of(:first_name).scoped_to(:last_name) }
     end
     describe '#nationality' do
-      it { is_expected.to validate_presence_of(:nationality) }
       it { is_expected.to validate_inclusion_of(:nationality).in_array(countries) }
     end
   end

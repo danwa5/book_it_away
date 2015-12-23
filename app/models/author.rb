@@ -13,7 +13,6 @@ class Author < ActiveRecord::Base
   
   validates :last_name, presence: true, length: { maximum: 50 }
   validates :first_name, presence: true, length: { maximum: 50 }
-  validates :nationality, presence: true
   validates_uniqueness_of :first_name, scope: :last_name
   validate :valid_author_nationalities, :valid_author_dob
 
@@ -27,7 +26,7 @@ class Author < ActiveRecord::Base
   
   def valid_author_nationalities
     countries = %w[Australia Brazil Canada Germany France Spain Sweden UK USA]
-    errors.add(:nationality, "needs to be in permitted list") unless countries.include?(self.nationality)
+    errors.add(:nationality, "needs to be in permitted list") unless countries.include?(nationality) || nationality.blank?
   end
   
   def name

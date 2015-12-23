@@ -2,7 +2,6 @@ module AuthorsHelper
 
   def author_nationalities
     [
-      ['',''],
       ['Australia', 'Australia'],
       ['Brazil','Brazil'],
       ['Canada', 'Canada'],

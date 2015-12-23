@@ -7,7 +7,6 @@ class ImportsController < ApplicationController
 
   def create
     author = Author.where(last_name: author_params[:last_name], first_name: author_params[:first_name]).first_or_initialize
-    author.nationality = 'USA'
 
     book_params     = author_params[:books_attributes].values.first
     category_params = book_params[:categories_attributes].values.first
