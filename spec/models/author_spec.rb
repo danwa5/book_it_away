@@ -45,9 +45,9 @@ RSpec.describe Author, :type => :model do
   # Defined in config/initializers/string.rb
   describe '#titleize_lastname' do
     it 'capitalizes the first letter of last name (if appropriate)' do
-      expect('Decker'.titleize_lastname).to eq('Decker')
-      expect('De Leon'.titleize_lastname).to eq('de Leon')
-      expect('Del Monte'.titleize_lastname).to eq('del Monte')
+      expect('decker'.titleize_lastname).to eq('Decker')
+      expect('de leon'.titleize_lastname).to eq('de Leon')
+      expect('del monte'.titleize_lastname).to eq('del Monte')
     end
   end
 
