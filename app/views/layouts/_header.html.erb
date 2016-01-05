@@ -19,9 +19,11 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.first_name.upcase %> <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-              <li<%= request.path.match(/account\/#{current_user.username}/) ? ' class=active' : '' %>><%= link_to "SETTINGS", current_user %></li>
+              <li<%= (request.path.match(/account\/#{current_user.username}/) && !request.path.match(/posts/)) ? ' class=active' : '' %>><%= link_to "SETTINGS", current_user %></li>
               <li class="divider"></li>
             <% if current_user.admin? %>
+              <li<%= current_page?(new_user_post_path(current_user)) ? ' class=active' : '' %>><%= link_to "CREATE POST", new_user_post_path(current_user) %></li>
+              <li<%= current_page?(user_posts_path(current_user)) ? ' class=active' : '' %>><%= link_to "MY POSTS", user_posts_path(current_user) %></li>
               <li<%= current_controller?('imports') ? ' class=active' : '' %>><%= link_to "IMPORT", imports_path %></li>
               <li<%= current_page?(users_path) ? ' class=active' : '' %>><%= link_to "USERS", users_path %></li>
               <li<%= current_controller?('categories') ? ' class=active' : '' %>><%= link_to "CATEGORIES", categories_path %></li>

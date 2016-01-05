@@ -1,0 +1,55 @@
+<% provide(:title, 'Blog Post') %>
+
+<div class="blog-post">
+  <div class="page-header">
+    <h2>Blog Post <small>(<%= link_to "edit", edit_user_post_path(current_user, @post) %>)</small></h2>
+  </div>
+
+  <div class="row">
+    <%= form_for([@user, @post], html: { class:"form-horizontal" }) do |f| %>
+
+      <div class="form-group">
+        <%= f.label :title, nil, class: "col-sm-3 control-label" %>
+        <div class="col-sm-8">
+          <%= f.text_field :title, class: "form-control", disabled: true %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :body, nil, class: "col-sm-3 control-label" %>
+        <div class="col-sm-8">
+          <%= f.text_area :body, rows: 15, class: "form-control", disabled: true %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :status, nil, class: "col-sm-3 control-label" %>
+        <div class="col-sm-8">
+          <%= f.text_field :status, class: "form-control", disabled: true %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :posted_at, nil, class: "col-sm-3 control-label" %>
+        <div class="col-sm-8">
+          <%= f.text_field :posted_at, class: "form-control", disabled: true %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :created_at, nil, class: "col-sm-3 control-label" %>
+        <div class="col-sm-8">
+          <%= f.text_field :created_at, class: "form-control", disabled: true %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :updated_at, nil, class: "col-sm-3 control-label" %>
+        <div class="col-sm-8">
+          <%= f.text_field :updated_at, class: "form-control", disabled: true %>
+        </div>
+      </div>
+
+    <% end %>
+  </div>
+</div>

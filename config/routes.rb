@@ -3,6 +3,7 @@ BookApp::Application.routes.draw do
     member do
       get :confirm_email
     end
+    resources :posts
   end
 
   resources :sessions, only: [:new, :create, :destroy]
@@ -14,12 +15,12 @@ BookApp::Application.routes.draw do
     end
   end
   
-  get '/signup',     to: 'users#new'
-  get '/signin',     to: 'sessions#new'
-  get '/blog',       to: 'static_pages#blog'
-  get '/top10',      to: 'static_pages#top10'
-  get '/results',    to: 'static_pages#results'
-  get '/search',     to: 'static_pages#search'
+  get '/signup',  to: 'users#new'
+  get '/signin',  to: 'sessions#new'
+  get '/blog',    to: 'static_pages#blog'
+  get '/top10',   to: 'static_pages#top10'
+  get '/results', to: 'static_pages#results'
+  get '/search',  to: 'static_pages#search'
   get '/signout', to: 'sessions#destroy'
   
   resources :authors, only: [:index, :new, :create]

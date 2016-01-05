@@ -2,6 +2,7 @@ class StaticPagesController < ApplicationController
   before_action :signed_in_user, except: [:blog]
 
   def blog
+    @posts = Post.published
   end
   
   def search

@@ -70,4 +70,10 @@ FactoryGirl.define do
     rating { rand(1..5) }
     comments { Faker::Hipster.paragraph(2) }
   end
+
+  factory :post do
+    association :user
+    title { Faker::Hipster.sentence }
+    body { Faker::Hipster.paragraph }
+  end
 end
