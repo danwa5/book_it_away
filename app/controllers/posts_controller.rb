@@ -30,6 +30,7 @@ class PostsController < ApplicationController
 
   def update
     if @post.update_attributes(post_params)
+      @post.update_column(:posted_at, Time.now) if @post.posted_at.nil? && @post.publish?
       flash[:success] = 'Blog post updated!'
       redirect_to user_post_path(user, @post)
     else
