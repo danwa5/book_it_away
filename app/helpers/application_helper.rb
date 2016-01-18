@@ -20,4 +20,10 @@ module ApplicationHelper
     end
     str.html_safe
   end
+
+  def month_year_label(yyyymm)
+    year = yyyymm[0..3]
+    month_code = yyyymm[4..5].to_i
+    Date::MONTHNAMES[month_code] + ' ' + year
+  end
 end

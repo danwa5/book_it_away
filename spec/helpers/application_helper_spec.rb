@@ -21,4 +21,8 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
   end
+
+  describe '#month_year_label' do
+    it { expect(helper.month_year_label('201601')).to eq('January 2016') }
+  end
 end

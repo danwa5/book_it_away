@@ -24,5 +24,29 @@ RSpec.describe Post, type: :model do
         expect(described_class.published).to eq([post_3, post_1])
       end
     end
+
+    describe '.posted_within' do
+      context 'month is nil' do
+        it 'returns all posts' do
+          expect(described_class.posted_within(nil)).to eq([post_1, post_2, post_3])
+        end
+      end
+      context 'month does not have posts' do
+        it 'returns no posts' do
+          expect(described_class.posted_within('201506')).to eq([])
+        end
+      end
+      context 'month has posts' do
+        it 'returns its posts' do
+          expect(described_class.posted_within('201512')).to eq([post_1, post_2, post_3])
+        end
+      end
+    end
+
+    describe '.month_and_published_count' do
+      it 'returns a list of all months with post count' do
+        expect(described_class.month_and_published_count).to eq({ '201512' => 2 })
+      end
+    end
   end
 end

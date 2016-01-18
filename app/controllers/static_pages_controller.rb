@@ -1,8 +1,9 @@
 class StaticPagesController < ApplicationController
   before_action :signed_in_user, except: [:blog]
+  before_action :find_archive_month, only: [:blog]
 
   def blog
-    @posts = Post.published
+    @posts = Post.published.posted_within(@archive_month)
   end
   
   def search
@@ -36,6 +37,10 @@ class StaticPagesController < ApplicationController
         flash[:warning] = 'No books found. Please try another search.'
         redirect_to search_path
       end
+    end
+
+    def find_archive_month
+      @archive_month = params[:archive]
     end
 
     def search_params
