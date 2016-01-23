@@ -283,6 +283,10 @@ RSpec.describe Book, :type => :model do
     end
   end
 
+  describe '#api_presenter' do
+    it { expect(book.api_presenter).to be_kind_of(Api::BookPresenter) }
+  end
+
   def mock_google_books_object
     attributes = {
       'authors_array' => ['Coconut de Jones'],

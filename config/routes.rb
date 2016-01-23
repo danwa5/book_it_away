@@ -1,4 +1,9 @@
 BookApp::Application.routes.draw do
+  # API namespace
+  namespace :api, defaults: {format: "json"} do
+    resources :books, only: [:show]
+  end
+
   resources :users, path: 'account' do
     member do
       get :confirm_email

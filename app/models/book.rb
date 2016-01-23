@@ -118,6 +118,10 @@ class Book < ActiveRecord::Base
     true
   end
 
+  def api_presenter
+    Api::BookPresenter.new(self)
+  end
+
   private
 
   def storage_config(a)
