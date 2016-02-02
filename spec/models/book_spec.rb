@@ -81,6 +81,19 @@ RSpec.describe Book, :type => :model do
     end
   end
 
+  describe 'Author#books_count counter cache' do
+    let!(:author) { create(:author) }
+    it 'must increment books_count by 1 after adding book, or decrement by 1 after deleting book' do
+      expect(author.books_count).to eq(0)
+      create(:book, author: author)
+      author.reload
+      expect(author.books_count).to eq(1)
+      author.books.first.destroy
+      author.reload
+      expect(author.books_count).to eq(0)
+    end
+  end
+
   describe 'class methods' do
     let(:author) { create(:author, last_name: 'Krakauer', first_name: 'Jon')}
     let!(:book_1) { create(:book, title: 'Into Thin Air', author: author)}

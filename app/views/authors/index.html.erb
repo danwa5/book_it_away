@@ -7,10 +7,10 @@
   <ul class="authors">
     <% @authors.each do |a| %>
       <li>
-        <%= link_to a.name, a %> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <%= pluralize(a.books.count, "book") %>
-        <% if a.books.count > 0 %>
+        <%= link_to a.name, a %> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <%= pluralize(a.books.size, "book") %>
+        <% if a.books.size > 0 %>
           including <i><%= link_to a.books.first.title, author_book_path(a, a.books.first) %></i>
-        <% if a.books.count > 1 %>
+        <% if a.books.size > 1 %>
           and <i><%= link_to a.books.last.title, author_book_path(a, a.books.last) %></i>
         <% end %><% end %>
       </li>

@@ -2,7 +2,7 @@ class Book < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, use: :scoped, scope: :author
 
-  belongs_to :author
+  belongs_to :author, counter_cache: true
   has_many :reviews
   has_and_belongs_to_many :categories
 
