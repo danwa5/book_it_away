@@ -26,9 +26,14 @@
     <div class="form-group">
       <%= f.label :nationality, nil, class: "col-sm-3 control-label" %>
       <div class="col-sm-8">
-        <%= f.select :nationality, author_nationalities, { include_blank: '' }, { class: "form-control" } %>
+        <%= f.country_select(:nationality, { selected: @author.nationality, include_blank: true }) %>
       </div>
     </div>
+    <script>
+      $(function() {
+        $('#author_nationality').selectize({ allowEmptyOption: true, sortField: 'text' });
+      });
+    </script>
 
     <div class="form-group">
       <div class="col-sm-5 col-sm-offset-3">

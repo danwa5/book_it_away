@@ -4,7 +4,7 @@ namespace :db do
   
   data = [
     {
-      'last_name' => 'Hemingway', 'first_name' => 'Ernest', 'dob' => '1899-07-21', 'nationality' => 'USA',
+      'last_name' => 'Hemingway', 'first_name' => 'Ernest', 'dob' => '1899-07-21', 'nationality' => 'US',
       'books' => [
         { 'isbn' => '0743297332', 'title' => 'The Sun Also Rises', 'publisher' => 'Scribner', 'pages' => '256' }
       ]
@@ -20,19 +20,19 @@ namespace :db do
       ]
     },
     {
-      'last_name' => 'Twain', 'first_name' => 'Mark', 'dob' => '1835-11-30', 'nationality' => 'USA',
+      'last_name' => 'Twain', 'first_name' => 'Mark', 'dob' => '1835-11-30', 'nationality' => 'US',
       'books' => [
         { 'isbn' => '0486280616', 'title' => 'The Adventures of Huckleberry Finn', 'publisher' => 'Dover Publications', 'pages' => '224' }
       ]
     },
     {
-      'last_name' => 'London', 'first_name' => 'Jack', 'dob' => '1876-01-12', 'nationality' => 'USA',
+      'last_name' => 'London', 'first_name' => 'Jack', 'dob' => '1876-01-12', 'nationality' => 'US',
       'books' => [
         { 'isbn' => '0141321059', 'title' => 'The Call of the Wild', 'publisher' => 'Penguin Books', 'pages' => '160' }
       ]
     },
     {
-      'last_name' => 'Larrson', 'first_name' => 'Stieg', 'dob' => '1954-08-15', 'nationality' => 'Sweden',
+      'last_name' => 'Larrson', 'first_name' => 'Stieg', 'dob' => '1954-08-15', 'nationality' => 'SE',
       'books' => [
         { 'isbn' => '0307272117', 'title' => 'The Girl with the Dragon Tattoo', 'publisher' => 'Random House', 'pages' => '480' },
         { 'isbn' => '0307272303', 'title' => 'The Girl Who Played with Fire', 'publisher' => 'Random House', 'pages' => '512' },
@@ -40,27 +40,27 @@ namespace :db do
       ]
     },
     {
-      'last_name' => 'Krakauer', 'first_name' => 'Jon', 'dob' => '1954-04-12', 'nationality' => 'USA',
+      'last_name' => 'Krakauer', 'first_name' => 'Jon', 'dob' => '1954-04-12', 'nationality' => 'US',
       'books' => [
         { 'isbn' => '0307476863', 'title' => 'Into the Wild', 'publisher' => 'Random House', 'pages' => '207' },
         { 'isbn' => '0330470027', 'title' => 'Into Thin Air', 'publisher' => 'Pan Macmillan', 'pages' => '304' }
       ]
     },
     {
-      'last_name' => 'Steinbeck', 'first_name' => 'John', 'dob' => '1902-02-27', 'nationality' => 'USA',
+      'last_name' => 'Steinbeck', 'first_name' => 'John', 'dob' => '1902-02-27', 'nationality' => 'US',
       'books' => [
         { 'isbn' => '1440637121', 'title' => 'The Grapes of Wrath', 'publisher' => 'Penguin Books', 'pages' => '544' },
         { 'isbn' => '1440674175', 'title' => 'The Pastures of Heaven', 'publisher' => 'Penguin Books', 'pages' => '240' }
       ]
     },
     {
-      'last_name' => 'de Rosnay', 'first_name' => 'Tatiana', 'dob' => '1961-09-28', 'nationality' => 'France',
+      'last_name' => 'de Rosnay', 'first_name' => 'Tatiana', 'dob' => '1961-09-28', 'nationality' => 'FR',
       'books' => [
         { 'isbn' => '1429985216', 'title' => 'Sarah\'s Key', 'publisher' => 'Macmillan', 'pages' => '304' }
       ]
     },
     {
-      'last_name' => 'Gregory', 'first_name' => 'Philippa', 'dob' => '1954-01-09', 'nationality' => 'UK',
+      'last_name' => 'Gregory', 'first_name' => 'Philippa', 'dob' => '1954-01-09', 'nationality' => 'GB',
       'books' => [
         { 'isbn' => '1416556532', 'title' => 'The Other Boleyn Girl', 'publisher' => 'Pocket Star Books', 'pages' => '735' }
       ]
@@ -74,25 +74,25 @@ namespace :db do
       ]
     },
     {
-      'last_name' => 'Smith', 'first_name' => 'Wilbur', 'dob' => '1933-01-09', 'nationality' => 'Canada',
+      'last_name' => 'Smith', 'first_name' => 'Wilbur', 'dob' => '1933-01-09', 'nationality' => 'CA',
       'books' => [
         { 'isbn' => '0330468340', 'title' => 'Cry Wolf', 'publisher' => 'Pan Macmillan', 'pages' => '416' }
       ]
     },
     {
-      'last_name' => 'Gladwell', 'first_name' => 'Malcolm', 'dob' => '1963-09-03', 'nationality' => 'Canada',
+      'last_name' => 'Gladwell', 'first_name' => 'Malcolm', 'dob' => '1963-09-03', 'nationality' => 'CA',
       'books' => [
         { 'isbn' => '0316017930', 'title' => 'Outliers: the Story of Success', 'publisher' => 'Little, Brown, & Company', 'pages' => '336' }
       ]
     },
     {
-      'last_name' => 'Alba', 'first_name' => 'Jessica', 'dob' => '1981-04-28', 'nationality' => 'USA',
+      'last_name' => 'Alba', 'first_name' => 'Jessica', 'dob' => '1981-04-28', 'nationality' => 'US',
       'books' => [
         { 'isbn' => '1609619129', 'title' => 'The Honest Life', 'publisher' => 'Rodale', 'pages' => '272' }
       ]
     },
     {
-      'last_name' => 'Sparks', 'first_name' => 'Nicholas', 'dob' => '1965-12-31', 'nationality' => 'USA',
+      'last_name' => 'Sparks', 'first_name' => 'Nicholas', 'dob' => '1965-12-31', 'nationality' => 'US',
       'books' => [
         { 'isbn' => '0748119760', 'title' => 'Dear John', 'publisher' => 'Little, Brown Book Group', 'pages' => '368' }
       ]

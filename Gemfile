@@ -24,6 +24,8 @@ gem 'multi_json', '1.11.2'
 gem 'dragonfly', '~> 1.0', '>= 1.0.12'
 gem 'dragonfly-s3_data_store', '~> 1.2'
 gem 'responders', '~> 2.0'
+gem 'country_select', '~> 2.5', '>= 2.5.1'
+gem 'selectize-rails', '~> 0.12.1'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.4'

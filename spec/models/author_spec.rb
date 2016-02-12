@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe Author, :type => :model do
   let(:author) { create(:author) }
-  let(:countries) { %w[Australia Brazil Canada Germany France Spain Sweden UK USA] }
   subject { author }
 
   it 'has a valid factory' do
@@ -37,9 +36,6 @@ RSpec.describe Author, :type => :model do
       it { is_expected.to validate_length_of(:first_name).is_at_most(50) }
       it { is_expected.to validate_uniqueness_of(:first_name).scoped_to(:last_name) }
     end
-    describe '#nationality' do
-      it { is_expected.to validate_inclusion_of(:nationality).in_array(countries) }
-    end
   end
 
   # Defined in config/initializers/string.rb
@@ -69,6 +65,20 @@ RSpec.describe Author, :type => :model do
   describe '#name' do
     it 'returns the author\'s first and last names' do
       expect(subject.name).to eq(subject.first_name + ' ' + subject.last_name)
+    end
+  end
+
+  describe '#nationality_name' do
+    context 'nationality is given' do
+      it 'returns the full country name' do
+        expect(subject.nationality_name).to eq('United States')
+      end
+    end
+    context 'nationality is blank' do
+      subject { build(:author, nationality: nil) }
+      it 'returns empty string' do
+        expect(subject.nationality_name).to eq('')
+      end
     end
   end
 

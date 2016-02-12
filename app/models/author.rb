@@ -14,7 +14,7 @@ class Author < ActiveRecord::Base
   validates :last_name, presence: true, length: { maximum: 50 }
   validates :first_name, presence: true, length: { maximum: 50 }
   validates_uniqueness_of :first_name, scope: :last_name
-  validate :valid_author_nationalities, :valid_author_dob
+  validate :valid_author_dob
 
   default_scope { order('last_name asc') }
   
@@ -24,13 +24,14 @@ class Author < ActiveRecord::Base
     end
   end
   
-  def valid_author_nationalities
-    countries = %w[Australia Brazil Canada Germany France Spain Sweden UK USA]
-    errors.add(:nationality, "needs to be in permitted list") unless countries.include?(nationality) || nationality.blank?
-  end
-  
   def name
     first_name + ' ' + last_name
+  end
+
+  def nationality_name
+    return '' if nationality.blank?
+    country = ISO3166::Country[nationality]
+    country.translations[I18n.locale.to_s] || country.name
   end
   
   def formatted_dob

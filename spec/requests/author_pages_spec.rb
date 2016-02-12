@@ -141,7 +141,7 @@ RSpec.describe 'Author Pages', type: :request do
         before do
           fill_in 'Last name', with: new_last_name
           fill_in 'First name', with: new_first_name
-          select new_nationality, from: 'Nationality'
+          select new_nationality, from: 'Nationality', :match => :first
           click_button 'Save Changes'
         end
 
@@ -183,7 +183,7 @@ RSpec.describe 'Author Pages', type: :request do
         before do
           fill_in 'Last name', with: new_last_name
           fill_in 'First name', with: new_first_name
-          select new_nationality, from: 'Nationality'
+          select new_nationality, from: 'Nationality', :match => :first
         end
         
         it 'should create an author' do

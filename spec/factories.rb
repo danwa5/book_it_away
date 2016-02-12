@@ -21,7 +21,7 @@ FactoryGirl.define do
     last_name { Faker::Name.first_name }
     first_name { Faker::Name.last_name }
     dob { Faker::Date.between(50.years.ago, 20.years.ago) }
-    nationality "USA"
+    nationality 'US'
   end
   
   factory :book do
