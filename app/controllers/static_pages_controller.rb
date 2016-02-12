@@ -7,7 +7,8 @@ class StaticPagesController < ApplicationController
   end
   
   def search
-    @categories_all = Category.all
+    @books = Book.all.select(:id, :isbn, :title)
+    @categories_all = Category.all.select(:id, :name)
   end
   
   def results

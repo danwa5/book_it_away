@@ -84,6 +84,11 @@ class Book < ActiveRecord::Base
     title = title[0,1].capitalize + title[1, title.length-1]
   end
 
+  def isbn_title_description
+    title_desc = (title.length <= 30) ? title : title[0..30] + '...'
+    "#{isbn} - #{title_desc}"
+  end
+
   def categorized_under?(category)
     self.categories.include?(category)
   end

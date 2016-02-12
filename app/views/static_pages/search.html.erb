@@ -24,9 +24,14 @@
     <div class="form-group">
       <%= label_tag :isbn, "ISBN", class: "col-sm-3 control-label" %>
       <div class="col-sm-8">
-        <%= text_field_tag :isbn, nil, class: "form-control", maxlength: 10 %>
+        <%= select_tag :isbn, options_from_collection_for_select(@books, 'isbn', 'isbn_title_description') %>
       </div>
     </div>
+    <script>
+      $(function() {
+        $('#isbn').selectize({ allowEmptyOption: true, sortField: 'text' });
+      });
+    </script>
 
     <div class="form-group">
       <%= label_tag :pages, nil, class: "col-sm-3 control-label" %>

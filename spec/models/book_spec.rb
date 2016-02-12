@@ -238,6 +238,21 @@ RSpec.describe Book, :type => :model do
     end
   end
 
+  describe '#isbn_title_description' do
+    context 'title is <= 30 characters' do
+      subject { build(:book, isbn: Faker::Number.number(10), title: Faker::Lorem.characters(30)) }
+      it 'returns the isbn and title' do
+        expect(subject.isbn_title_description).to eq("#{subject.isbn} - #{subject.title}")
+      end
+    end
+    context 'title is > 30 characters' do
+      subject { build(:book, isbn: Faker::Number.number(10), title: Faker::Lorem.characters(31)) }
+      it 'returns the isbn and first 30 characters of title' do
+        expect(subject.isbn_title_description).to eq("#{subject.isbn} - #{subject.title[0..30]}...")
+      end
+    end
+  end
+
   describe 'category-related methods' do
     let!(:travel_book) { create(:travel_book) }
     let!(:fiction_book) { create(:fiction_book) }

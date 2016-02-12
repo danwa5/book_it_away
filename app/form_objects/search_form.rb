@@ -38,8 +38,9 @@ class SearchForm
   end
 
   def clean_attributes
-    author.strip! if author.present?
-    title.strip! if title.present?
-    isbn.strip! if isbn.present?
+    self.instance_variables.each do |var|
+      value = instance_variable_get(var)
+      value.strip! if value.kind_of?(String) && value.present?
+    end
   end
 end
