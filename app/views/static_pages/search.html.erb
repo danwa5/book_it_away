@@ -24,7 +24,7 @@
     <div class="form-group">
       <%= label_tag :isbn, "ISBN", class: "col-sm-3 control-label" %>
       <div class="col-sm-8">
-        <%= select_tag :isbn, options_from_collection_for_select(@books, 'isbn', 'isbn_title_description') %>
+        <%= select_tag :isbn, options_from_collection_for_select(@books, 'isbn', 'isbn_title_description'), { include_blank: true } %>
       </div>
     </div>
     <script>
