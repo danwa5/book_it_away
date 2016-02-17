@@ -16,13 +16,22 @@ RSpec.describe Author, :type => :model do
     it { is_expected.to accept_nested_attributes_for(:books) }
   end
 
-  describe 'before_save callback' do
-    it 'strips leading and trailing whitespace and titleizes the author\'s first and last names' do
-      subject.first_name = ' larry'
-      subject.last_name = " o'donnell-robinson "
-      subject.save
-      expect(subject.first_name).to eq('Larry')
-      expect(subject.last_name).to eq("O'Donnell-Robinson")
+  describe 'callbacks' do
+    describe 'after_initialize' do
+      subject { Author.new(authors_array: ['Jack Daniels', 'Jim Bean']) }
+      it 'takes the first element in array and sets first and last names' do
+        expect(subject.first_name).to eq('Jack')
+        expect(subject.last_name).to eq('Daniels')
+      end
+    end
+    describe 'before_save' do
+      it 'strips leading and trailing whitespace and titleizes the author\'s first and last names' do
+        subject.first_name = ' larry'
+        subject.last_name = " o'donnell-robinson "
+        subject.save
+        expect(subject.first_name).to eq('Larry')
+        expect(subject.last_name).to eq("O'Donnell-Robinson")
+      end
     end
   end
 

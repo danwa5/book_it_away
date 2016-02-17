@@ -45,22 +45,9 @@ class ImportsController < ApplicationController
         flash[:danger] = 'ISBN cannot be found in Google Books API!'
         redirect_to imports_path
       else
-        @author = Author.new(nationality: 'USA')
-        @author.last_name = @gbook.authors_array.first.partition(' ').last
-        @author.first_name = @gbook.authors_array.first.partition(' ').first
-
-        @book = @author.books.build(
-          title: @gbook.title,
-          isbn: @gbook.isbn_10,
-          publisher: @gbook.publisher,
-          published_date: @gbook.published_date,
-          pages: @gbook.page_count,
-          description: @gbook.description,
-        )
-
-        @book.categories.build(
-          name: @gbook.categories
-        )
+        @author = Author.new({ authors_array: @gbook.authors_array })
+        @book = @author.books.build({ gbook: @gbook })
+        @book.categories.build(name: @gbook.categories)
       end
     end
   end

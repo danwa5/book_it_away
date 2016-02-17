@@ -40,16 +40,29 @@ RSpec.describe Book, :type => :model do
     end
   end
 
-  describe 'before_save' do
-    it 'strips and titleizes the book\'s title' do
-      subject.title = ' the old man and the sea '
-      subject.save
-      expect(subject.title).to eq('The Old Man and the Sea')
+  describe 'callbacks' do
+    describe 'after_initialize' do
+      subject { Book.new({ gbook: mock_google_books_object}) }
+      it 'initializes with isbn, title, publisher, published_date, pages, and description' do
+        expect(subject.isbn).to eq('1234567890')
+        expect(subject.title).to eq('Peas and Carrots')
+        expect(subject.publisher).to eq('Coconut Publishing')
+        expect(subject.published_date).to eq(Date.parse('2015-12-31'))
+        expect(subject.pages).to eq(123)
+        expect(subject.description).to eq('My first book.')
+      end
     end
-    it 'strips and titleizes the book\'s publisher' do
-      subject.publisher = ' world publishing '
-      subject.save
-      expect(subject.publisher).to eq('World Publishing')
+    describe 'before_save' do
+      it 'strips and titleizes the book\'s title' do
+        subject.title = ' the old man and the sea '
+        subject.save
+        expect(subject.title).to eq('The Old Man and the Sea')
+      end
+      it 'strips and titleizes the book\'s publisher' do
+        subject.publisher = ' world publishing '
+        subject.save
+        expect(subject.publisher).to eq('World Publishing')
+      end
     end
   end
 

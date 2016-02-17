@@ -1,11 +1,20 @@
 class Author < ActiveRecord::Base
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
+  attr_accessor :authors_array
 
   has_many :books
 
   accepts_nested_attributes_for :books
   
+  after_initialize {
+    if new_record? && authors_array.present?
+      full_name = authors_array.first
+      self.first_name = full_name.partition(' ').first
+      self.last_name = full_name.partition(' ').last
+    end
+  }
+
   before_save { 
     self.last_name = last_name.strip.titleize_lastname
     self.first_name = first_name.strip.titleize

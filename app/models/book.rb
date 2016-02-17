@@ -19,6 +19,17 @@ class Book < ActiveRecord::Base
     storage_options :storage_config
   end
   
+  after_initialize {
+    if new_record? && gbook.present?
+      self.isbn = gbook.isbn_10
+      self.title = gbook.title
+      self.publisher = gbook.publisher
+      self.published_date = gbook.published_date
+      self.pages = gbook.page_count
+      self.description = gbook.description
+    end
+  }
+
   before_save {
     self.title = book_title_case(title)
     self.publisher = publisher.to_s.strip.titleize
