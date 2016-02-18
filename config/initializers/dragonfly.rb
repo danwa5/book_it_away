@@ -15,6 +15,8 @@ Dragonfly.app.configure do
       access_key_id: Figaro.env.aws_access_key_id,
       secret_access_key: Figaro.env.aws_secret_access_key,
       region: Figaro.env.aws_region
+  elsif Rails.env.test?
+    datastore :memory
   else
     datastore :file,
       root_path: Rails.root.join('public/system/dragonfly', Rails.env),

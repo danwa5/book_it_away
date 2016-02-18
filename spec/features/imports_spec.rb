@@ -51,6 +51,12 @@ RSpec.describe 'Imports', type: :feature do
         expect(find('#cover_image').value).to eq(image_url)
         expect(find('#import_cover_image').value).to eq('true')
       end
+      it 'must display error message after unsuccessful import' do
+        find('#last_name').set('')
+        click_button 'Import Author and Book'
+        expect(current_path).to eq(imports_path)
+        is_expected.to have_selector('div.alert.alert-danger', text: 'Author and book data could not be imported')
+      end
       it 'must create new author and book records' do
         make_image_stub_request(image_url)
         click_button 'Import Author and Book'
@@ -58,11 +64,23 @@ RSpec.describe 'Imports', type: :feature do
         expect(current_path).to eq(author_path(author))
         is_expected.to have_selector('div.alert.alert-success', text: 'Author and book data successfully imported!')
       end
-      it 'must display error message after unsuccessful import' do
-        find('#last_name').set('')
-        click_button 'Import Author and Book'
-        expect(current_path).to eq(imports_path)
-        is_expected.to have_selector('div.alert.alert-danger', text: 'Author and book data could not be imported')
+      context "with 'Import Cover Image' selected" do
+        it 'must set the cover image for book' do
+          make_image_stub_request(image_url)
+          find(:css, "#import_cover_image[value='true']").set(true)
+          click_button 'Import Author and Book'
+          author = Author.last
+          expect(author.books.first.cover_image_uid).to be_present
+        end
+      end
+      context "with 'Import Cover Image' not selected" do
+        it 'must not set the cover image for book' do
+          make_image_stub_request(image_url)
+          find(:css, "#import_cover_image[value='true']").set(false)
+          click_button 'Import Author and Book'
+          author = Author.last
+          expect(author.books.first.cover_image_uid).to be_nil
+        end
       end
     end
   end

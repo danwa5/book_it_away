@@ -66,6 +66,7 @@ GEM
       execjs
     coffee-script-source (1.10.0)
     concurrent-ruby (1.0.0)
+    connection_pool (2.2.0)
     countries (1.2.5)
       currencies (~> 0.4.2)
       i18n_data (~> 0.7.0)
@@ -224,6 +225,10 @@ GEM
       rubyzip
     shoulda-matchers (3.0.1)
       activesupport (>= 4.0.0)
+    sidekiq (4.1.0)
+      concurrent-ruby (~> 1.0)
+      connection_pool (~> 2.2, >= 2.2.0)
+      redis (~> 3.2, >= 3.2.1)
     simplecov (0.11.0)
       docile (~> 1.1.0)
       json (~> 1.8)
@@ -293,6 +298,7 @@ DEPENDENCIES
   selectize-rails (~> 0.12.1)
   selenium-webdriver (= 2.0.0)
   shoulda-matchers
+  sidekiq (~> 4.1)
   simplecov
   turbolinks (~> 2.5.3)
   uglifier (~> 2.7)

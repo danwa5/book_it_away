@@ -141,6 +141,7 @@ class Book < ActiveRecord::Base
   private
 
   def storage_config(a)
-    { path: "books/#{id}/#{isbn}/#{a.attribute}-#{Time.now.utc.to_i}.jpg" }
+    book_id = id || 'presave'
+    { path: "books/#{book_id}/#{isbn}/#{a.attribute}-#{Time.now.utc.to_i}.jpg" }
   end
 end
