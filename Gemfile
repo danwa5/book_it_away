@@ -4,6 +4,7 @@ ruby '2.2.3'
 
 gem 'rails', '~> 4.2.5'
 gem 'pg', '0.15.1'
+gem 'redis-namespace', '~> 1.5', '>= 1.5.2'
 gem 'redis', '~> 3.2.1'
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.6'
 gem 'bcrypt-ruby', '3.1.2'
@@ -27,6 +28,7 @@ gem 'responders', '~> 2.0'
 gem 'country_select', '~> 2.5', '>= 2.5.1'
 gem 'selectize-rails', '~> 0.12.1'
 gem 'sidekiq', '~> 4.1'
+gem 'sinatra', :require => nil
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.4'

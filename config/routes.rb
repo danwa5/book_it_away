@@ -1,4 +1,8 @@
+require 'sidekiq/web'
+
 BookApp::Application.routes.draw do
+  mount Sidekiq::Web => '/sidekiq'
+
   # API namespace
   namespace :api, defaults: {format: "json"} do
     resources :books, only: [:show]

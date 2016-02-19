@@ -16,7 +16,7 @@ class ImportsController < ApplicationController
     if author.save
       book.author = author
       book.update_attributes(book_params)
-      CoverImportWorker.new.perform(book.id, params[:cover_image]) if params[:import_cover_image] == 'true'
+      CoverImportWorker.perform_async(book.id, params[:cover_image]) if params[:import_cover_image] == 'true'
 
       if category_params[:name].present?
         category = Category.where(name: category_params[:name]).first_or_create!

@@ -65,21 +65,19 @@ RSpec.describe 'Imports', type: :feature do
         is_expected.to have_selector('div.alert.alert-success', text: 'Author and book data successfully imported!')
       end
       context "with 'Import Cover Image' selected" do
-        it 'must set the cover image for book' do
-          make_image_stub_request(image_url)
+        it 'must enqueue CoverImportWorker' do
           find(:css, "#import_cover_image[value='true']").set(true)
-          click_button 'Import Author and Book'
-          author = Author.last
-          expect(author.books.first.cover_image_uid).to be_present
+          expect{
+            click_button 'Import Author and Book'
+          }.to change(CoverImportWorker.jobs, :size).by(1)
         end
       end
       context "with 'Import Cover Image' not selected" do
-        it 'must not set the cover image for book' do
-          make_image_stub_request(image_url)
+        it 'must not enqueue CoverImportWorker' do
           find(:css, "#import_cover_image[value='true']").set(false)
-          click_button 'Import Author and Book'
-          author = Author.last
-          expect(author.books.first.cover_image_uid).to be_nil
+          expect{
+            click_button 'Import Author and Book'
+          }.not_to change(CoverImportWorker.jobs, :size)
         end
       end
     end
