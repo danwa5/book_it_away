@@ -83,6 +83,16 @@ RSpec.describe 'Imports', type: :feature do
     end
   end
 
+  describe 'GET /import/import_covers' do
+    it 'enqueues a CoverImportBatchWorker' do
+      referer = 'http://example.com'
+      Capybara.current_session.driver.header 'Referer', referer
+      expect {
+        visit import_covers_imports_path
+      }.to change(CoverImportBatchWorker.jobs, :size).by(1)
+    end
+  end
+
   def mock_google_books_object
     attributes = {
       'authors_array' => ['Coconut de Jones'],

@@ -24,7 +24,8 @@
             <% if current_user.admin? %>
               <li<%= current_page?(new_user_post_path(current_user)) ? ' class=active' : '' %>><%= link_to "CREATE POST", new_user_post_path(current_user) %></li>
               <li<%= current_page?(user_posts_path(current_user)) ? ' class=active' : '' %>><%= link_to "MY POSTS", user_posts_path(current_user) %></li>
-              <li<%= current_controller?('imports') ? ' class=active' : '' %>><%= link_to "IMPORT", imports_path %></li>
+              <li<%= current_controller?('imports') ? ' class=active' : '' %>><%= link_to "IMPORT BOOK", imports_path %></li>
+              <li<%= current_controller?('imports') ? ' class=active' : '' %>><%= link_to "IMPORT COVERS", import_covers_imports_path %></li>
               <li<%= current_page?(users_path) ? ' class=active' : '' %>><%= link_to "USERS", users_path %></li>
               <li<%= current_controller?('categories') ? ' class=active' : '' %>><%= link_to "CATEGORIES", categories_path %></li>
               <li class="divider"></li>

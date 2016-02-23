@@ -21,6 +21,7 @@ BookApp::Application.routes.draw do
   resources :imports, only: [:index, :create] do
     collection do
       get :results
+      get :import_covers
     end
   end
   

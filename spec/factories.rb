@@ -56,6 +56,7 @@ FactoryGirl.define do
     end
 
     trait :with_cover_image do
+      cover_image { Rails.root.join('spec/fixtures/images/cover.jpg') }
       cover_small_image { Rails.root.join('spec/fixtures/images/cover.jpg') }
     end
   end

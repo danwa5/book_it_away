@@ -52,6 +52,12 @@ class ImportsController < ApplicationController
     end
   end
 
+  def import_covers
+    CoverImportBatchWorker.perform_async
+    flash[:success] = 'Worker enqueued to import covers.'
+    redirect_to request.referrer
+  end
+
   private
 
   def author_params
