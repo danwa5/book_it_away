@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::BooksController, type: :controller do
-  let(:book) { create(:book) }
+  let(:book) { create(:book, :with_cover_image) }
 
   describe 'GET /api/books/:id' do
     context 'for valid book' do

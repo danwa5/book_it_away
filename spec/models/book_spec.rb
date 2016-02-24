@@ -324,6 +324,26 @@ RSpec.describe Book, :type => :model do
     end
   end
 
+  describe '#cover_image_url' do
+    context 'cover_image is missing' do
+      it { expect(subject.cover_image_url).to eq('') }
+    end
+    context 'cover_image is present' do
+      subject { create(:book, :with_cover_image) }
+      it { expect(subject.cover_image_url).to be_present }
+    end
+  end
+
+  describe '#cover_small_image_url' do
+    context 'cover_small_image is missing' do
+      it { expect(subject.cover_small_image_url).to eq('') }
+    end
+    context 'cover_small_image is present' do
+      subject { create(:book, :with_cover_image) }
+      it { expect(subject.cover_small_image_url).to be_present }
+    end
+  end
+
   describe '#api_presenter' do
     it { expect(book.api_presenter).to be_kind_of(Api::BookPresenter) }
   end

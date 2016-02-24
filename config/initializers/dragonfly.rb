@@ -7,7 +7,7 @@ Dragonfly.app.configure do
 
   secret "06810258903414a2f5012d3bd6d702cae5231c7329ef00d916b4e42341fd71c3"
 
-  url_format "/media/:job/:name"
+  url_format "/media/:job/cover.jpg"
 
   if Rails.env.production?
     datastore :s3,

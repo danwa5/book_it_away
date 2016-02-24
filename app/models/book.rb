@@ -134,6 +134,14 @@ class Book < ActiveRecord::Base
     true
   end
 
+  def cover_image_url
+    cover_image.present? ? cover_image.url : ''
+  end
+
+  def cover_small_image_url
+    cover_small_image.present? ? cover_small_image.url : ''
+  end
+
   def api_presenter
     Api::BookPresenter.new(self)
   end
