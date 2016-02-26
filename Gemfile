@@ -29,7 +29,7 @@ gem 'country_select', '~> 2.5', '>= 2.5.1'
 gem 'selectize-rails', '~> 0.12.1'
 gem 'sidekiq', '~> 4.1'
 gem 'sinatra', :require => nil
-gem 'canadian_pig_latin', git: 'git@github.com:danwa5/canadian_pig_latin.git'
+gem 'canadian_pig_latin', git: 'git://github.com/danwa5/canadian_pig_latin.git'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.4'

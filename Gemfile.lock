@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:danwa5/canadian_pig_latin.git
+  remote: git://github.com/danwa5/canadian_pig_latin.git
   revision: 85f488f0c233872dbb31d9b009ad14baebfc3a68
   specs:
     canadian_pig_latin (0.1.0)
