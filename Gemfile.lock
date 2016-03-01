@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/danwa5/canadian_pig_latin.git
-  revision: 85f488f0c233872dbb31d9b009ad14baebfc3a68
+  revision: 0f78bc3d6daeac41114005829e0f72df25bcdd3c
   specs:
-    canadian_pig_latin (0.1.0)
+    canadian_pig_latin (0.2.0)
 
 GEM
   remote: https://rubygems.org/

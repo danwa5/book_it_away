@@ -51,7 +51,8 @@
               <h3>About Us</h3>
             </div>
             <div class="sidebar-body">
-              <p><%= CanadianPigLatin.translate(Faker::Hipster.sentence(rand(10..15))) %></p>
+              <% country = CanadianPigLatin::EXPRESSIONS.keys.sample %>
+              <p><%= CanadianPigLatin.translate(Faker::Hipster.sentence(rand(10..15)), {country: country}) %></p>
             </div>
           </div>
 
